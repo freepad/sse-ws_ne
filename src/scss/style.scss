@@ -17,7 +17,8 @@ body {
 
 section,
 div,
-.accaunt__online_one {
+.accaunt__online_one,
+.author {
 	display: flex;
 	box-sizing: border-box;
 	flex-direction: row;
@@ -42,7 +43,9 @@ div,
 .accaunts,
 .chattalks,
 .chattalks>div:last-of-type,
-.preview {
+.preview,
+.author,
+.button button {
 	border: 1px solid #464646;
 	border-radius: 20px;
 	margin: 0;
@@ -155,4 +158,88 @@ div,
 	max-width: inherit;
 	padding-top: 20px;
 	font-size: 16px;
+}
+.author {
+	position: absolute;
+	left: calc(50% - 275px);
+
+	width: 100%;
+	max-width: 555px;
+	flex-direction: row;
+	flex-wrap: wrap;
+	background-color: rgb(250, 235, 215, 85%);
+
+	justify-content: center;
+	margin: 0 auto;
+	padding-bottom: 20px;
+	z-index: 2;
+
+	.title {
+		width: inherit;
+		padding-top: 5px;
+
+		h2 {
+			display: initial;
+			margin: 0 auto;
+			font-size: 22px;
+		}
+	}
+
+	.form {
+		width: inherit;
+		padding-top: 32px;
+
+
+		form {
+			width: 100%;
+			max-width: 500px;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			margin: 0 auto;
+		}
+
+		.input,
+		.button {
+			width: 100%;
+
+
+		}
+
+		.input {
+			min-height: 50px;
+
+			input {
+				width: inherit;
+				min-height: inherit;
+				background-color: #fff;
+			}
+		}
+
+		.button {
+			padding-top: 15px;
+			display: flex;
+			justify-content: center;
+			cursor: pointer;
+
+			button {
+				width: 100%;
+				max-width: 355px;
+				min-height: 50px;
+				background-color: green;
+				color: chartreuse;
+
+				&:hover,
+				&:active,
+				{
+				color: #fff;
+				background-color: red;
+			}
+
+			&:active {
+				font-size: 18px;
+			}
+		}
+	}
+}
 }
