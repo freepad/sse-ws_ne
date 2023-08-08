@@ -1,5 +1,158 @@
+
 * {
 	margin: 0;
 	padding: 0;
 
+}
+
+html {
+	height: 100%;
+
+}
+
+body {
+	min-height: 100%;
+	padding-top: 38px;
+}
+
+section,
+div,
+.accaunt__online_one {
+	display: flex;
+	box-sizing: border-box;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-content: flex-start;
+	justify-content: flex-start;
+}
+
+#chat {
+
+
+	min-width: 230px;
+	width: 100%;
+	max-width: 945px;
+
+	min-height: 593px;
+	flex-wrap: nowrap;
+	margin: 0 auto;
+	padding-bottom: 55px;
+}
+
+.accaunts,
+.chattalks,
+.chattalks>div:last-of-type,
+.preview {
+	border: 1px solid #464646;
+	border-radius: 20px;
+	margin: 0;
+}
+
+.accaunts {
+	height: 305px;
+	min-width: 228px;
+	width: 100%;
+	max-width: 245px;
+	margin-top: 18px;
+	padding: 26px 0 8px 16px;
+
+	flex-direction: column;
+	flex-wrap: nowrap;
+	align-content: flex-start;
+
+	border-right: 0px;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+
+}
+
+.accaunt__online_one {
+	flex-wrap: nowrap;
+	padding-top: 12px;
+
+
+	.preview {
+		width: 58px;
+		height: 58px;
+		border-radius: 25px;
+		// padding-left: 16px;
+	}
+
+}
+
+.sourcename {
+	flex-wrap: nowrap;
+	align-items: center;
+
+	padding-left: 20px;
+	;
+}
+
+.accaunt__online_one:first-of-type {
+	padding-top: 0;
+}
+
+.chattalks {
+	position: relative;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	align-content: space-between;
+	padding: 15px 20px 8px 20px;
+
+	width: 100%;
+	max-width: 697px;
+	min-height: inherit;
+
+
+	&>div {
+		flex-direction: column;
+		flex-wrap: nowrap;
+		padding-right: 21px;
+		overflow-y: hidden;
+
+
+		&:last-of-type {
+			position: absolute;
+			bottom: 18px;
+			right: auto;
+			width: 100%;
+
+			max-width: 665px;
+			height: 55px;
+		}
+	}
+
+}
+
+.post {
+	display: block;
+	padding-bottom: 30px;
+}
+
+.your-post {
+	text-align: right;
+
+	.sourcename,
+	.date {
+		color: #fe654e;
+	}
+}
+
+
+.post-accaunt.sourcename {
+	padding: 0;
+}
+
+.post-accaunt,
+.date {
+	display: inline-block;
+	width: auto;
+
+}
+
+.text {
+	display: block;
+	max-width: inherit;
+	padding-top: 20px;
+	font-size: 16px;
 }
