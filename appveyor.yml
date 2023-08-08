@@ -1,0 +1,50 @@
+version: 1.0.{build}-{branch}
+
+branches:
+# https://appveyor-staging.azurewebsites.net/docs/branches/
+  only:
+    - master
+
+image:
+  - Visual Studio 2019
+
+platform:
+  - x64
+
+init:
+  - git config -global core.autocrlf input
+
+stack:
+  - node 18.12.0
+
+cache:
+# https://appveyor-staging.azurewebsites.net/docs/build-cache/
+  - node_modules
+
+install:
+  yarn add package.js
+
+duild: off
+# https://appveyor-staging.azurewebsites.net/docs/build-configuration/
+
+deploy: off
+
+
+artifacts:
+# https://appveyor-staging.azurewebsites.net/docs/packaging-artifacts/
+  - path: `\dist/to/file.exe`
+
+after_build:
+  - yarn run build
+  - yarn run lint
+  - ps: Get-ChildItem .\*.nupkg | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
+
+deploy_script
+# https://www.appveyor.com/docs/how-to/git-push/
+# https://www.appveyor.com/docs/how-to/git-push/#adding-access-token-to-credential-store
+  - git config --global credential.helper store
+  - git config --global user.name Tryd0g0lik
+  - git config --global user.email work80@mail.ru
+  - ps: Write-Host "https://$GITHUB_TOKEN:x-oauth-basic@github.com" > "$HOME/.git-credentials" -NoNewline
+
+  - npm install push-dir --dir=dist --branch=master --force

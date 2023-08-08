@@ -1,0 +1,22 @@
+{
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"noImplicitAny": true,
+		"module": "commonJS",
+		"target": "ES2021",
+		"allowJs": true,
+		"sourceMap": true,
+		"outDir": "./dist",
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"strict": true,
+		"noImplicitAny": true,
+		"skipLibCheck": true
+	},
+	"exclude": [
+		"node_modules",
+		"directory"
+	],
+
+  "files": ["./src/index.js"]
+}
