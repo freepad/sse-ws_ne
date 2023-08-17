@@ -15,12 +15,12 @@ module.exports = merge(common, {
 	// Spin up a server for quick development
 	devServer: {
 		static: {
-			directory: path.join(__dirname, './dist'),
+			directory: path.join(__dirname, 'dist'),
 		},
 		compess: true,
-		historyApiFileBack: true,
-		// open: true,
-		port: 8080,
+		historyApiFallback: true,
+		open: true,
+		port: 'auto'
 	},
 
 	plugins: [

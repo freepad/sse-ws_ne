@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
 		"noImplicitAny": true,
-		"module": "commonJS",
+		"module": "ES6",
 		"target": "ES2021",
 		"allowJs": true,
 		"sourceMap": true,
@@ -12,6 +12,7 @@
 		"strict": true,
 		"noImplicitAny": true,
 		"skipLibCheck": true
+
 	},
 	"exclude": [
 		"node_modules",
