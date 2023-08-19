@@ -20,6 +20,44 @@ function forms() {
 /* -----FORM a checkins new Login if not the existence----- Start*/
 const existenceAccaunts = document.getElementsByClassName('sourcename') as HTMLCollectionOf<HTMLElement>;
 let inputValue: string = '';
+interface Options {
+	method: string,
+	headers: {},
+	body: {}
+}
+/* -----Sents and accepts to/of the server-----  Start*/
+const server = {
+	sendOneData(datas: {} = {}) {
+		const req = async (body: any) => {
+			let res = await fetch('http://localhost:7070');
+			if (res.ok) {
+				return JSON.stringify(body);
+			}
+			return {}
+		}
+
+		return req(datas)
+			.then(async (datas) => {
+				const options = ({
+					method: 'POST',
+					headers: {
+						"Content-Type": "application/json",
+						"Access-Control-Allow-Origin": 'http://localhost:7070'
+					},
+					body: datas
+				} as Options);
+
+				const res = await fetch('http://localhost:7070', (options as any));
+				console.log('Async POST: ', res);
+				return res
+			})
+			.then(datas => {
+				console.log('DATAS: ', datas);
+			})
+	}
+}
+/* -----Sents and accepts to/of the server-----  Finish*/
+
 
 /***
  * TODO: Checking input's symbols/line from the input form. This's line in which entries a new login from the new user/
@@ -35,6 +73,7 @@ const checkLiveForAutorization = (elem: HTMLInputElement) => {
 			&& (inputArray as any).input.length === (inputArray as any)[0].length) {
 			if (elem.hasAttribute('style')) elem.removeAttribute('style');
 			inputValue = (inputArray as any[])[0];
+
 			return
 
 		} else if (inputArray !== null
@@ -75,6 +114,7 @@ const handlers = {
 				(body[0].querySelector('.author') as HTMLElement).setAttribute('style', 'display:none;');
 				/* public form input type=text for will send the message into the chat. */
 				(body[0].querySelector('.chattalks > div:last-of-type') as HTMLElement).removeAttribute('style');
+				server.sendOneData({ user: inputValue })
 				console.log(inputValue);
 			}
 			return
@@ -86,6 +126,7 @@ const handlers = {
 
 		if (inputElem.id === "login") {
 			checkLiveForAutorization(inputElem);
+
 			document.body.addEventListener('keypress', handlers.EventsAutorization, true);
 			document.body.addEventListener('click', handlers.EventsAutorization, true);
 		}
