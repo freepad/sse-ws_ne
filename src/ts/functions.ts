@@ -21,29 +21,12 @@ function forms() {
 const existenceAccaunts = document.getElementsByClassName('sourcename') as HTMLCollectionOf<HTMLElement>;
 let inputValue: string = '';
 
-
-/**
- *TODO: checking the existencr of a new login from the new user.
- * @param arr: It's array of all accounts which we can see on page
- * returns: 'false' if new login can't be unique and a 'true' if's a unique
- */
-const checkToExistence = (arr: HTMLCollectionOf<HTMLElement>): boolean => {
-	document.body.removeEventListener('keypress', handlers.EventsAutorization, true); // При переходе НА фрму через фокус, правило не срабатывает
-	document.removeEventListener('mousedown', handlers.insertNewLogin);
-	const result = Array.from(arr).filter((item: HTMLElement) => inputValue === item.innerText);
-
-	return result.length > 0 ? false : true
-}
-/* -----FORM a checkins new Login if not the existence----- finish/
-
-
-/* -----FORM Input from new Login----- Start*/
 /***
  * TODO: Checking input's symbols/line from the input form. This's line in which entries a new login from the new user/
  * @param elem: This's an input field (from popUp box for a uatorization).
  * returns won't be
  */
-const checkingNewAuthor = (elem: HTMLInputElement) => {
+const checkLiveForAutorization = (elem: HTMLInputElement) => {
 	const regexp = new RegExp(/^[a-zA-Z]\w{3,}/, 'i');
 
 	elem.oninput = () => {
@@ -64,13 +47,36 @@ const checkingNewAuthor = (elem: HTMLInputElement) => {
 };
 
 
-const handlers = {
+/**
+ *TODO: checking the existencr of a new login from the new user.
+ * @param arr: It's array of all accounts which we can see on page
+ * returns: 'false' if new login can't be unique and a 'true' if's a unique
+ */
+const checkLoginToExistence = (arr: HTMLCollectionOf<HTMLElement>): boolean => {
+	document.removeEventListener('mousedown', handlers.insertNewLogin);
+	document.body.removeEventListener('keypress', handlers.EventsAutorization, true); // При переходе НА фрму через фокус, правило не срабатывает
+	const result = Array.from(arr).filter((item: HTMLElement) => inputValue === item.innerText);
 
+	return result.length > 0 ? false : true
+}
+
+
+const handlers = {
 	EventsAutorization(e: MouseEvent | KeyboardEvent) {
 		if (((e as MouseEvent).target as HTMLButtonElement).type === "submit"
 			|| ((e as KeyboardEvent).key == 'Enter')) {
 			e.preventDefault();
-			if (inputValue.length > 3) checkToExistence(existenceAccaunts);
+
+			if (inputValue.length > 3
+				&& checkLoginToExistence(existenceAccaunts) === true) {
+
+				const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
+				/* remove a form uatorization */
+				(body[0].querySelector('.author') as HTMLElement).setAttribute('style', 'display:none;');
+				/* public form input type=text for will send the message into the chat. */
+				(body[0].querySelector('.chattalks > div:last-of-type') as HTMLElement).removeAttribute('style');
+				console.log(inputValue);
+			}
 			return
 		}
 	},
@@ -79,7 +85,7 @@ const handlers = {
 		const inputElem = (e.target as HTMLInputElement);
 
 		if (inputElem.id === "login") {
-			checkingNewAuthor(inputElem);
+			checkLiveForAutorization(inputElem);
 			document.body.addEventListener('keypress', handlers.EventsAutorization, true);
 			document.body.addEventListener('click', handlers.EventsAutorization, true);
 		}
