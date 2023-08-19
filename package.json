@@ -8,7 +8,7 @@
     "@babel/core": "^7.22.10",
     "@babel/plugin-proposal-class-properties": "^7.18.6",
     "@babel/preset-env": "^7.22.10",
-		"@types/koa__router": "^12.0.0",
+    "@types/koa__router": "^12.0.0",
     "@typescript-eslint/eslint-plugin": "^5.52.0",
     "@webpack-cli/generators": "^3.0.7",
     "autoprefixer": "^10.4.14",
@@ -42,16 +42,16 @@
     "lint": "eslint .",
     "build": "webpack --mode=prodaction --config ./webpack.config.js",
     "build:dev": "webpack --config ./webpack.dev.js",
-		"start": "node src/ts/serve.ts",
-		"serve": "npx webpack serve"
+    "start": "node src/ts/serve.ts",
+    "serve": "npx webpack serve"
   },
-	"description": "sse-ws_ne",
-	"dependencies": {
-		"forever": "^4.0.3",
-		"http": "^0.0.1-security",
-		"koa": "^2.14.2",
-		"koa-body": "^6.0.1",
-		"koa-router": "^12.0.0",
-		"ws": "^8.13.0"
-	}
+  "description": "sse-ws_ne",
+  "dependencies": {
+    "forever": "^4.0.3",
+    "http": "^0.0.1-security",
+    "koa": "^2.14.2",
+    "koa-body": "^6.0.1",
+    "koa-router": "^12.0.0",
+    "ws": "^8.13.0"
+  }
 }
