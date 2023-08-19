@@ -1,6 +1,6 @@
 /* авторизация */
 function forms() {
-	return `<section class="Login">
+	return `<section class="author">
 		<div class="title">
 			<h2>Выберите псевдоним</h2>
 		</div>
@@ -28,22 +28,22 @@ let inputValue: string = '';
  * returns: 'false' if new login can't be unique and a 'true' if's a unique
  */
 const checkToExistence = (arr: HTMLCollectionOf<HTMLElement>): boolean => {
-	document.body.removeEventListener('keypress', handlers.onKeyEnter, true); // При переходе НА фрму через фокус, правило не срабатывает
+	document.body.removeEventListener('keypress', handlers.EventsAutorization, true); // При переходе НА фрму через фокус, правило не срабатывает
 	document.removeEventListener('mousedown', handlers.insertNewLogin);
+	const result = Array.from(arr).filter((item: HTMLElement) => inputValue === item.innerText);
 
-
-
-	return false
+	return result.length > 0 ? false : true
 }
-
 /* -----FORM a checkins new Login if not the existence----- finish/
 
 
 /* -----FORM Input from new Login----- Start*/
 /***
  * TODO: Checking input's symbols/line from the input form. This's line in which entries a new login from the new user/
+ * @param elem: This's an input field (from popUp box for a uatorization).
+ * returns won't be
  */
-const checkingTextToAutorization = (elem: HTMLInputElement) => {
+const checkingNewAuthor = (elem: HTMLInputElement) => {
 	const regexp = new RegExp(/^[a-zA-Z]\w{3,}/, 'i');
 
 	elem.oninput = () => {
@@ -57,37 +57,20 @@ const checkingTextToAutorization = (elem: HTMLInputElement) => {
 		} else if (inputArray !== null
 			|| (inputArray === null && elem.value !== undefined)) {
 			elem.setAttribute('style', "color:#ff0000;");
+			inputValue = '';
 			return
 		}
 	};
 };
 
 
-// const removeEListener = () => {
-// 	document.body.removeEventListener('keypress', handlers.onKeyEnter, true); // При переходе НА фрму через фокус, правило не срабатывает
-// 	document.removeEventListener('mousedown', handlers.insertNewLogin);
-// }
-
-
-
 const handlers = {
 
-	onMouseClick(e: MouseEvent) {
-		if ((e.target as HTMLButtonElement).type === "submit") {
+	EventsAutorization(e: MouseEvent | KeyboardEvent) {
+		if (((e as MouseEvent).target as HTMLButtonElement).type === "submit"
+			|| ((e as KeyboardEvent).key == 'Enter')) {
 			e.preventDefault();
-			// removeEListener();
-
-			if (inputValue.length > 3) checkToExistence(existenceAccaunts)
-			return
-		}
-	},
-
-	onKeyEnter(e: KeyboardEvent) {
-		if (e.key === 'Enter') {
-			e.preventDefault();
-			// removeEListener();
-
-			if (inputValue.length > 3) checkToExistence(existenceAccaunts)
+			if (inputValue.length > 3) checkToExistence(existenceAccaunts);
 			return
 		}
 	},
@@ -96,9 +79,9 @@ const handlers = {
 		const inputElem = (e.target as HTMLInputElement);
 
 		if (inputElem.id === "login") {
-			checkingTextToAutorization(inputElem);
-			document.body.addEventListener('keypress', handlers.onKeyEnter, true);
-			document.body.addEventListener('click', handlers.onMouseClick, true);
+			checkingNewAuthor(inputElem);
+			document.body.addEventListener('keypress', handlers.EventsAutorization, true);
+			document.body.addEventListener('click', handlers.EventsAutorization, true);
 		}
 	}
 }
