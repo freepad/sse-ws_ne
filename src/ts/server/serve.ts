@@ -1,8 +1,9 @@
 const http = require('http');
 let bufer = [];
-
+const Koa = require('koa');
 const server = http.createServer();
 
+const app = new Koa();
 // Listen to the request event
 server.on('request', (req, res) => {
 	// req.on('connect', (head) => console.log('HeadOfConnestReq: ', head));

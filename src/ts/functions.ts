@@ -54,7 +54,7 @@ const server = {
 			.then(datas => {
 				console.log('DATAS: ', datas);
 			})
-	}
+	},
 }
 /* -----Sents and accepts to/of the server-----  Finish*/
 
@@ -126,13 +126,10 @@ const handlers = {
 
 		if (inputElem.id === "login") {
 			checkLiveForAutorization(inputElem);
-
 			document.body.addEventListener('keypress', handlers.EventsAutorization, true);
 			document.body.addEventListener('click', handlers.EventsAutorization, true);
 		}
 	}
 }
 /* -----FORM Input from new Login----- Finish*/
-
-
 export { forms, handlers }
