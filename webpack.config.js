@@ -13,7 +13,7 @@ const webpack = require('webpack');
 
 module.exports = {
 		mode: 'none',
-	entry: './src/templates/index.js',
+	entry: './src/index.js',
 		target: 'web',
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -25,7 +25,7 @@ module.exports = {
 	// },
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: './src/templates/index.js',
+			template: './src/app/index.html',
 			minify: {
 				// exclude the minification
 				collapseWhitespace: false
@@ -38,7 +38,7 @@ module.exports = {
 
 		new webpack.SourceMapDevToolPlugin({
 			filename: '[file].map.[query]',
-			exclude: path.join(__dirname, './src'),
+			exclude: path.join(__dirname, 'src/app'),
 		}),
 
 
@@ -52,7 +52,7 @@ module.exports = {
 
 				loader: 'ts-loader',
 				include: [
-					path.resolve(__dirname, 'src/ts')
+					path.resolve(__dirname, 'src/app/ts')
 				],
 			},
 			{

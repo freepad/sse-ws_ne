@@ -1,7 +1,7 @@
 {
   "name": "sse-ws_ne",
   "version": "1.0.0",
-  "main": "./src/templates/index.js",
+	"main": "./src/app/index.js",
   "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.22.10",
@@ -43,8 +43,8 @@
     "lint": "eslint .",
     "build": "webpack --mode=prodaction --config ./webpack.config.js",
     "build:dev": "webpack --config ./webpack.dev.js",
-    "start": "nodemon ./src/ts/serve.ts",
-    "starts": "node ./src/ts/serve.ts",
+		"start": "nodemon --watch ./ --ext js,css,scss,html --ignore dist  ./src/app/serve.ts ",
+		"starts": "node ./serve.ts",
     "serve": "npx webpack serve"
   },
   "description": "sse-ws_ne",

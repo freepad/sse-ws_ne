@@ -4,18 +4,21 @@ const Koa = require('koa');
 const json = require('koa-json');
 const Router = require('koa-router');
 const render = require('koa-ejs');
+
 const app = new Koa();
 const router = new Router();
 const server = http.createServer(app.callback())
 
+
+
 app.use(json());
 
 render(app, {
-	root: path.join(__dirname, "templates"),
+	root: path.join(__dirname, "/"),
 	layout: 'index',
 	viewExt: 'html',
 	cache: false,
-	debag: true
+	debag: false
 });
 
 // app.use(async ctx => {
@@ -30,5 +33,6 @@ async function index(ctx: any) {
 app
 	.use(router.routes())
 	.use(router.allowedMethods());
+
 server.listen(7070, () => console.log('Start listens by a 7070 port'));
 
