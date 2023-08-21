@@ -13,7 +13,7 @@ const webpack = require('webpack');
 
 module.exports = {
 		mode: 'none',
-    entry: './src/index.js',
+	entry: './src/templates/index.js',
 		target: 'web',
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -25,7 +25,7 @@ module.exports = {
 	// },
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: './src/index.html',
+			template: './src/templates/index.js',
 			minify: {
 				// exclude the minification
 				collapseWhitespace: false
