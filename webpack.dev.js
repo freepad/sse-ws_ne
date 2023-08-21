@@ -17,10 +17,10 @@ module.exports = merge(common, {
 		static: {
 			directory: path.join(__dirname, 'dist'),
 		},
-		// compess: true,
-		// historyApiFallback: true,
-		// open: true,
-		// port: 'auto'
+		compess: true,
+		historyApiFallback: true,
+		open: true,
+		port: 'auto'
 	},
 
 	plugins: [

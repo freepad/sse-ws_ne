@@ -27,7 +27,7 @@ render(app, {
 // router.get('/');
 router.get('/', index);
 
-async function index(ctx: any) {
+async function index(ctx) {
 	await ctx.render('index', {});
 }
 app

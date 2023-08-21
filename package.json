@@ -23,8 +23,7 @@
     "eslint-webpack-plugin": "^4.0.1",
     "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.3",
-    "mini-css-extract-plugin": "^2.7.6",
-    "nodemon": "^3.0.1",
+		"mini-css-extract-plugin": "^2.7.6",
     "path": "^0.12.7",
     "postcss": "^8.4.27",
     "postcss-loader": "^7.3.3",
@@ -44,7 +43,7 @@
     "build": "webpack --mode=prodaction --config ./webpack.config.js",
     "build:dev": "webpack --config ./webpack.dev.js",
 		"start": "nodemon --watch ./ --ext js,css,scss,html --ignore dist  ./src/app/serve.ts ",
-		"starts": "node ./serve.ts",
+		"starts": "node ./src/app/serve.ts",
     "serve": "npx webpack serve"
   },
   "description": "sse-ws_ne",
