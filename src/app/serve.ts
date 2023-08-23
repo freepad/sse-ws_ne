@@ -3,36 +3,67 @@ const http = require('http');
 const Koa = require('koa');
 const json = require('koa-json');
 const Router = require('koa-router');
-const render = require('koa-ejs');
+
+const WS = require('ws');
+const { koaBody } = require('koa-body');
 
 const app = new Koa();
 const router = new Router();
-const server = http.createServer(app.callback())
+app
+	.use(json());
 
 
+router.get('/');
+router.post('/', koaBody({ urlencoded: true, }), (ctx: any) => {
+	console.log('ROUTER request POST');
+	const body = JSON.parse(ctx.request.body);
+	console.log(body);
+	ctx.response.body = { status: "OKs" }
+	// console.log(ctx);
 
-app.use(json());
+	ctx.response.set('Access-Control-Allow-Origin', '*');
+	ctx.response.set('Access-Control-Allow-Headers', 'POST');
 
-render(app, {
-	root: path.join(__dirname, "/"),
-	layout: 'index',
-	viewExt: 'html',
-	cache: false,
-	debag: false
 });
 
-// app.use(async ctx => {
-// 	ctx.body = { msg: 'Hello Word' };
-// });
-// router.get('/');
-router.get('/', index);
 
-async function index(ctx) {
-	await ctx.render('index', {});
-}
+
 app
-	.use(router.routes())
-	.use(router.allowedMethods());
+	.use(router.routes()).use(router.allowedMethods());
 
-server.listen(7070, () => console.log('Start listens by a 7070 port'));
+
+const server = http.createServer(app.callback())
+const wsServer = new WS.Server({ server });
+
+wsServer.on('connection', (ws: any) => {
+
+	ws.send('Hello Ws connection')
+});
+
+
+
+wsServer.on('opent', (ws: any) => {
+
+	ws.send('Hello Ws OPEN')
+});
+
+wsServer.on('close', (ws: any) => {
+	ws.send('Hello Ws CLOSE');
+});
+
+wsServer.on('error', (ws: any) => {
+	ws.send('Hello Ws ERROR');
+});
+
+
+const port = 7070
+
+server.listen(port, (err: any) => {
+	if (err) {
+		console.log('Port 7070, we gets Err: ', err);
+		return
+
+	}
+	console.log('Start listens by a 7070 port')
+});
 
