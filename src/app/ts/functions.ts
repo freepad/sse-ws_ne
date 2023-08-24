@@ -5,21 +5,49 @@ let inputValue: string = '';
 
 /* -----Sents and accepts to/of the server-----  Start*/
 function sendOneData(elem: string) {
+
 	return (async () => {
-		const res = await fetch('http://localhost:7070/', {
+		let response = await fetch('http://localhost:7070/', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ login: inputValue }),
+			body: JSON.stringify({ login: elem }),
 			mode: 'no-cors'
-		});
+		})
 
-		const result = await res;
-		const jsonRes = await result;
-		console.log('Async POST: ', jsonRes, res);
-		return jsonRes
-	})();
+		if (response) {
+			let commits = await response;
+			console.log('Async status  POST: ', commits.status);
+			console.log('Async .ok POST: ', commits.ok);
+			console.log('Async POST: ', commits);
+			return commits
+
+
+
+		}
+	})()
+
+	// fetch('http://localhost:7070/', {
+	// 	method: 'POST',
+	// 	headers: {
+	// 		'Content-Type': 'application/json'
+	// 	},
+	// 	body: JSON.stringify({ login: elem }),
+	// 	mode: 'no-cors'
+	// })
+	// 	.then((response) => {
+
+	// 		if (response) {
+	// 			console.log('response POST: ', commits);
+	// 			return response.body;
+	// 		}
+	// 		return 'NON'
+	// 	})
+	// 	.then((commits) => {
+	// 		console.log('Async POST: ', commits);
+	// 	})
+
 };
 /* -----Sents and accepts to/of the server-----  Finish*/
 
@@ -72,7 +100,7 @@ const handlers = {
 				(body[0].querySelector('.author') as HTMLElement).setAttribute('style', 'display:none;');
 				/* public form input type=text for will send the message into the chat. */
 				(body[0].querySelector('.chattalks > div:last-of-type') as HTMLElement).removeAttribute('style');
-				console.log("inputValue:", inputValue)
+				// console.log("inputValue:", inputValue)
 				sendOneData(inputValue);
 			}
 			return

@@ -3,12 +3,17 @@ const http = require('http');
 const Koa = require('koa');
 const json = require('koa-json');
 const Router = require('koa-router');
+const Logger = require('koa-logger');
 
 const WS = require('ws');
 const { koaBody } = require('koa-body');
 
 const app = new Koa();
+app.use(Logger());
 const router = new Router();
+
+let body: any = { login: '' };
+let bufer: any[] = [];
 app
 	.use(json());
 
@@ -16,14 +21,22 @@ app
 router.get('/');
 router.post('/', koaBody({ urlencoded: true, }), (ctx: any) => {
 	console.log('ROUTER request POST');
-	const body = JSON.parse(ctx.request.body);
+	body = JSON.parse(ctx.request.body);
 	console.log(body);
-	ctx.response.body = { status: "OKs" }
+	// ctx.response.body = { status: "OKs" }
 	// console.log(ctx);
 
+
+	let arrFilter = bufer.filter((item) => { if (item['login'] === body['login']) return 1 });
+	arrFilter.length === 0 ? bufer.push(body) : null;
+	ctx.response.body = { accaunts: bufer }
+	ctx.response.status = 200
 	ctx.response.set('Access-Control-Allow-Origin', '*');
 	ctx.response.set('Access-Control-Allow-Headers', 'POST');
-
+	console.log('ROUTER response POST');
+	body = ctx.response.body;
+	console.log(body);
+	arrFilter = [];
 });
 
 
