@@ -4,43 +4,67 @@ let inputValue: string = '';
 
 
 /* -----Sents and accepts to/of the server-----  Start*/
-function sendOneData(elem: string) {
+async function sendOneData(elem: string) {
 
-	return (async () => {
-		let response = await fetch('http://localhost:7070/', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ login: elem }),
-			mode: 'no-cors'
-		})
+	// return (async () => {
+	// 	let response = await fetch('http://localhost:7070/', {
+	// 		method: 'POST',
+	// 		headers: {
+	// 			'Content-Type': 'application/json'
+	// 		},
+	// 		body: JSON.stringify({ login: elem }),
+	// 		mode: 'no-cors'
+	// 	})
 
-		if (response) {
-			let commits = await response;
-			console.log('Async status  POST: ', commits.status);
-			console.log('Async .ok POST: ', commits.ok);
-			console.log('Async POST: ', commits);
-			return commits
+	// 	if (response) {
+	// 		const result = await response;
+	// 		if (!result.status) {
+	// 			console.error('Ошибка!');
+	// 			console.log('result.status:', result.status)
+	// 			console.log('result.ok:', result.ok)
+	// 			console.log('result.body:', result.body)
 
-
-
-		}
-	})()
-
+	// 			return;
+	// 		}
+	// 		console.log('Async commits  POST: ', result.json());
+	// 		console.log('Async .ok POST: ', result.ok);
+	// 		console.log('Async POST: ', result);
+	// 		const json = await result.json();
+	// 		const status = json.status;
+	// 		return json
+	// 	}
+	// })()
+	const response = await fetch('http://localhost:7070/', {
+		method: "POST", // *GET, POST, PUT, DELETE, etc.
+		mode: "cors", // no-cors, *cors, same-origin
+		cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+		// credentials: "same-origin", // include, *same-origin, omit
+		headers: {
+			"Content-Type": "application/json",
+			// 'Content-Type': 'application/x-www-form-urlencoded',
+		},
+		// redirect: "follow", // manual, *follow, error
+		// referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+		body: JSON.stringify({ login: elem }), // body data type must match "Content-Type" header
+	});
+	let resp = await response.json();
+	let result = await resp;
+	console.log('RESULT: ', result);
+	// return result; // parses JSON response into native JavaScript objects
+// }
 	// fetch('http://localhost:7070/', {
 	// 	method: 'POST',
 	// 	headers: {
 	// 		'Content-Type': 'application/json'
 	// 	},
-	// 	body: JSON.stringify({ login: elem }),
+	// 	body: `${{ login: elem }}`,
 	// 	mode: 'no-cors'
 	// })
 	// 	.then((response) => {
 
 	// 		if (response) {
-	// 			console.log('response POST: ', commits);
-	// 			return response.body;
+	// 			console.log('response POST: ', response);
+	// 			return response.json();
 	// 		}
 	// 		return 'NON'
 	// 	})

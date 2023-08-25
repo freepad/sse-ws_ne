@@ -49,6 +49,7 @@
   },
   "description": "sse-ws_ne",
   "dependencies": {
+    "@koa/cors": "^4.0.0",
     "forever": "^4.0.3",
     "http": "^0.0.1-security",
     "koa": "^2.14.2",

@@ -4,6 +4,7 @@ const Koa = require('koa');
 const json = require('koa-json');
 const Router = require('koa-router');
 const Logger = require('koa-logger');
+const cors = require('@koa/cors')
 
 const WS = require('ws');
 const { koaBody } = require('koa-body');
@@ -15,34 +16,41 @@ const router = new Router();
 let body: any = { login: '' };
 let bufer: any[] = [];
 app
+	.use(cors({
+		'Access-Control-Allow-Origin': '*',
+		'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+		'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE, OPTIONS',
+	}))
 	.use(json());
 
 
 router.get('/');
 router.post('/', koaBody({ urlencoded: true, }), (ctx: any) => {
 	console.log('ROUTER request POST');
-	body = JSON.parse(ctx.request.body);
+	body = ctx.request.body;
 	console.log(body);
-	// ctx.response.body = { status: "OKs" }
 	// console.log(ctx);
 
-
+	console.log('bufer: ', bufer);
 	let arrFilter = bufer.filter((item) => { if (item['login'] === body['login']) return 1 });
 	arrFilter.length === 0 ? bufer.push(body) : null;
-	ctx.response.body = { accaunts: bufer }
-	ctx.response.status = 200
-	ctx.response.set('Access-Control-Allow-Origin', '*');
-	ctx.response.set('Access-Control-Allow-Headers', 'POST');
+	ctx.response.body = { accaunts: bufer };
+	ctx.response.status = 200;
+	// ctx.set();
+
 	console.log('ROUTER response POST');
-	body = ctx.response.body;
-	console.log(body);
+
+	console.log(ctx.response)
+	console.log(ctx.response);
 	arrFilter = [];
 });
 
 
 
+
 app
-	.use(router.routes()).use(router.allowedMethods());
+	.use(router.routes())
+	.use(router.allowedMethods());
 
 
 const server = http.createServer(app.callback())
