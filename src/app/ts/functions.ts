@@ -5,73 +5,18 @@ let inputValue: string = '';
 
 /* -----Sents and accepts to/of the server-----  Start*/
 async function sendOneData(elem: string) {
-
-	// return (async () => {
-	// 	let response = await fetch('http://localhost:7070/', {
-	// 		method: 'POST',
-	// 		headers: {
-	// 			'Content-Type': 'application/json'
-	// 		},
-	// 		body: JSON.stringify({ login: elem }),
-	// 		mode: 'no-cors'
-	// 	})
-
-	// 	if (response) {
-	// 		const result = await response;
-	// 		if (!result.status) {
-	// 			console.error('Ошибка!');
-	// 			console.log('result.status:', result.status)
-	// 			console.log('result.ok:', result.ok)
-	// 			console.log('result.body:', result.body)
-
-	// 			return;
-	// 		}
-	// 		console.log('Async commits  POST: ', result.json());
-	// 		console.log('Async .ok POST: ', result.ok);
-	// 		console.log('Async POST: ', result);
-	// 		const json = await result.json();
-	// 		const status = json.status;
-	// 		return json
-	// 	}
-	// })()
 	const response = await fetch('http://localhost:7070/', {
 		method: "POST", // *GET, POST, PUT, DELETE, etc.
 		mode: "cors", // no-cors, *cors, same-origin
 		cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-		// credentials: "same-origin", // include, *same-origin, omit
 		headers: {
 			"Content-Type": "application/json",
-			// 'Content-Type': 'application/x-www-form-urlencoded',
 		},
-		// redirect: "follow", // manual, *follow, error
-		// referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
 		body: JSON.stringify({ login: elem }), // body data type must match "Content-Type" header
 	});
 	let resp = await response.json();
 	let result = await resp;
 	console.log('RESULT: ', result);
-	// return result; // parses JSON response into native JavaScript objects
-// }
-	// fetch('http://localhost:7070/', {
-	// 	method: 'POST',
-	// 	headers: {
-	// 		'Content-Type': 'application/json'
-	// 	},
-	// 	body: `${{ login: elem }}`,
-	// 	mode: 'no-cors'
-	// })
-	// 	.then((response) => {
-
-	// 		if (response) {
-	// 			console.log('response POST: ', response);
-	// 			return response.json();
-	// 		}
-	// 		return 'NON'
-	// 	})
-	// 	.then((commits) => {
-	// 		console.log('Async POST: ', commits);
-	// 	})
-
 };
 /* -----Sents and accepts to/of the server-----  Finish*/
 
@@ -124,7 +69,6 @@ const handlers = {
 				(body[0].querySelector('.author') as HTMLElement).setAttribute('style', 'display:none;');
 				/* public form input type=text for will send the message into the chat. */
 				(body[0].querySelector('.chattalks > div:last-of-type') as HTMLElement).removeAttribute('style');
-				// console.log("inputValue:", inputValue)
 				sendOneData(inputValue);
 			}
 			return

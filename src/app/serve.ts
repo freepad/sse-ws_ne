@@ -23,43 +23,25 @@ app
 	}))
 	.use(json());
 
-
 router.get('/');
 router.post('/', koaBody({ urlencoded: true, }), (ctx: any) => {
-	console.log('ROUTER request POST');
 	body = ctx.request.body;
-	console.log(body);
-	// console.log(ctx);
 
-	console.log('bufer: ', bufer);
 	let arrFilter = bufer.filter((item) => { if (item['login'] === body['login']) return 1 });
 	arrFilter.length === 0 ? bufer.push(body) : null;
 	ctx.response.body = { accaunts: bufer };
 	ctx.response.status = 200;
-	// ctx.set();
-
-	console.log('ROUTER response POST');
-
-	console.log(ctx.response)
-	console.log(ctx.response);
 	arrFilter = [];
 });
-
-
-
 
 app
 	.use(router.routes())
 	.use(router.allowedMethods());
 
-
 const server = http.createServer(app.callback())
 const wsServer = new WS.Server({ server });
 
-wsServer.on('connection', (ws: any) => {
-
-	ws.send('Hello Ws connection')
-});
+wsServer.on('connection', (ws: any) => ws.send('Hello Ws connection'));
 
 
 
