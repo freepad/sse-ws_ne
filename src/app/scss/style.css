@@ -1,0 +1,208 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  padding-top: 38px;
+}
+
+section,
+div,
+.accaunt__online_one,
+.author {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: flex-start;
+}
+
+#chat {
+  min-width: 230px;
+  width: 100%;
+  max-width: 945px;
+  min-height: 593px;
+  flex-wrap: nowrap;
+  margin: 0 auto;
+  padding-bottom: 55px;
+}
+
+.accaunts,
+.chattalks,
+.chattalks > div:last-of-type,
+.preview,
+.author,
+.button button {
+  border: 1px solid #464646;
+  border-radius: 20px;
+  margin: 0;
+}
+
+.accaunts {
+  height: 305px;
+  min-width: 228px;
+  width: 100%;
+  max-width: 245px;
+  margin-top: 18px;
+  padding: 26px 0 8px 16px;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: flex-start;
+  border-right: 0px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.accaunt__online_one {
+  flex-wrap: nowrap;
+  padding-top: 12px;
+}
+.accaunt__online_one .preview {
+  width: 58px;
+  height: 58px;
+  border-radius: 25px;
+}
+
+.sourcename {
+  flex-wrap: nowrap;
+  align-items: center;
+  padding-left: 20px;
+}
+
+.accaunt__online_one:first-of-type {
+  padding-top: 0;
+}
+
+.chattalks {
+  position: relative;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: space-between;
+  padding: 15px 20px 8px 20px;
+  width: 100%;
+  max-width: 697px;
+  min-height: inherit;
+}
+.chattalks > div {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  padding-right: 21px;
+  overflow-y: hidden;
+}
+.chattalks > div:last-of-type {
+  position: absolute;
+  bottom: 18px;
+  right: auto;
+  width: 100%;
+  max-width: 665px;
+  height: 55px;
+}
+
+.post {
+  display: block;
+  padding-bottom: 30px;
+}
+
+.your-post {
+  text-align: right;
+}
+.your-post .sourcename,
+.your-post .date {
+  color: #fe654e;
+}
+
+.post-accaunt.sourcename {
+  padding: 0;
+}
+
+.post-accaunt,
+.date {
+  display: inline-block;
+  width: auto;
+}
+
+.text {
+  display: block;
+  max-width: inherit;
+  padding-top: 20px;
+  font-size: 16px;
+  white-space: pre;
+}
+
+.author {
+  position: absolute;
+  left: calc(50% - 275px);
+  width: 100%;
+  max-width: 555px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-color: rgba(250, 235, 215, 0.85);
+  justify-content: center;
+  margin: 0 auto;
+  padding-bottom: 20px;
+  z-index: 2;
+}
+.author .title {
+  width: inherit;
+  padding-top: 5px;
+}
+.author .title h2 {
+  display: initial;
+  margin: 0 auto;
+  font-size: 22px;
+}
+
+.form {
+  width: inherit;
+  padding-top: 32px;
+}
+.form form {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.input,
+.button {
+  width: 100%;
+}
+
+.input {
+  min-height: 50px;
+}
+.input input {
+  width: inherit;
+  min-height: inherit;
+  background-color: #fff;
+}
+
+.button {
+  padding-top: 15px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+.button button {
+  width: 100%;
+  max-width: 355px;
+  min-height: 50px;
+  background-color: green;
+  color: chartreuse;
+}
+.button button:hover, .button button:active {
+  color: #fff;
+  background-color: red;
+}
+.button button:active {
+  font-size: 18px;
+}/*# sourceMappingURL=style.css.map */

@@ -1,61 +1,23 @@
-/* авторизация */
-function forms() {
-	return `<section class="author">
-		<div class="title">
-			<h2>Выберите псевдоним</h2>
-		</div>
-		<div class="form">
-			<form action="" class="login">
-				<div class="input">
-					<input type="text" maxlength="25" value="" id="login">
-				</div>
-				<div class="button">
-					<button type="submit">Предложить</button>
-				</div>
-			</form>
-		</div>
-	</section>`
-}
-
 /* -----FORM a checkins new Login if not the existence----- Start*/
 const existenceAccaunts = document.getElementsByClassName('sourcename') as HTMLCollectionOf<HTMLElement>;
 let inputValue: string = '';
-interface Options {
-	method: string,
-	headers: {},
-	body: {}
-}
+
+
 /* -----Sents and accepts to/of the server-----  Start*/
-const server = {
-	sendOneData(datas: {} = {}) {
-		const req = async (body: any) => {
-			let res = await fetch('http://localhost:7070');
-			if (res.ok) {
-				return JSON.stringify(body);
-			}
-			return {}
-		}
-
-		return req(datas)
-			.then(async (datas) => {
-				const options = ({
-					method: 'POST',
-					headers: {
-						"Content-Type": "application/json",
-						"Access-Control-Allow-Origin": 'http://localhost:7070'
-					},
-					body: datas
-				} as Options);
-
-				const res = await fetch('http://localhost:7070', (options as any));
-				console.log('Async POST: ', res);
-				return res
-			})
-			.then(datas => {
-				console.log('DATAS: ', datas);
-			})
-	}
-}
+async function sendOneData(elem: string) {
+	const response = await fetch('http://localhost:7070/', {
+		method: "POST", // *GET, POST, PUT, DELETE, etc.
+		mode: "cors", // no-cors, *cors, same-origin
+		cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({ login: elem }), // body data type must match "Content-Type" header
+	});
+	let resp = await response.json();
+	let result = await resp;
+	console.log('RESULT: ', result);
+};
 /* -----Sents and accepts to/of the server-----  Finish*/
 
 
@@ -74,13 +36,10 @@ const checkLiveForAutorization = (elem: HTMLInputElement) => {
 			if (elem.hasAttribute('style')) elem.removeAttribute('style');
 			inputValue = (inputArray as any[])[0];
 
-			return
-
 		} else if (inputArray !== null
 			|| (inputArray === null && elem.value !== undefined)) {
 			elem.setAttribute('style', "color:#ff0000;");
 			inputValue = '';
-			return
 		}
 	};
 };
@@ -92,13 +51,9 @@ const checkLiveForAutorization = (elem: HTMLInputElement) => {
  * returns: 'false' if new login can't be unique and a 'true' if's a unique
  */
 const checkLoginToExistence = (arr: HTMLCollectionOf<HTMLElement>): boolean => {
-	document.removeEventListener('mousedown', handlers.insertNewLogin);
-	document.body.removeEventListener('keypress', handlers.EventsAutorization, true); // При переходе НА фрму через фокус, правило не срабатывает
 	const result = Array.from(arr).filter((item: HTMLElement) => inputValue === item.innerText);
-
 	return result.length > 0 ? false : true
 }
-
 
 const handlers = {
 	EventsAutorization(e: MouseEvent | KeyboardEvent) {
@@ -114,8 +69,7 @@ const handlers = {
 				(body[0].querySelector('.author') as HTMLElement).setAttribute('style', 'display:none;');
 				/* public form input type=text for will send the message into the chat. */
 				(body[0].querySelector('.chattalks > div:last-of-type') as HTMLElement).removeAttribute('style');
-				server.sendOneData({ user: inputValue })
-				console.log(inputValue);
+				sendOneData(inputValue);
 			}
 			return
 		}
@@ -126,13 +80,28 @@ const handlers = {
 
 		if (inputElem.id === "login") {
 			checkLiveForAutorization(inputElem);
-
 			document.body.addEventListener('keypress', handlers.EventsAutorization, true);
 			document.body.addEventListener('click', handlers.EventsAutorization, true);
 		}
+	},
+
+	forms() {
+		return `<section class="author">
+		<div class="title">
+			<h2>Выберите псевдоним</h2>
+		</div>
+		<div class="form">
+			<form action="" class="login" >
+				<div class="input">
+					<input type="text" maxlength="25" value="" id="login">
+				</div>
+				<div class="button">
+					<button type="submit">Предложить</button>
+				</div>
+			</form>
+		</div>
+	</section>`
 	}
 }
 /* -----FORM Input from new Login----- Finish*/
-
-
-export { forms, handlers }
+export { handlers }

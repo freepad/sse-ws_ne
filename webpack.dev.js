@@ -27,7 +27,7 @@ module.exports = merge(common, {
 		// Only update what has changed on hot reload
 		new webpack.HotModuleReplacementPlugin(),
 		new ESLintPlugin({
-			files: path.join(__dirname, './src/ts'),
+			files: path.join(__dirname, 'src/ts'),
 		})
 	]
 });

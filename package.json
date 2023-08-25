@@ -1,7 +1,7 @@
 {
   "name": "sse-ws_ne",
   "version": "1.0.0",
-  "main": "./src/index.js",
+  "main": "./src/app/index.js",
   "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.22.10",
@@ -24,6 +24,7 @@
     "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.3",
     "mini-css-extract-plugin": "^2.7.6",
+    "nodemon": "^3.0.1",
     "path": "^0.12.7",
     "postcss": "^8.4.27",
     "postcss-loader": "^7.3.3",
@@ -42,16 +43,21 @@
     "lint": "eslint .",
     "build": "webpack --mode=prodaction --config ./webpack.config.js",
     "build:dev": "webpack --config ./webpack.dev.js",
-    "start": "node src/ts/serve.ts",
+    "start": "nodemon --watch ./ --ext js,css,scss,html --ignore dist  ./src/app/serve.ts ",
+    "starts": "node ./src/app/serve.ts",
     "serve": "npx webpack serve"
   },
   "description": "sse-ws_ne",
   "dependencies": {
+    "@koa/cors": "^4.0.0",
     "forever": "^4.0.3",
     "http": "^0.0.1-security",
     "koa": "^2.14.2",
     "koa-body": "^6.0.1",
+    "koa-json": "^2.0.2",
+    "koa-logger": "^3.2.1",
     "koa-router": "^12.0.0",
+    "ts-node": "^10.9.1",
     "ws": "^8.13.0"
   }
 }
