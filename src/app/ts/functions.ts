@@ -1,7 +1,7 @@
 /* -----FORM a checkins new Login if not the existence----- Start*/
 const existenceAccaunts = document.getElementsByClassName('sourcename') as HTMLCollectionOf<HTMLElement>;
 let inputValue: string = '';
-
+let result = {}
 
 /* -----Sents and accepts to/of the server-----  Start*/
 async function sendOneData(elem: string) {
@@ -14,9 +14,9 @@ async function sendOneData(elem: string) {
 		},
 		body: JSON.stringify({ login: elem }), // body data type must match "Content-Type" header
 	});
-	let resp = await response.json();
-	let result = await resp;
+	result = await response.json();
 	console.log('RESULT: ', result);
+
 };
 /* -----Sents and accepts to/of the server-----  Finish*/
 

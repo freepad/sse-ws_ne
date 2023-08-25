@@ -3,6 +3,7 @@ process.traceDeprecation = true;
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const webpack = require('webpack');
 // const isProduction = process.env.NODE_ENV == 'production';
 
@@ -40,7 +41,7 @@ module.exports = {
 			filename: '[file].map.[query]',
 			exclude: path.join(__dirname, 'src/app'),
 		}),
-
+		// new OptimizeCssAssetsPlugin()
 
 		// Add your plugins here
 		// Learn more about plugins from https://webpack.js.org/configuration/plugins/
@@ -74,19 +75,9 @@ module.exports = {
 			{
 				test: /\.s?[ac]ss$/i,
 				include: [
-					path.resolve(__dirname, './src')
+					path.resolve(__dirname, './src/app/scss')
 				],
-				use: [
-					MiniCssExtractPlugin.loader,
-					{
-						loader: 'css-loader'
-					}, {
-						loader: "sass-loader",
-
-					}, {
-						loader: 'postcss-loader'
-					}
-				],
+				use: [MiniCssExtractPlugin.loader, 'css-loader', "sass-loader", 'postcss-loader'],
 
 			},
 			{

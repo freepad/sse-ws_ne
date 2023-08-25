@@ -31,7 +31,6 @@
     "prettier": "^3.0.1",
     "sass": "^1.64.2",
     "sass-loader": "^13.3.2",
-    "style-loader": "^3.3.3",
     "ts-loader": "^9.4.4",
     "typescript": "^5.1.6",
     "webpack": "^5.88.2",
@@ -43,12 +42,13 @@
     "lint": "eslint .",
     "build": "webpack --mode=prodaction --config ./webpack.config.js",
     "build:dev": "webpack --config ./webpack.dev.js",
+    "watch": "webpack --watch",
     "start": "nodemon --watch ./ --ext js,css,scss,html --ignore dist  ./src/app/serve.ts ",
-    "starts": "node ./src/app/serve.ts",
-    "serve": "npx webpack serve"
+    "serve": "webpack serve "
   },
   "description": "sse-ws_ne",
   "dependencies": {
+    "-": "^0.0.1",
     "@koa/cors": "^4.0.0",
     "forever": "^4.0.3",
     "http": "^0.0.1-security",

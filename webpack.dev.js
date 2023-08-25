@@ -16,7 +16,17 @@ module.exports = merge(common, {
 	devServer: {
 		static: {
 			directory: path.join(__dirname, 'dist'),
+			staticOptions: {
+				redirect: true,
+			},
 		},
+		watchFiles: [
+			'./src/app/styles',
+			'./src/app/ts',
+			'./src/app/routers',
+			'./src/app/serve.ts'
+		],
+
 		compess: true,
 		historyApiFallback: true,
 		open: true,
