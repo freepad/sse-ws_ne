@@ -1,10 +1,12 @@
 module.exports = {
-	    "env": {
-        "browser": true,
-        "commonjs": true,
-		"es6": true
+	"env": {
+		"browser": true,
+		"commonjs": true,
+		"es6": true,
+		"jest": true,
     },
-    "extends": "standard-with-typescript",
+	"extends": ["airbnb-base",
+		"standard-with-typescript"],
     "overrides": [
     ],
     "parserOptions": {
@@ -16,5 +18,5 @@ module.exports = {
 		"error",
 		"windows"
 	],
-
+	"parser": ["babel-eslint", '@typescript-eslint/parser']
 }

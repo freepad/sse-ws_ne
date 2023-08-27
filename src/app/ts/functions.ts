@@ -1,10 +1,12 @@
+const { Users } = require("./users.ts");
+
 /* -----FORM a checkins new Login if not the existence----- Start*/
 const existenceAccaunts = document.getElementsByClassName('sourcename') as HTMLCollectionOf<HTMLElement>;
 let inputValue: string = '';
 let result = {}
 
 /* -----Sents and accepts to/of the server-----  Start*/
-async function sendOneData(elem: string) {
+export async function sendLoginStr(elem: string) {
 	const response = await fetch('http://localhost:7070/', {
 		method: "POST", // *GET, POST, PUT, DELETE, etc.
 		mode: "cors", // no-cors, *cors, same-origin
@@ -16,8 +18,12 @@ async function sendOneData(elem: string) {
 	});
 	result = await response.json();
 	console.log('RESULT: ', result);
+	return result
 
 };
+// переделать Ориентироваться на status
+// Поситать про throw в пормисах
+
 /* -----Sents and accepts to/of the server-----  Finish*/
 
 
@@ -39,7 +45,7 @@ const checkLiveForAutorization = (elem: HTMLInputElement) => {
 		} else if (inputArray !== null
 			|| (inputArray === null && elem.value !== undefined)) {
 			elem.setAttribute('style', "color:#ff0000;");
-			inputValue = '';
+
 		}
 	};
 };
@@ -55,7 +61,8 @@ const checkLoginToExistence = (arr: HTMLCollectionOf<HTMLElement>): boolean => {
 	return result.length > 0 ? false : true
 }
 
-const handlers = {
+let person: any;
+export const handlers = {
 	EventsAutorization(e: MouseEvent | KeyboardEvent) {
 		if (((e as MouseEvent).target as HTMLButtonElement).type === "submit"
 			|| ((e as KeyboardEvent).key == 'Enter')) {
@@ -65,11 +72,32 @@ const handlers = {
 				&& checkLoginToExistence(existenceAccaunts) === true) {
 
 				const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
+				const formAutor = (body[0].querySelector('.author') as HTMLElement);
 				/* remove a form uatorization */
-				(body[0].querySelector('.author') as HTMLElement).setAttribute('style', 'display:none;');
+				formAutor.setAttribute('style', 'display:none;');
 				/* public form input type=text for will send the message into the chat. */
 				(body[0].querySelector('.chattalks > div:last-of-type') as HTMLElement).removeAttribute('style');
-				sendOneData(inputValue);
+				sendLoginStr(inputValue)
+					.then((result) => {
+						if (result === 208) {
+							const err = new Error();
+							err.message = 'Данный пользователь существует';
+							err.name = 'UserName';
+
+							console.error(err);
+
+							throw err
+						}
+						person = new Users(inputValue);
+					})
+					.catch((err) => formAutor.insertAdjacentHTML('beforeend', `<p style="coclor:red">${err.message}</p>`))
+					.then(() => {
+						const accaunts = document.getElementsByClassName('accaunts');
+
+						return accaunts as HTMLCollectionOf<HTMLElement>
+					})
+					.then((result) => person.participantsAdd = result);
+
 			}
 			return
 		}
@@ -104,4 +132,5 @@ const handlers = {
 	}
 }
 /* -----FORM Input from new Login----- Finish*/
-export { handlers }
+// module.exports = { handlers, sendLoginStr }
+// export default { handlers, sendLoginStr }

@@ -8,7 +8,8 @@
         [
           {
             "plugins": [
-              "@babel/plugin-transform-modules-commonjs"
+							"@babel/plugin-transform-modules-commonjs",
+
             ]
           },
           {
@@ -17,8 +18,17 @@
             }
           }
         ],
-        "@babel/preset-typescript"
-      ]
+[
+					"@babel/preset-typescript",
+					{
+						"useBuiltIns": "usege",
+						"corejs": 3
+					}
+				]
+			]
     }
-  }
+	}
+	// "presets": [
+	// 	"@babel/preset-env"
+	// ]
 }
