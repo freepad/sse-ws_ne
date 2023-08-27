@@ -1,4 +1,4 @@
-const { Users } = require("./users.ts");
+const { Person } = require("./users.ts");
 
 /* -----FORM a checkins new Login if not the existence----- Start*/
 const existenceAccaunts = document.getElementsByClassName('sourcename') as HTMLCollectionOf<HTMLElement>;
@@ -78,16 +78,9 @@ export const handlers = {
 				(body[0].querySelector('.chattalks > div:last-of-type') as HTMLElement).removeAttribute('style');
 				sendLoginStr(inputValue)
 					.then((result): boolean => {
-
 						let res = Object.values(result)[0] as string;
 						console.log('RES: ', res)
-						if (typeof res !== 'string') {
-							res = '';
-							console.log('FALSE')
-							return false
-						}
-						res = '';
-						console.log('TRUE')
+						if (typeof res !== 'string') return false
 						return true
 					})
 					.then((resp: boolean) => {
@@ -98,9 +91,15 @@ export const handlers = {
 							return
 						}
 						formAutor.setAttribute('style', 'display:none;');
+						const newPerson = new Person(inputValue);
+						let personList = newPerson.participantsAdd = document.querySelectorAll('.accaunts');
+						const perArr = personList[0].querySelectorAll('.accaunt__online_one');
+						console.log('PERSON: ', perArr[0]);
+						console.log('PERSON2: ', perArr[perArr.length - 1]);
+						newPerson.personСss = perArr[perArr.length - 1];
+						newPerson.personСss
+						inputValue = '';
 						return
-						// alert('Полуьзователь уже сузществует');
-
 					});
 			}
 			return
