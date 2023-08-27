@@ -26,21 +26,20 @@ app
 router.get('/');
 router.post('/', koaBody({ urlencoded: true, }), (ctx: any) => {
 	body = ctx.request.body;
-
+	console.log('request.BODY: ', body);
 	let arrFilter = bufer.filter((item) => { if (item['login'] === body['login']) return 1 });
 	let status = arrFilter.length === 0 ? 'Ok' : null;
-	ctx.response.body = status !== null ? { 'status': status } : { 'status': status };
+	ctx.response.body = { 'status': status };
+
 	if (status !== null) {
 		bufer.push(body);
 		console.log('BUFER: ', bufer);
-		ctx.response.status = 200;
+
 	}
-	else {
-		console.log('BUFER: ', bufer);
-		ctx.response.status = 208;
-	}
+
 	status = null;
 	arrFilter = [];
+	return ctx.response
 });
 
 app

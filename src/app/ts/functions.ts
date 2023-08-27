@@ -7,6 +7,7 @@ let result = {}
 
 /* -----Sents and accepts to/of the server-----  Start*/
 export async function sendLoginStr(elem: string) {
+	console.log('SENDlOGINsTR: ', elem);
 	const response = await fetch('http://localhost:7070/', {
 		method: "POST", // *GET, POST, PUT, DELETE, etc.
 		mode: "cors", // no-cors, *cors, same-origin
@@ -19,7 +20,6 @@ export async function sendLoginStr(elem: string) {
 	result = await response.json();
 	console.log('RESULT: ', result);
 	return result
-
 };
 // переделать Ориентироваться на status
 // Поситать про throw в пормисах
@@ -61,7 +61,6 @@ const checkLoginToExistence = (arr: HTMLCollectionOf<HTMLElement>): boolean => {
 	return result.length > 0 ? false : true
 }
 
-let person: any;
 export const handlers = {
 	EventsAutorization(e: MouseEvent | KeyboardEvent) {
 		if (((e as MouseEvent).target as HTMLButtonElement).type === "submit"
@@ -74,30 +73,35 @@ export const handlers = {
 				const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
 				const formAutor = (body[0].querySelector('.author') as HTMLElement);
 				/* remove a form uatorization */
-				formAutor.setAttribute('style', 'display:none;');
+
 				/* public form input type=text for will send the message into the chat. */
 				(body[0].querySelector('.chattalks > div:last-of-type') as HTMLElement).removeAttribute('style');
 				sendLoginStr(inputValue)
-					.then((result) => {
-						if (result === 208) {
-							const err = new Error();
-							err.message = 'Данный пользователь существует';
-							err.name = 'UserName';
+					.then((result): boolean => {
 
-							console.error(err);
-
-							throw err
+						let res = Object.values(result)[0] as string;
+						console.log('RES: ', res)
+						if (typeof res !== 'string') {
+							res = '';
+							console.log('FALSE')
+							return false
 						}
-						person = new Users(inputValue);
+						res = '';
+						console.log('TRUE')
+						return true
 					})
-					.catch((err) => formAutor.insertAdjacentHTML('beforeend', `<p style="coclor:red">${err.message}</p>`))
-					.then(() => {
-						const accaunts = document.getElementsByClassName('accaunts');
+					.then((resp: boolean) => {
+						const newLogin = document.querySelector('.login');
+						if (!resp) {
+							console.log('RESP', resp)
+							newLogin?.insertAdjacentHTML('beforeend', '<p style="color:red">Полуьзователь уже сузществует</p>');
+							return
+						}
+						formAutor.setAttribute('style', 'display:none;');
+						return
+						// alert('Полуьзователь уже сузществует');
 
-						return accaunts as HTMLCollectionOf<HTMLElement>
-					})
-					.then((result) => person.participantsAdd = result);
-
+					});
 			}
 			return
 		}

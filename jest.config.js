@@ -3,8 +3,8 @@
  * https://jestjs.io/docs/configuration
  * https://jestjs.io/docs/cli#--watchall
  */
+
 const { defaults } = require('jest-config');
-const path = require('path');
 // import type { Config } from 'jest';
 
 module.exports = {
@@ -13,14 +13,14 @@ module.exports = {
 	// automock: false,
 
 	// Stop running tests after `n` failures
-	// bail: 0,
+	bail: 2, // 0,
 
 	// The directory where Jest should store its cached dependency information
 	// Каталог, в котором Jest должен хранить свою кэшированную информацию о зависимостях
 	// cacheDirectory: "C:\\Users\\tryd0\\AppData\\Local\\Temp\\jest",
 
 	// Automatically clear mock calls, instances, contexts and results before every test
-	// clearMocks: true,
+	clearMocks: true,
 
 	// Indicates whether the coverage information should be collected while executing the test
 	// Включаем/отключаем отображение покрытия кода тестами
@@ -112,10 +112,10 @@ Jest поставляется с двумя поставщиками покры�
 
 	// A set of global variables that need to be available in all test environments
 	// Глобальные переменные, доступные в каждом модуле тестов
-	// globals: {},
+	// globals: {  },
 
 	// The maximum amount of workers used to run your tests. Can be specified as % or a number. E.g. maxWorkers: 10% will use 10% of your CPU amount + 1 as the maximum worker number. maxWorkers: 2 will use a maximum of 2 workers.
-	// maxWorkers: "50%",
+	maxWorkers: 1,//"50%",
 
 	// An array of directory names to be searched recursively up from the requiring module's location
 	// moduleDirectories: [
@@ -222,11 +222,11 @@ Jest поставляется с двумя поставщиками покры�
 	Параметры тестовой среды, которые будут переданы в testEnvironment. Соответствующие варианты зависят от окружающей среды.
 Например, вы можете переопределить параметры, переданные в jsdom:
 	*/
-	testEnvironment: 'jsdom',//"jsdom",
+	testEnvironment: "jsdom", // 'node',//"jsdom",
 
 	// Options that will be passed to the testEnvironment
 	testEnvironmentOptions: {
-		url: "http://localhost/:9000"
+		url: "http://localhost/:7070"
 	},
 
 	// Adds a location field to test results
@@ -265,7 +265,7 @@ Jest поставляется с двумя поставщиками покры�
 	//Определяет преобразование файлов перед запуском тестов, например, используя Babel для поддержки современного синтаксиса
 	// позволяет определить, какие преобразования должны быть применены к файлам JavaScript перед их выполнением во время тестирования.
 	transform: {
-		'^.+\\.(ts|js|jsx|mjs)$': 'babel-jest',
+		'\\.(ts|js|jsx|mjs)$': 'babel-jest',
 		// 	'^.+\.(css|less)$': 'config/jest/cssTransform.js',
 		// 	'^(?!.*\.(js|jsx|mjs|css|less|json)$)': 'config/jest/fileTransform.js'
 	},
