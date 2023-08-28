@@ -23,7 +23,7 @@ class Users {
 	}
 }
 
-export class Person extends Users {
+export class Persons extends Users {
 	person: any;
 	constructor(newLogin: string) {
 		super(newLogin)
@@ -35,5 +35,9 @@ export class Person extends Users {
 	get personСss(): void {
 		this.person.classList.add('you');
 		return
+	}
+
+	set loadPersons(elem: HTMLElement) {
+
 	}
 }

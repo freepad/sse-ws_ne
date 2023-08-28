@@ -1,28 +1,47 @@
-const { Person } = require("./users.ts");
+const { Persons } = require("./users.ts");
 
 /* -----FORM a checkins new Login if not the existence----- Start*/
 const existenceAccaunts = document.getElementsByClassName('sourcename') as HTMLCollectionOf<HTMLElement>;
 let inputValue: string = '';
 let result = {}
 
-/* -----Sents and accepts to/of the server-----  Start*/
-export async function sendLoginStr(elem: string) {
-	console.log('SENDlOGINsTR: ', elem);
-	const response = await fetch('http://localhost:7070/', {
-		method: "POST", // *GET, POST, PUT, DELETE, etc.
+function __haveRequestToServer(paths: string = './', method: string = "GET",
+	contentTypes: string, requestBody: {} | undefined = {},
+) {
+	let requestBodies = JSON.stringify(requestBody);
+
+	return fetch(paths, {
+		method: method, // *GET, POST, PUT, DELETE, etc.
 		mode: "cors", // no-cors, *cors, same-origin
 		cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
 		headers: {
-			"Content-Type": "application/json",
+			"Content-Type": contentTypes,
 		},
-		body: JSON.stringify({ login: elem }), // body data type must match "Content-Type" header
+		body: requestBodies, // body data type must match "Content-Type" header
 	});
+}
+
+/* -----Sents and accepts to/of the server-----  Start*/
+export async function sendLoginStr(elem: string) {
+	let requestBody = { login: elem };
+	let paths = 'http://localhost:7070/';
+	let contentTypes = "application/json";
+	let method = "POST";
+
+	const response = await __haveRequestToServer(
+		paths = paths,
+		method = method,
+		contentTypes = contentTypes,
+		requestBody = requestBody
+	);
 	result = await response.json();
 	console.log('RESULT: ', result);
 	return result
 };
 // переделать Ориентироваться на status
 // Поситать про throw в пормисах
+
+
 
 /* -----Sents and accepts to/of the server-----  Finish*/
 
@@ -91,7 +110,7 @@ export const handlers = {
 							return
 						}
 						formAutor.setAttribute('style', 'display:none;');
-						const newPerson = new Person(inputValue);
+						const newPerson = new Persons(inputValue);
 						let personList = newPerson.participantsAdd = document.querySelectorAll('.accaunts');
 						const perArr = personList[0].querySelectorAll('.accaunt__online_one');
 						console.log('PERSON: ', perArr[0]);
