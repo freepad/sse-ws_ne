@@ -28,7 +28,10 @@ router.get('/', async (ctx: any) => {
 	// ctx.response.body = { 'status': bufer }
 	// console.log('GET_BUFER: ');
 	// return ctx.response
-	ctx.body = 'Hello, World!';
+	let status = bufer.length === 0 ? 'Ok' : null;
+	ctx.response.body = { 'status': status };
+
+	return ctx
 });
 
 router.post('/', koaBody({ urlencoded: true, }), async (ctx: any) => {
@@ -40,6 +43,7 @@ router.post('/', koaBody({ urlencoded: true, }), async (ctx: any) => {
 
 	if (status !== null) {
 		bufer.push(body);
+
 		console.log('BUFER: ', bufer);
 
 	}
