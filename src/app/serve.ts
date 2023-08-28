@@ -23,10 +23,17 @@ app
 	}))
 	.use(json());
 
-router.get('/');
-router.post('/', koaBody({ urlencoded: true, }), (ctx: any) => {
+router.get('/', async (ctx: any) => {
+	// console.log('request.GET_BODY: ');
+	// ctx.response.body = { 'status': bufer }
+	// console.log('GET_BUFER: ');
+	// return ctx.response
+	ctx.body = 'Hello, World!';
+});
+
+router.post('/', koaBody({ urlencoded: true, }), async (ctx: any) => {
 	body = ctx.request.body;
-	console.log('request.BODY: ', body);
+	console.log('request.POST_BODY: ', body);
 	let arrFilter = bufer.filter((item) => { if (item['login'] === body['login']) return 1 });
 	let status = arrFilter.length === 0 ? 'Ok' : null;
 	ctx.response.body = { 'status': status };

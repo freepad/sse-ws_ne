@@ -5,11 +5,17 @@ const existenceAccaunts = document.getElementsByClassName('sourcename') as HTMLC
 let inputValue: string = '';
 let result = {}
 
-function __haveRequestToServer(paths: string = './', method: string = "GET",
+
+function __fetchPOSTRequestToServer(paths: any = './', method: string = "GET",
 	contentTypes: string, requestBody: {} | undefined = {},
 ) {
 	let requestBodies = JSON.stringify(requestBody);
-
+	console.log("fetxn_ PATHS:", paths)
+	console.log("fetxn_ METHOD: ", method);
+	console.log("fetxn_ contentTYPES:", contentTypes)
+	console.log("fetxn_ requestBODY: ", requestBody);
+	// console.log("fetxn_")
+	// console.log("fetxn_")
 	return fetch(paths, {
 		method: method, // *GET, POST, PUT, DELETE, etc.
 		mode: "cors", // no-cors, *cors, same-origin
@@ -22,13 +28,19 @@ function __haveRequestToServer(paths: string = './', method: string = "GET",
 }
 
 /* -----Sents and accepts to/of the server-----  Start*/
+/**
+ * TODO: function geting It's keep a new lodin name which a user input for a autorisation to the chat
+ * @param elem: this's type 'string' . It's keep a new lodin name.
+ * @returns respons of 'localhost:7070'. Respons keeps it in self the 'OK' or null. If 'Ok' it's have unique
+ * new login into the chat-db. If a null it's no unique.
+ */
 export async function sendOneLoginStr(elem: string) {
 	let requestBody = { login: elem };
 	let paths = 'http://localhost:7070/';
 	let contentTypes = "application/json";
 	let method = "POST";
 
-	const response = await __haveRequestToServer(
+	const response = await __fetchPOSTRequestToServer(
 		paths = paths,
 		method = method,
 		contentTypes = contentTypes,
@@ -41,8 +53,22 @@ export async function sendOneLoginStr(elem: string) {
 // переделать Ориентироваться на status
 // Поситать про throw в пормисах
 
+async function getExistencesLoginsArr(): Promise<string[]> {
+	console.log('ASYNC getExistencesLoginsArr');
+	// let requestBody = {};
+	// let paths = 'http://localhost:7070/';
+	// let contentTypes = "application/json";
+	// let method = "GET";
 
-
+	const response = await __fetchPOSTRequestToServer(
+		'http://localhost:7070/', "GET",
+		"application/json"
+	);
+	console.log('RE: ', response);
+	let res = await response.json();
+	console.log("LoginsArr RES: ", res);
+	return res
+}
 /* -----Sents and accepts to/of the server-----  Finish*/
 
 
@@ -80,7 +106,16 @@ const checkLoginToExistence = (arr: HTMLCollectionOf<HTMLElement>): boolean => {
 	return result.length > 0 ? false : true
 }
 
+const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
 export const handlers = {
+	EventUsersLoads(elem: HTMLCollectionOf<HTMLElement>) {
+		console.log('Hadleer EventUsersLoads', elem);
+
+		getExistencesLoginsArr()
+			.then((result) => {
+				console.log("RESULT: ", result[0]);
+			});
+	},
 	EventsAutorization(e: MouseEvent | KeyboardEvent) {
 		if (((e as MouseEvent).target as HTMLButtonElement).type === "submit"
 			|| ((e as KeyboardEvent).key == 'Enter')) {
@@ -88,8 +123,6 @@ export const handlers = {
 
 			if (inputValue.length > 3
 				&& checkLoginToExistence(existenceAccaunts) === true) {
-
-				const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
 				const formAutor = (body[0].querySelector('.author') as HTMLElement);
 				/* remove a form uatorization */
 

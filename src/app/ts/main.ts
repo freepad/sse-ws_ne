@@ -3,7 +3,9 @@ const { handlers } = require('./functions.ts');
 const socket = new WebSocket('ws://localhost:7070/ws')
 
 document.addEventListener('DOMContentLoaded', () => {
+	console.log('Events DOMContentLoaded');
 	const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
+	handlers.EventUsersLoads(body);
 	(body[0].querySelector('.chattalks > div:last-of-type') as HTMLElement).setAttribute('style', "display:none;")
 
 	body[0].insertAdjacentHTML("afterbegin", handlers.forms());
