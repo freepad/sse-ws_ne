@@ -22,7 +22,7 @@ function __haveRequestToServer(paths: string = './', method: string = "GET",
 }
 
 /* -----Sents and accepts to/of the server-----  Start*/
-export async function sendLoginStr(elem: string) {
+export async function sendOneLoginStr(elem: string) {
 	let requestBody = { login: elem };
 	let paths = 'http://localhost:7070/';
 	let contentTypes = "application/json";
@@ -95,7 +95,7 @@ export const handlers = {
 
 				/* public form input type=text for will send the message into the chat. */
 				(body[0].querySelector('.chattalks > div:last-of-type') as HTMLElement).removeAttribute('style');
-				sendLoginStr(inputValue)
+				sendOneLoginStr(inputValue)
 					.then((result): boolean => {
 						let res = Object.values(result)[0] as string;
 						console.log('RES: ', res)
@@ -154,5 +154,5 @@ export const handlers = {
 	}
 }
 /* -----FORM Input from new Login----- Finish*/
-// module.exports = { handlers, sendLoginStr }
-// export default { handlers, sendLoginStr }
+// module.exports = { handlers, sendOneLoginStr }
+// export default { handlers, sendOneLoginStr }
