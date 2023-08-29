@@ -7,14 +7,17 @@ const Logger = require('koa-logger');
 const cors = require('@koa/cors')
 const WS = require('ws');
 const { koaBody } = require('koa-body');
+const { v4 } = require('uuid');
 
+
+const ind = v4();
 const app = new Koa();
 app.use(Logger());
 const router = new Router();
 
 let body: any = { login: '' };
 let loginsList: any[] = [];
-// const loginsList
+// const loginsList = new Set();
 app
 	.use(cors({
 		'Access-Control-Allow-Origin': '*',
@@ -29,19 +32,21 @@ router.post('/', koaBody({ urlencoded: true }), async (ctx: any) => {
 	body = ctx.request.body;
 	console.log('request.POST_BODY: ', body,);
 	if (!body) return
+
+
 	let arrFilter = loginsList.filter((item) => { if (item['login'] === body['login']) return 1 });
 	let status = arrFilter.length === 0 ? 'Ok' : 'Exist';
-	ctx.response.body = { 'status': status };
 
 
 	if (status !== 'Exist') {
-		// loginsList.push(body);
-
-		console.log('loginsList: ', loginsList);
-
+		Object(body)['ind'] = ind;
+		loginsList.push(body);
+		ctx.response.body = { 'status': status, 'ind': ind };
+		// console.log('serve', ctx.response.body)
+		return
 	}
+	ctx.response.body = { 'status': status };
 	arrFilter = [];
-	return ctx.response
 });
 
 app

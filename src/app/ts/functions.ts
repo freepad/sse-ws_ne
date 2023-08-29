@@ -40,6 +40,8 @@ const checkLoginToExistence = (arr: HTMLCollectionOf<HTMLElement>): boolean => {
 }
 
 const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
+const boxAccaunts = document.querySelectorAll('.accaunts');
+
 export const handlers = {
 	EventUsersLoads(elem: HTMLCollectionOf<HTMLElement>) {
 		console.log('Hadleer EventUsersLoads', elem);
@@ -48,13 +50,21 @@ export const handlers = {
 		req.loadExistencesLogins()
 			.then((result: any) => { return result.json() })
 			.then((result: any) => {
-				console.log('Logins-arr RESULT: ', result)
+				// console.log('Logins-arr RESULT: ', Object.values(result));
+				(Object.values(result)[0] as any).forEach((item: any) => {
+					// console.log('ALL:', item)
+					const persons = new Persons(item['login']);
+					persons.addId = item['ind'];
+					persons.participantsAdd
+					persons.participantsAdd = boxAccaunts;
+				});
+
 			});
 	},
 
 	EventsAutorization(e: MouseEvent | KeyboardEvent) {
 		if (((e as MouseEvent).target as HTMLButtonElement).type === "submit"
-			|| ((e as KeyboardEvent).key == 'Enter')) {
+			|| ((e as KeyboardEvent).key === 'Enter')) {
 			e.preventDefault();
 
 			if (inputValue.length > 3
@@ -64,14 +74,22 @@ export const handlers = {
 
 				/* public form input type=text for will send the message into the chat. */
 
-
+				let newPerson: any; // It's one a new User
 				const req = new fetchRequest();
 				req.sendOneLoginStr(inputValue)
 					.then((result: any) => {
 						if (!result.ok) return
 						return result.json();
 					})
-					.then((result: any): boolean => { return Object.values(result)[0] === 'Ok' ? true : false })
+					.then((result: any): boolean => {
+						const pesponse = Object.values(result)[0] === 'Ok' ? true : false
+						if (pesponse === true) {
+							newPerson = new Persons(inputValue);
+							newPerson.addId = Object.values(result)[1]
+						}
+
+						return pesponse
+					})
 					.then((resp: boolean) => {
 						const newLogin = document.querySelector('.login');
 						if (!resp) {
@@ -84,8 +102,7 @@ export const handlers = {
 						/* This's the Input forms - finished */
 
 
-						const newPerson = new Persons(inputValue);
-						let personList = newPerson.participantsAdd = document.querySelectorAll('.accaunts');
+						let personList = newPerson.participantsAdd = boxAccaunts;
 						const perArr = personList[0].querySelectorAll('.accaunt__online_one');
 						newPerson.personСss = perArr[perArr.length - 1];
 						newPerson.personСss
