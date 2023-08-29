@@ -1,43 +1,38 @@
-const { Persons } = require("./users.ts");
+const { Persons } = require("./chating/users.ts");
 const { fetchRequest } = require("./fech-request");
+const { checkLoginValidate } = require("./validators");
 
 /* -----FORM a checkins new Login if not the existence----- Start*/
-const existenceAccaunts = document.getElementsByClassName('sourcename') as HTMLCollectionOf<HTMLElement>;
 let inputValue: string = '';
 
-/***
- * TODO: Checking input's symbols/line from the input form. This's line in which entries a new login from the new user/
- * @param elem: This's an input field (from popUp box for a uatorization).
- * returns won't be
- */
+
 const checkLiveForAutorization = (elem: HTMLInputElement) => {
-	const regexp = new RegExp(/^[a-zA-Z]\w{3,}/, 'i');
-
-	elem.oninput = () => {
-		let inputArray = regexp.exec(elem.value)
-		if (inputArray !== null
-			&& (inputArray as any).input.length === (inputArray as any)[0].length) {
+	elem.addEventListener('input', () => {
+		const response = checkLoginValidate(elem.value);
+		if (response) {
 			if (elem.hasAttribute('style')) elem.removeAttribute('style');
-			inputValue = (inputArray as any[])[0];
-
-		} else if (inputArray !== null
-			|| (inputArray === null && elem.value !== undefined)) {
+			inputValue = (elem.value as any)[0];
+			console.log('/============', elem.value)
+			inputValue = elem.value;
+		} else if (!response) {
 			elem.setAttribute('style', "color:#ff0000;");
-
 		}
-	};
+	});
 };
+// 	elem.oninput = () => {
+// 		let inputArray = regexp.exec(elem.value)
+// 		if (inputArray !== null
+// 			&& (inputArray as any).input.length === (inputArray as any)[0].length) {
+// 			if (elem.hasAttribute('style')) elem.removeAttribute('style');
+// 			inputValue = (inputArray as any[])[0];
 
+// 		} else if (inputArray !== null
+// 			|| (inputArray === null && elem.value !== undefined)) {
+// 			elem.setAttribute('style', "color:#ff0000;");
 
-/**
- *TODO: checking the existencr of a new login from the new user.
- * @param arr: It's array of all accounts which we can see on page
- * returns: 'false' if new login can't be unique and a 'true' if's a unique
- */
-const checkLoginToExistence = (arr: HTMLCollectionOf<HTMLElement>): boolean => {
-	const result = Array.from(arr).filter((item: HTMLElement) => inputValue === item.innerText);
-	return result.length > 0 ? false : true
-}
+// 		}
+// 	};
+// };
 
 const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
 const boxAccaunts = document.querySelectorAll('.accaunts');
@@ -52,11 +47,13 @@ export const handlers = {
 			.then((result: any) => {
 				// console.log('Logins-arr RESULT: ', Object.values(result));
 				(Object.values(result)[0] as any).forEach((item: any) => {
-					// console.log('ALL:', item)
+					/**
+					 * Loading on a page all the Logins from the db    begining*/
 					const persons = new Persons(item['login']);
 					persons.addId = item['ind'];
 					persons.participantsAdd
 					persons.participantsAdd = boxAccaunts;
+					/* * Loading on a page all the Logins from the db    finished*/
 				});
 
 			});
@@ -67,8 +64,7 @@ export const handlers = {
 			|| ((e as KeyboardEvent).key === 'Enter')) {
 			e.preventDefault();
 
-			if (inputValue.length > 3
-				&& checkLoginToExistence(existenceAccaunts) === true) {
+
 				const formAutor = (body[0].querySelector('.author') as HTMLElement);
 				/* remove a form uatorization */
 
@@ -109,7 +105,7 @@ export const handlers = {
 						inputValue = '';
 						return
 					});
-			}
+
 			return
 		}
 	},
@@ -143,5 +139,3 @@ export const handlers = {
 	}
 }
 /* -----FORM Input from new Login----- Finish*/
-// module.exports = { handlers, sendOneLoginStr }
-// export default { handlers, sendOneLoginStr }
