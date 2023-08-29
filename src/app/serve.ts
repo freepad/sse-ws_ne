@@ -24,31 +24,28 @@ app
 	.use(json());
 
 router.get('/', async (ctx: any) => {
-	// console.log('request.GET_BODY: ');
-	// ctx.response.body = { 'status': buferExistingLogins }
-	// console.log('GET_buferExistingLogins: ');
-	// return ctx.response
 	let status = buferExistingLogins.length === 0 ? 'Ok' : null;
 	ctx.response.body = { 'status': status };
 	ctx.state.logins = buferExistingLogins;
-	return ctx.logins
+	console.log('request.GET_BODY: ', ctx.state.logins);
+	return ctx.state.logins
 });
 
-router.post('/', koaBody({ urlencoded: true, }), async (ctx: any) => {
+router.post('/', koaBody({ urlencoded: true }), async (ctx: any) => {
 	body = ctx.request.body;
-	console.log('request.POST_BODY: ', body);
+	console.log('request.POST_BODY: ', body,);
+	if (!body) return
 	let arrFilter = buferExistingLogins.filter((item) => { if (item['login'] === body['login']) return 1 });
-	let status = arrFilter.length === 0 ? 'Ok' : null;
+	let status = arrFilter.length === 0 ? 'Ok' : 'Exist';
 	ctx.response.body = { 'status': status };
 
-	if (status !== null) {
+
+	if (status !== 'Exist') {
 		buferExistingLogins.push(body);
 
 		console.log('buferExistingLogins: ', buferExistingLogins);
 
 	}
-
-	status = null;
 	arrFilter = [];
 	return ctx.response
 });
