@@ -1,5 +1,5 @@
 const { handlers } = require('./functions.ts');
-// const WebSocet = require('ws');
+
 const socket = new WebSocket('ws://localhost:7070/ws')
 
 document.addEventListener('DOMContentLoaded', () => {

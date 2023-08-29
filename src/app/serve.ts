@@ -5,7 +5,6 @@ const json = require('koa-json');
 const Router = require('koa-router');
 const Logger = require('koa-logger');
 const cors = require('@koa/cors')
-
 const WS = require('ws');
 const { koaBody } = require('koa-body');
 
@@ -14,7 +13,8 @@ app.use(Logger());
 const router = new Router();
 
 let body: any = { login: '' };
-let buferExistingLogins: any[] = [];
+let loginsList: any[] = [];
+// const loginsList
 app
 	.use(cors({
 		'Access-Control-Allow-Origin': '*',
@@ -23,21 +23,21 @@ app
 	}))
 	.use(json());
 
-router.get('/', async (ctx: any) => { ctx.response.body = { 'Logins': buferExistingLogins } });
+router.get('/', async (ctx: any) => { ctx.response.body = { 'Logins': loginsList } });
 
 router.post('/', koaBody({ urlencoded: true }), async (ctx: any) => {
 	body = ctx.request.body;
 	console.log('request.POST_BODY: ', body,);
 	if (!body) return
-	let arrFilter = buferExistingLogins.filter((item) => { if (item['login'] === body['login']) return 1 });
+	let arrFilter = loginsList.filter((item) => { if (item['login'] === body['login']) return 1 });
 	let status = arrFilter.length === 0 ? 'Ok' : 'Exist';
 	ctx.response.body = { 'status': status };
 
 
 	if (status !== 'Exist') {
-		buferExistingLogins.push(body);
+		// loginsList.push(body);
 
-		console.log('buferExistingLogins: ', buferExistingLogins);
+		console.log('loginsList: ', loginsList);
 
 	}
 	arrFilter = [];

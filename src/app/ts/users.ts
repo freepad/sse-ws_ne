@@ -1,14 +1,19 @@
+
 class Users {
 	newLogin: string;
-
+	ind: number;
 	constructor(newLogin: string) {
 		this.newLogin = newLogin;
+		this.ind = 0
 	}
 
 	set participantsAdd(elem: HTMLElement[]) {
 		elem[elem.length - 1].insertAdjacentHTML('beforeend', this.templates());
 	}
 
+	set addId(ind: number) {
+		this.ind = ind;
+	}
 
 
 	private templates() {
