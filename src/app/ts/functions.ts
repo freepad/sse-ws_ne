@@ -2,38 +2,27 @@ const { Persons } = require("./chating/users.ts");
 const { fetchRequest } = require("./fech-request");
 const { checkLoginValidate } = require("./validators");
 
-/* -----FORM a checkins new Login if not the existence----- Start*/
+/* -----FORM a checkins new Login.  ----- Start*/
+/**
+ * It's only a font's visual style  from the foms authorization
+ */
 let inputValue: string = '';
-
-
 const checkLiveForAutorization = (elem: HTMLInputElement) => {
 	elem.addEventListener('input', () => {
 		const response = checkLoginValidate(elem.value);
 		if (response) {
 			if (elem.hasAttribute('style')) elem.removeAttribute('style');
 			inputValue = (elem.value as any)[0];
-			console.log('/============', elem.value)
 			inputValue = elem.value;
 		} else if (!response) {
 			elem.setAttribute('style', "color:#ff0000;");
 		}
 	});
 };
-// 	elem.oninput = () => {
-// 		let inputArray = regexp.exec(elem.value)
-// 		if (inputArray !== null
-// 			&& (inputArray as any).input.length === (inputArray as any)[0].length) {
-// 			if (elem.hasAttribute('style')) elem.removeAttribute('style');
-// 			inputValue = (inputArray as any[])[0];
+/* -----FORM a checkins new Login ----- End */
 
-// 		} else if (inputArray !== null
-// 			|| (inputArray === null && elem.value !== undefined)) {
-// 			elem.setAttribute('style', "color:#ff0000;");
 
-// 		}
-// 	};
-// };
-
+/*** This's a handlers for the Events */
 const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
 const boxAccaunts = document.querySelectorAll('.accaunts');
 
@@ -45,7 +34,6 @@ export const handlers = {
 		req.loadExistencesLogins()
 			.then((result: any) => { return result.json() })
 			.then((result: any) => {
-				// console.log('Logins-arr RESULT: ', Object.values(result));
 				(Object.values(result)[0] as any).forEach((item: any) => {
 					/**
 					 * Loading on a page all the Logins from the db    begining*/
@@ -65,7 +53,7 @@ export const handlers = {
 			e.preventDefault();
 
 
-				const formAutor = (body[0].querySelector('.author') as HTMLElement);
+			const formAuthorisation = (body[0].querySelector('.author') as HTMLElement);
 				/* remove a form uatorization */
 
 				/* public form input type=text for will send the message into the chat. */
@@ -93,7 +81,7 @@ export const handlers = {
 							return
 						}
 						/* This's the Input forms from the mmain page- start */
-						formAutor.setAttribute('style', 'display:none;');
+						formAuthorisation.setAttribute('style', 'display:none;');
 						(body[0].querySelector('.chattalks > div:last-of-type') as HTMLElement).removeAttribute('style');
 						/* This's the Input forms - finished */
 
