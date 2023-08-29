@@ -116,8 +116,8 @@ class fetchRequest {
 
 		}
 		else if (params['method'] === 'GET') {
-			console.log('GET params', params['body'])
-			console.log('GET params', params['method'] === 'GET')
+			console.log('GET params', params)
+
 
 			return fetch(this.paths, params)
 		}
@@ -173,7 +173,12 @@ export const handlers = {
 		const req = new fetchRequest();
 		req.loadExistencesLogins()
 			.then((result: any) => {
-				console.log('lOGINS-ARR RESULT: ', result['body'])
+				console.log('Logins-arr result JSON: ', result.json())
+				const res = result
+				return res
+			})
+			.then((result) => {
+				console.log('Logins-arr RESULT: ', result)
 			});
 
 

@@ -14,7 +14,7 @@ app.use(Logger());
 const router = new Router();
 
 let body: any = { login: '' };
-let bufer: any[] = [];
+let buferExistingLogins: any[] = [];
 app
 	.use(cors({
 		'Access-Control-Allow-Origin': '*',
@@ -25,26 +25,26 @@ app
 
 router.get('/', async (ctx: any) => {
 	// console.log('request.GET_BODY: ');
-	// ctx.response.body = { 'status': bufer }
-	// console.log('GET_BUFER: ');
+	// ctx.response.body = { 'status': buferExistingLogins }
+	// console.log('GET_buferExistingLogins: ');
 	// return ctx.response
-	let status = bufer.length === 0 ? 'Ok' : null;
+	let status = buferExistingLogins.length === 0 ? 'Ok' : null;
 	ctx.response.body = { 'status': status };
-
-	return ctx
+	ctx.state.logins = buferExistingLogins;
+	return ctx.logins
 });
 
 router.post('/', koaBody({ urlencoded: true, }), async (ctx: any) => {
 	body = ctx.request.body;
 	console.log('request.POST_BODY: ', body);
-	let arrFilter = bufer.filter((item) => { if (item['login'] === body['login']) return 1 });
+	let arrFilter = buferExistingLogins.filter((item) => { if (item['login'] === body['login']) return 1 });
 	let status = arrFilter.length === 0 ? 'Ok' : null;
 	ctx.response.body = { 'status': status };
 
 	if (status !== null) {
-		bufer.push(body);
+		buferExistingLogins.push(body);
 
-		console.log('BUFER: ', bufer);
+		console.log('buferExistingLogins: ', buferExistingLogins);
 
 	}
 
