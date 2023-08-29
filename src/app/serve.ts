@@ -23,13 +23,7 @@ app
 	}))
 	.use(json());
 
-router.get('/', async (ctx: any) => {
-	let status = buferExistingLogins.length === 0 ? 'Ok' : null;
-	ctx.response.body = { 'status': status };
-	ctx.state.logins = buferExistingLogins;
-	console.log('request.GET_BODY: ', ctx.state.logins);
-	return ctx.state.logins
-});
+router.get('/', async (ctx: any) => { ctx.response.body = { 'Logins': buferExistingLogins } });
 
 router.post('/', koaBody({ urlencoded: true }), async (ctx: any) => {
 	body = ctx.request.body;

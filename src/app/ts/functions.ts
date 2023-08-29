@@ -46,10 +46,7 @@ export const handlers = {
 
 		const req = new fetchRequest();
 		req.loadExistencesLogins()
-			.then((result: any) => {
-				const res = result
-				return res
-			})
+			.then((result: any) => { return result.json() })
 			.then((result: any) => {
 				console.log('Logins-arr RESULT: ', result)
 			});
@@ -66,25 +63,27 @@ export const handlers = {
 				/* remove a form uatorization */
 
 				/* public form input type=text for will send the message into the chat. */
-				(body[0].querySelector('.chattalks > div:last-of-type') as HTMLElement).removeAttribute('style');
+
 
 				const req = new fetchRequest();
 				req.sendOneLoginStr(inputValue)
 					.then((result: any) => {
 						if (!result.ok) return
-						const res = result.json();
-						return res
+						return result.json();
 					})
-					.then((result: any): boolean => {
-						return Object.values(result)[0] === 'Ok' ? true : false
-					})
+					.then((result: any): boolean => { return Object.values(result)[0] === 'Ok' ? true : false })
 					.then((resp: boolean) => {
 						const newLogin = document.querySelector('.login');
 						if (!resp) {
 							newLogin?.insertAdjacentHTML('beforeend', '<p style="color:red">Полуьзователь уже сузществует</p>');
 							return
 						}
+						/* This's the Input forms from the mmain page- start */
 						formAutor.setAttribute('style', 'display:none;');
+						(body[0].querySelector('.chattalks > div:last-of-type') as HTMLElement).removeAttribute('style');
+						/* This's the Input forms - finished */
+
+
 						const newPerson = new Persons(inputValue);
 						let personList = newPerson.participantsAdd = document.querySelectorAll('.accaunts');
 						const perArr = personList[0].querySelectorAll('.accaunt__online_one');
