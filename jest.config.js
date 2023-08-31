@@ -10,7 +10,7 @@ const { defaults } = require('jest-config');
 module.exports = {
 
 	// All imported modules in your tests should be mocked automatically
-	// automock: false,
+	automock: false,
 
 	// Stop running tests after `n` failures
 	bail: 2, // 0,
@@ -158,7 +158,7 @@ Jest поставляется с двумя поставщиками покры�
 
 	// A preset that is used as a base for Jest's configuration
 	//  указывает, что мы используем пресет ts-jest для работы с TypeScript
-	preset: 'ts-jest', // undefined,
+	preset: "jest-puppeteer", // 'jest-puppeteer',"ts-jest",  // undefined, //,
 
 	// Run tests from one or more projects
 	// projects: undefined,
@@ -204,11 +204,11 @@ Jest поставляется с двумя поставщиками покры�
 
 	// The paths to modules that run some code to configure or set up the testing environment before each test
 	//Задает файлы, которые должны быть выполнены перед запуском тестов, например, для настройки окружения.
-	// setupFiles: [],
+	setupFiles: ['./websocket-polyfill.js'],
 
 	// A list of paths to modules that run some code to configure or set up the testing framework before each test
 	// setupFiles и setupFilesAfterEnv - позволяют подключить дополнительные файлы или модули, которые должны быть выполнены перед запуском тестов или после их запуска
-	// setupFilesAfterEnv: [],
+	// setupFilesAfterEnv: ['src\\__tests__\\setupTests.js'],
 
 	// The number of seconds after which a test is considered as slow and reported as such in the results.
 	// slowTestThreshold: 5,
@@ -222,11 +222,13 @@ Jest поставляется с двумя поставщиками покры�
 	Параметры тестовой среды, которые будут переданы в testEnvironment. Соответствующие варианты зависят от окружающей среды.
 Например, вы можете переопределить параметры, переданные в jsdom:
 	*/
-	testEnvironment: "jsdom", // 'node',//"jsdom",
+	testEnvironment: "jest-environment-jsdom", // "jsdom", // 'node',//"jsdom",
 
 	// Options that will be passed to the testEnvironment
 	testEnvironmentOptions: {
-		url: "http://localhost/:7070"
+		url: "http://localhost/",
+		port: 9000,
+
 	},
 
 	// Adds a location field to test results
@@ -266,6 +268,7 @@ Jest поставляется с двумя поставщиками покры�
 	// позволяет определить, какие преобразования должны быть применены к файлам JavaScript перед их выполнением во время тестирования.
 	transform: {
 		'\\.(ts|js|jsx|mjs)$': 'babel-jest',
+		'\\.(ts|js|jsx|mjs)$': "ts-jest",
 		// 	'^.+\.(css|less)$': 'config/jest/cssTransform.js',
 		// 	'^(?!.*\.(js|jsx|mjs|css|less|json)$)': 'config/jest/fileTransform.js'
 	},
@@ -293,6 +296,7 @@ Jest поставляется с двумя поставщиками покры�
 
 	// Whether to use watchman for file crawling
 	// watchman: true,
+
 };
 
 // export default config;

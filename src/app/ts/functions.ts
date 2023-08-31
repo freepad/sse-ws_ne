@@ -31,7 +31,7 @@ export const handlers = {
 		console.log('Hadleer EventUsersLoads', elem);
 
 		const req = new fetchRequest();
-		req.loadExistencesLogins()
+		req.makeGetRequest()
 			.then((result: any) => { return result.json() })
 			.then((result: any) => {
 				(Object.values(result)[0] as any).forEach((item: any) => {
@@ -54,45 +54,43 @@ export const handlers = {
 
 
 			const formAuthorisation = (body[0].querySelector('.author') as HTMLElement);
-				/* remove a form uatorization */
+			/* remove a form uathorization */
 
-				/* public form input type=text for will send the message into the chat. */
+			let newPerson: any; // It's one a new User
+			const req = new fetchRequest();
+			req.sendOneLoginStr(inputValue)
+				.then((result: any) => {
+					if (!result.ok) return
+					return result.json();
+				})
+				.then((result: any): boolean => {
+					const pesponse = Object.values(result)[0] === 'Ok' ? true : false
+					if (pesponse === true) {
+						newPerson = new Persons(inputValue);
+						newPerson.addId = Object.values(result)[1]
+					}
 
-				let newPerson: any; // It's one a new User
-				const req = new fetchRequest();
-				req.sendOneLoginStr(inputValue)
-					.then((result: any) => {
-						if (!result.ok) return
-						return result.json();
-					})
-					.then((result: any): boolean => {
-						const pesponse = Object.values(result)[0] === 'Ok' ? true : false
-						if (pesponse === true) {
-							newPerson = new Persons(inputValue);
-							newPerson.addId = Object.values(result)[1]
-						}
-
-						return pesponse
-					})
-					.then((resp: boolean) => {
-						const newLogin = document.querySelector('.login');
-						if (!resp) {
-							newLogin?.insertAdjacentHTML('beforeend', '<p style="color:red">Полуьзователь уже сузществует</p>');
-							return
-						}
-						/* This's the Input forms from the mmain page- start */
-						formAuthorisation.setAttribute('style', 'display:none;');
-						(body[0].querySelector('.chattalks > div:last-of-type') as HTMLElement).removeAttribute('style');
-						/* This's the Input forms - finished */
-
-
-						let personList = newPerson.participantsAdd = boxAccaunts;
-						const perArr = personList[0].querySelectorAll('.accaunt__online_one');
-						newPerson.personСss = perArr[perArr.length - 1];
-						newPerson.personСss
-						inputValue = '';
+					return pesponse
+				})
+				.then((resp: boolean) => {
+					const newLogin = document.querySelector('.login');
+					if (!resp) {
+						newLogin?.insertAdjacentHTML('beforeend', '<p style="color:red">Полуьзователь уже сузществует</p>');
 						return
-					});
+					}
+					/* This's the Input forms from the mmain page- start */
+					formAuthorisation.setAttribute('style', 'display:none;');
+					(body[0].querySelector('.chattalks > div:last-of-type') as HTMLElement).removeAttribute('style');
+					/* This's the Input forms - finished */
+
+
+					let personList = newPerson.participantsAdd = boxAccaunts;
+					const perArr = personList[0].querySelectorAll('.accaunt__online_one');
+					newPerson.personСss = perArr[perArr.length - 1];
+					newPerson.personСss
+					inputValue = '';
+					return
+				});
 
 			return
 		}

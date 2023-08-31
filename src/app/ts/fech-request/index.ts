@@ -18,9 +18,9 @@ export class fetchRequest {
 	 * @returns respons of 'localhost:7070'. Respons keeps it in self the 'OK' or null. If 'Ok' it's have unique
 	 * new login into the chat-db. If a null it's no unique.
 	 */
-	async sendOneLoginStr(elem: string) { return this.#fetchRequestToServer('POST', { login: elem }) }
+	async makePostRequest(elem: string) { return this.#fetchRequestToServer('POST', { login: elem }) }
 
-	async loadExistencesLogins() { return await this.#fetchRequestToServer('GET'); }
+	async makeGetRequest() { return this.#fetchRequestToServer('GET'); }
 
 	#fetchRequestToServer(methods = 'GET', requestBody: object = {}) {
 		let params: any = {
@@ -33,11 +33,26 @@ export class fetchRequest {
 		}
 
 		if (params['method'] === 'POST' && 'login' in requestBody) {
+			try {
 			params['body'] = JSON.stringify(requestBody);
-			return fetch(this.paths, params);
+				return fetch(this.paths, params);
+			}
+			catch (e) {
+				console.warn('Method POST MESSAGE: ', e);
+				console.warn('From is fonction.ts')
+			}
+		}
+		else if (params['method'] === 'GET') {
+			try {
+				return fetch(this.paths, params)
+			}
+			catch (e) {
+				console.warn('Method GET MESSAGE: ', e);
+				console.warn('From is fonction.ts')
+			}
 		}
 
-		else if (params['method'] === 'GET') { return fetch(this.paths, params) }
+		if (params['body']) { params['body'].remove() }
 	}
 }
 

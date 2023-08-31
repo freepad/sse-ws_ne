@@ -5,3 +5,5 @@ src/index.js
 src/__tests__
 coverage
 dist
+websocket-polyfill.js
+setupTests.js
