@@ -43,6 +43,7 @@ router.post('/', koaBody({ urlencoded: true }), async (ctx: any) => {
 		Object(body)['ind'] = ind;
 		loginsList.push(body);
 		ctx.response.body = { 'status': status, 'ind': ind };
+		console.log('request.SEND_BODY: ', ctx.response.body,);
 		// console.log('serve', ctx.response.body)
 		return
 	}

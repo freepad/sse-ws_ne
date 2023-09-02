@@ -17,7 +17,7 @@ module.exports = {
 
 	// The directory where Jest should store its cached dependency information
 	// Каталог, в котором Jest должен хранить свою кэшированную информацию о зависимостях
-	// cacheDirectory: "C:\\Users\\tryd0\\AppData\\Local\\Temp\\jest",
+	cacheDirectory: "caches",
 
 	// Automatically clear mock calls, instances, contexts and results before every test
 	clearMocks: true,
@@ -102,9 +102,11 @@ Jest поставляется с двумя поставщиками покры�
 	// },
 
 	// Force coverage collection from ignored files using an array of glob patterns
+	// Принудительный сбор покрытия из игнорируемых файлов с использованием массива шаблонов глобусов
 	// forceCoverageMatch: [],
 
 	// A path to a module which exports an async function that is triggered once before all test suites
+	//
 	// globalSetup: undefined,
 
 	// A path to a module which exports an async function that is triggered once after all test suites
@@ -118,6 +120,7 @@ Jest поставляется с двумя поставщиками покры�
 	maxWorkers: 1,//"50%",
 
 	// An array of directory names to be searched recursively up from the requiring module's location
+	// Массив имен каталогов, подлежащих рекурсивному поиску по местоположению требуемого модуля
 	// moduleDirectories: [
 	//   "node_modules"
 	// ],
@@ -148,7 +151,8 @@ Jest поставляется с двумя поставщиками покры�
 	// moduleNameMapper: {},
 
 	// An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
-	// modulePathIgnorePatterns: [],
+	// modulePathIgnorePatterns: [
+	// 	"src/__tests__/__unit__/"],
 
 	// Activates notifications for test results
 	// notify: false,
@@ -158,7 +162,7 @@ Jest поставляется с двумя поставщиками покры�
 
 	// A preset that is used as a base for Jest's configuration
 	//  указывает, что мы используем пресет ts-jest для работы с TypeScript
-	preset: "jest-puppeteer", // 'jest-puppeteer',"ts-jest",  // undefined, //,
+	preset: "ts-jest",  // undefined, // "jest-puppeteer",
 
 	// Run tests from one or more projects
 	// projects: undefined,
@@ -191,7 +195,7 @@ Jest поставляется с двумя поставщиками покры�
 	 * вашем репозитории хранится код.
 	 */
 	// rootDir: path.join(__dirname, "src/__tests__/__unit__"),
-	// rootDir: "src/__tests__/__unit__",
+	// rootDir: ,
 
 
 	// Задает путь к корневому каталогу, где находятся файлы с тестами
@@ -204,7 +208,7 @@ Jest поставляется с двумя поставщиками покры�
 
 	// The paths to modules that run some code to configure or set up the testing environment before each test
 	//Задает файлы, которые должны быть выполнены перед запуском тестов, например, для настройки окружения.
-	setupFiles: ['./websocket-polyfill.js'],
+	// setupFiles: ['./websocket-polyfill.js'],
 
 	// A list of paths to modules that run some code to configure or set up the testing framework before each test
 	// setupFiles и setupFilesAfterEnv - позволяют подключить дополнительные файлы или модули, которые должны быть выполнены перед запуском тестов или после их запуска
@@ -222,7 +226,7 @@ Jest поставляется с двумя поставщиками покры�
 	Параметры тестовой среды, которые будут переданы в testEnvironment. Соответствующие варианты зависят от окружающей среды.
 Например, вы можете переопределить параметры, переданные в jsdom:
 	*/
-	testEnvironment: "jest-environment-jsdom", // "jsdom", // 'node',//"jsdom",
+	// testEnvironment: "jsdom", //"jest-environment-jsdom", // "jsdom", // 'node',//"jsdom",
 
 	// Options that will be passed to the testEnvironment
 	testEnvironmentOptions: {
@@ -239,14 +243,19 @@ Jest поставляется с двумя поставщиками покры�
 	//позволяет указать шаблон или регулярное выражение для поиска и определения файлов JavaScript, которые должны быть протестированы
 	// определяет шаблон для поиска файлов тестов. Здесь мы ищем файлы с расширением .spec.ts,
 	//находящиеся в папке tests или ее подпапках
-	testMatch: [
-		"**/?(*.)+(test).[jt]s",
-	],
+	// testMatch: [
+	// 	"**/__e2e__/(*.)+(test).[jt]s",
+
+	// 	"!**__unit__/EventsAutorization.test.js",
+	// 	"!**__unit__/zero.test.js"
+	// ],
 
 	// An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
 	// определяет шаблоны файлов, которые должны быть проигнорированы при поиске тестов.
 	// testPathIgnorePatterns: [
-	// 	"/node_modules/"
+	// 	// "/node_modules/"
+	// 	"src/__tests__/__unit__/EventsAutorization.test.js",
+	// 	"src/__tests__/__unit__/zero.test.js"
 	// ],
 
 	// The regexp pattern or array of patterns that Jest uses to detect test files
@@ -256,7 +265,10 @@ Jest поставляется с двумя поставщиками покры�
 	 spec.js.Смотрите также testMatch [array < string >], но обратите внимание, что вы не можете указать оба параметра.
 	 https://jestjs.io/docs/configuration#testregex-string--arraystring
 	 */
-	// testRegex: [],
+	// testRegex: [
+	// 	/\/?(\w*.)+(test)\.[jt]s/,
+	// 	/\/__unit__\/*\.[jt]s$/,
+	// ],
 
 	// This option allows the use of a custom results processor
 	// testResultsProcessor: undefined,
@@ -295,7 +307,7 @@ Jest поставляется с двумя поставщиками покры�
 	// watchPathIgnorePatterns: [],
 
 	// Whether to use watchman for file crawling
-	// watchman: true,
+	watchman: true,
 
 };
 

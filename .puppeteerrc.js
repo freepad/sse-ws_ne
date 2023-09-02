@@ -8,6 +8,12 @@ module.exports = {
 		// args: ['--no-sandbox', '--disable-setuid-sandbox'],
 		pipe: true,
 		// Добавьте следующий параметр, чтобы использовать нативный WebSocket объект вместо 'ws'
-		ignoreDefaultArgs: ['--disable-extensions'],
+		ignoreDefaultArgs: ['--disable-extensions', '--disable-web-security'],
 	},
+	// вид страницы
+	viewport: {
+		heught: 800,
+		width: 1200,
+	}
+
 }

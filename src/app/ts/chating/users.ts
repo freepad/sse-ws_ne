@@ -2,15 +2,15 @@ const { fetchRequest } = require('../fech-request');
 
 class Users {
 	login: string;
-	ind: string;
+	#ind: string;
 	constructor(newLogin: string) {
 		this.login = newLogin;
-		this.ind = '';
+		this.#ind = '';
 	}
 	set addId(ind: string) {
-		this.ind = ind;
+		this.#ind = ind;
 	}
-	get addId() { return this.ind }
+	get addId() { return this.#ind }
 
 	set participantsAdd(elem: HTMLElement[]) {
 		elem[elem.length - 1].insertAdjacentHTML('beforeend', this.templates());
@@ -31,18 +31,21 @@ class Users {
 }
 
 class UsersStyle extends Users {
-	person: any;
+	userBoxHtml: any;
 	status: boolean;
+
 	constructor(newLogin: string) {
 		super(newLogin)
-		this.person = '';
+		this.userBoxHtml = null;
 		this.status = false;
 	}
 	set personСss(elem: HTMLElement) {
-		this.person = elem;
+		console.log('ELEM_CSS:', elem)
+		this.userBoxHtml = elem;
 	}
 	get personСss(): void {
-		this.person.classList.add('you');
+		this.userBoxHtml.classList.add('you');
+		console.log('ELEM_Clacc:', this.userBoxHtml.classList)
 		return
 	}
 
@@ -50,12 +53,12 @@ class UsersStyle extends Users {
 }
 
 export class UsersNetwork extends UsersStyle {
-	person: any;
-	status: boolean;
+	// person: any;
+	// status: boolean;
 	constructor(newLogin: string) {
 		super(newLogin)
-		this.person = '';
-		this.status = false;
+		// this.person = '';
+		// this.status = false;
 	}
 
 	set onOrOfLine(elem: boolean) {

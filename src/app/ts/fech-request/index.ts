@@ -3,6 +3,7 @@
 export class fetchRequest {
 	paths?: any;
 	contentTypes?: string;
+
 	constructor(
 		paths = 'http://localhost:7070/',
 		contentTypes = "application/json",
@@ -10,6 +11,7 @@ export class fetchRequest {
 	) {
 		this.paths = paths;
 		this.contentTypes = contentTypes;
+
 	}
 
 	/**
@@ -17,8 +19,9 @@ export class fetchRequest {
 	 * @param elem: this's type 'string' . It's keep a new lodin name.
 	 * @returns respons of 'localhost:7070'. Respons keeps it in self the 'OK' or null. If 'Ok' it's have unique
 	 * new login into the chat-db. If a null it's no unique.
+	 * { login: elem }
 	 */
-	async makePostRequest(elem: string) { return this.#fetchRequestToServer('POST', { login: elem }) }
+	async makePostRequest(elem: object) { return this.#fetchRequestToServer('POST', elem) }
 
 	async makeGetRequest() { return this.#fetchRequestToServer('GET'); }
 

@@ -101,11 +101,12 @@ div,
   overflow-y: hidden;
 }
 .chattalks > div:last-of-type {
+	box-sizing: border-box;
   position: absolute;
   bottom: 18px;
   right: auto;
-  width: 100%;
-  max-width: 665px;
+		width: 100%;
+	max-width: calc(665px - 40px);
   height: 55px;
 }
 

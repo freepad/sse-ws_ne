@@ -25,7 +25,7 @@ const checkLiveForAutorization = (elem: HTMLInputElement) => {
 
 /*** This's a handlers for the Events */
 const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
-const boxAccaunts = document.querySelectorAll('.accaunts');
+const boxHtmlElem = document.querySelectorAll('.accaunts');
 
 export const handlers = {
 
@@ -45,8 +45,8 @@ export const handlers = {
 					const persons = new UsersNetwork(item['login']);
 					persons.addId = item['ind'];
 
-					persons.participantsAdd
-					persons.participantsAdd = boxAccaunts;
+					// persons.participantsAdd
+					persons.participantsAdd = boxHtmlElem;
 					/* * Loading on a page all the Logins from the db    finished*/
 				});
 
@@ -63,13 +63,14 @@ export const handlers = {
 	EventsAutorization(e: MouseEvent | KeyboardEvent) {
 		if (((e as MouseEvent).target as HTMLButtonElement).type === "submit"
 			|| ((e as KeyboardEvent).key === 'Enter')) {
-			// e.preventDefault();
+			e.preventDefault();
 
 			const formAuthorisation = (body[0].querySelector('.author') as HTMLElement);
 			/* remove a form uathorization */
 
-			let userNetwork: any; // It's one a new User
+			let userNetwork: any = null;
 			const req = new fetchRequest();
+
 			if (inputValue.length == 0) { return }
 			req.makePostRequest({ login: inputValue })
 				.then((result: any) => {
@@ -78,6 +79,7 @@ export const handlers = {
 				})
 				.then((result: any): boolean => {
 					const pesponse = Object.values(result)[0] === 'Ok' ? true : false
+
 					if (pesponse === true) {
 						userNetwork = new UsersNetwork(inputValue);
 						userNetwork.addId = Object.values(result)[1]
@@ -87,6 +89,8 @@ export const handlers = {
 				})
 				.then((resp: boolean) => {
 					const newLogin = document.querySelector('.login');
+					console.log('test -1');
+					debugger;
 					if (!resp) {
 						newLogin?.insertAdjacentHTML('beforeend', '<p style="color:red">Полуьзователь уже сузществует</p>');
 						return
@@ -97,8 +101,10 @@ export const handlers = {
 					/* This's the Input forms - finished */
 
 
-					let personList = userNetwork.participantsAdd = boxAccaunts;
+					let personList = userNetwork.participantsAdd = boxHtmlElem;
 					const perArr = personList[0].querySelectorAll('.accaunt__online_one');
+					console.log('test 0');
+					debugger;
 					userNetwork.personСss = perArr[perArr.length - 1];
 					userNetwork.personСss
 					inputValue = '';

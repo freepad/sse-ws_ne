@@ -1,8 +1,31 @@
+/**
+ * i want would  be to has only  a page with Events
+ */
 const { handlers } = require('./functions.ts');
 
 try {
 	// const socket = new WebSocket(`ws://localhost:${port}/ws`);
 	const socket = new WebSocket(`ws://localhost:7070/ws`);
+
+	/***
+	 * TODO: Only changing a user's browser. It's online or not/
+	 *  The start
+	 */
+	window.addEventListener('offline', (e) => {
+		// debugger;
+		console.warn("Note: User's browser id ofline now!")
+		// если оффлай - удалить пользователя
+	})
+	// debugger
+	window.addEventListener('online', (e) => {
+		if (navigator.onLine) {
+			console.log("online");
+
+		}
+		// debugger
+		console.log("Note: We having an online!")
+	})
+	/* It's online or not - finished */
 
 	document.addEventListener('DOMContentLoaded', () => {
 		console.log('Events DOMContentLoaded');
