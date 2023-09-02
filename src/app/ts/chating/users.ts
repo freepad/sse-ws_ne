@@ -1,9 +1,9 @@
 
 class Users {
-	newLogin: string;
+	login: string;
 	ind: string;
 	constructor(newLogin: string) {
-		this.newLogin = newLogin;
+		this.login = newLogin;
 		this.ind = '';
 	}
 	set addId(ind: string) {
@@ -22,7 +22,7 @@ class Users {
 					<!-- <img src="/" /> -->
 				</div>
 				<div class="sourcename">
-					<span>${this.newLogin}</span>
+					<span>${this.login}</span>
 				</div>
 			</div>`
 	}
@@ -30,9 +30,11 @@ class Users {
 
 export class Persons extends Users {
 	person: any;
+	status: boolean;
 	constructor(newLogin: string) {
 		super(newLogin)
 		this.person = '';
+		this.status = false;
 	}
 	set personСss(elem: HTMLElement) {
 		this.person = elem;
@@ -40,6 +42,10 @@ export class Persons extends Users {
 	get personСss(): void {
 		this.person.classList.add('you');
 		return
+	}
+
+	set onOrOfLine(elem: boolean) {
+		if (elem) { this.status = true }
 	}
 
 	set loadPersons(elem: HTMLElement) {
