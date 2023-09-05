@@ -109,7 +109,23 @@ div,
 	max-width: calc(665px - 40px);
   height: 55px;
 }
+#chat>div.chattalks>div:nth-child(2)>form {
+	display: inline-block;
+	width: calc(100% - 21px);
+	min-height: 48px;
+}
 
+.chattalks input,
+.chattalks input:focus,
+.chattalks input:hover,
+.chattalks input:active,
+.chattalks input:focus-visible {
+	display: inline-block;
+	width: inherit;
+	min-height: inherit;
+	outline-width: 0;
+	border: 0px;
+}
 .post {
   display: block;
   padding-bottom: 30px;
