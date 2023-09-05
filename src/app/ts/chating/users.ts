@@ -1,5 +1,3 @@
-const { fetchRequest } = require('../fech-request');
-
 class Users {
 	login: string;
 	#ind: string;
@@ -11,70 +9,81 @@ class Users {
 		this.#ind = ind;
 	}
 	get addId() { return this.#ind }
-
-	set participantsAdd(elem: HTMLElement[]) {
-		elem[elem.length - 1].insertAdjacentHTML('beforeend', this.templates());
-	}
-
-
-
-	private templates() {
-		return `<div class="accaunt__online_one">
-				<div class="preview">
-					<!-- <img src="/" /> -->
-				</div>
-				<div class="sourcename">
-					<span>${this.login}</span>
-				</div>
-			</div>`
-	}
 }
 
-class UsersStyle extends Users {
-	userBoxHtml: any;
+class UsersHtml extends Users {
 	status: boolean;
+	templateHtml: HTMLElement;
 
 	constructor(newLogin: string) {
 		super(newLogin)
-		this.userBoxHtml = null;
 		this.status = false;
-	}
-	set personСss(elem: HTMLElement) {
-		console.log('ELEM_CSS:', elem)
-		this.userBoxHtml = elem;
-	}
-	get personСss(): void {
-		this.userBoxHtml.classList.add('you');
-		console.log('ELEM_Clacc:', this.userBoxHtml.classList)
-		return
+		this.templateHtml = document.createElement('div') as HTMLElement;
 	}
 
+	private crateUserHtml() {
+
+		const div: HTMLElement = this.templateHtml;
+		const divImg = div.cloneNode(true);
+		(divImg as HTMLElement).className = 'preview';
+		const divLogin = div.cloneNode(true);
+		(divLogin as HTMLElement).setAttribute('data-num', this.addId);
+
+		const img = document.createElement('img');
+		img.src = '/';
+		divImg.appendChild(img);
+
+		const span = document.createElement('span');
+		span.innerHTML = this.login;
+
+		(divLogin as HTMLElement).className = "sourcename";
+		(divLogin as HTMLElement).appendChild(span);
+
+		div.appendChild(divImg);
+		div.appendChild(divLogin);
+
+		(div as HTMLElement).className = `accaunt__online_one`;
+
+		this.templateHtml = div as HTMLElement;
+		// debugger
+		// return this.templateHtml;
+	}
+
+	get addAllUser() {
+		this.crateUserHtml();
+		return this.templateHtml
+	}
+
+	get addOneUser(): HTMLElement {
+		this.crateUserHtml();
+		return this.templateHtml
+	}
 
 }
 
-export class UsersNetwork extends UsersStyle {
-	// person: any;
-	// status: boolean;
+export class UsersNetwork extends UsersHtml {
+	network: 'online' | 'ofline';
 	constructor(newLogin: string) {
 		super(newLogin)
-		// this.person = '';
-		// this.status = false;
+		this.network = 'ofline';
 	}
 
-	set onOrOfLine(elem: boolean) {
-		if (elem) {
-			this.status = true;
-			this.#sendPersonDB();
+	/**
+	 * @params status: if it's a 'true' means login is a unique and user has been status a online;
+	 */
+	set onOrOfLine(status: boolean) {
+		if (status) this.network = 'online';
+	}
+
+	get onOrOfLine(): string { return this.network }
+
+	get addPropertiesUser() {
+		return {
+			login: this.login,
+			ind: this.addId,
+			network: this.onOrOfLine,
 		}
-	}
-	get onOrOfLine() { return this.status }
 
-	#sendPersonDB() {
-		const req = new fetchRequest();
-		req.makePostRequest(this);
 	}
 
-	set loadPersons(elem: HTMLElement) {
-		/**объект отправить в БД  */
-	}
 }

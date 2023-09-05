@@ -1,5 +1,5 @@
 const { UsersNetwork } = require("./chating/users.ts");
-const { fetchRequest } = require("./fech-request");
+let { fetchRequest } = require("./fech-request");
 const { checkLoginValidate } = require("./validators");
 
 /* -----FORM a checkins new Login.  ----- Start*/
@@ -22,14 +22,11 @@ const checkLiveForAutorization = (elem: HTMLInputElement) => {
 /* -----FORM a checkins new Login ----- End */
 
 
-
 /*** This's a handlers for the Events */
 const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
-const boxHtmlElem = document.querySelectorAll('.accaunts');
+const exictingUsers = document.querySelectorAll('.accaunts');
 
 export const handlers = {
-
-
 
 	EventUsersLoads(elem: HTMLCollectionOf<HTMLElement>) {
 		console.log('Hadleer EventUsersLoads', elem);
@@ -44,9 +41,7 @@ export const handlers = {
 					 * Loading on a page all the Logins from the db    begining*/
 					const persons = new UsersNetwork(item['login']);
 					persons.addId = item['ind'];
-
-					// persons.participantsAdd
-					persons.participantsAdd = boxHtmlElem;
+					exictingUsers[exictingUsers.length - 1].insertAdjacentElement('beforeend', persons.addAllUser);
 					/* * Loading on a page all the Logins from the db    finished*/
 				});
 
@@ -55,20 +50,17 @@ export const handlers = {
 
 	/**
 	 * This's function geting to the entrance the Event:MouseEvent
-	 * @param e : It's an Event from the buttom by the form for indetifacation/.
+	 * @param e : It's an Event by the buttom from a form for indetifacation/.
 	 * @param inputValue: It's a value from the input field.
-	 * @returns The void. Only can see in the browser this form/ If 'inputValue' is unique so it a forms removing from the screen/ If not the unique
-	 * insert a red text row to the form
+	 * @returns The void. Only can see in the browser this form/ If 'inputValue' is unique so forms removing from the screen/ If not the unique
+	 * insert a red text below row to the form.
 	 */
 	EventsAutorization(e: MouseEvent | KeyboardEvent) {
 		if (((e as MouseEvent).target as HTMLButtonElement).type === "submit"
 			|| ((e as KeyboardEvent).key === 'Enter')) {
 			e.preventDefault();
 
-			const formAuthorisation = (body[0].querySelector('.author') as HTMLElement);
 			/* remove a form uathorization */
-
-			let userNetwork: any = null;
 			const req = new fetchRequest();
 
 			if (inputValue.length == 0) { return }
@@ -78,40 +70,29 @@ export const handlers = {
 					return result.json();
 				})
 				.then((result: any): boolean => {
-					const pesponse = Object.values(result)[0] === 'Ok' ? true : false
-
-					if (pesponse === true) {
-						userNetwork = new UsersNetwork(inputValue);
-						userNetwork.addId = Object.values(result)[1]
-					}
-
+					const pesponse = Object.values(result)[0] === 'Ok' ? true : false;
+					const myLogin = document.querySelector(`div[data-num="${result.ind}"]`);
+					myLogin?.classList.add('you');
 					return pesponse
 				})
 				.then((resp: boolean) => {
-					const newLogin = document.querySelector('.login');
-					console.log('test -1');
-					debugger;
+					/**
+					 * @param 'resp': it's saving respons from the checker a new login's name.
+					 * If 'resp' is a 'true' so form (for identification) removing.
+					 * */
+					const formAuthorisation = (body[0].querySelector('.author') as HTMLElement);
 					if (!resp) {
-						newLogin?.insertAdjacentHTML('beforeend', '<p style="color:red">Полуьзователь уже сузществует</p>');
+						formAuthorisation?.insertAdjacentHTML('beforeend', '<p style="color:red">Полуьзователь уже существует</p>');
 						return
 					}
-					/* This's the Input forms from the mmain page- start */
+
+					/* This's the Input forms (for chatting is  below on page ) from the mmain.ts page- start */
 					formAuthorisation.setAttribute('style', 'display:none;');
 					(body[0].querySelector('.chattalks > div:last-of-type') as HTMLElement).removeAttribute('style');
 					/* This's the Input forms - finished */
-
-
-					let personList = userNetwork.participantsAdd = boxHtmlElem;
-					const perArr = personList[0].querySelectorAll('.accaunt__online_one');
-					console.log('test 0');
-					debugger;
-					userNetwork.personСss = perArr[perArr.length - 1];
-					userNetwork.personСss
 					inputValue = '';
 					return
 				});
-
-
 		}
 		return
 	},

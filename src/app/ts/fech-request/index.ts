@@ -1,22 +1,24 @@
 /* -----Sents and accepts to/of the server-----  Start*/
 
 export class fetchRequest {
-	paths?: any;
-	contentTypes?: string;
+	paths: any;
+	contentTypes: string;
 
-	constructor(
-		paths = 'http://localhost:7070/',
-		contentTypes = "application/json",
-
-	) {
+	constructor(paths = 'http://localhost:7070', contentTypes = "application/json") {
 		this.paths = paths;
 		this.contentTypes = contentTypes;
 
 	}
+	set updatePaths(path: string) {
+		this.paths = path
+	}
 
+	set updateCType(str: string) {
+		this.contentTypes = str;
+	}
 	/**
 	 * TODO: function geting It's keep a new lodin name which a user input for a autorisation to the chat
-	 * @param elem: this's type 'string' . It's keep a new lodin name.
+	 * @param elem: this's type 'object' . It's keep a new data.
 	 * @returns respons of 'localhost:7070'. Respons keeps it in self the 'OK' or null. If 'Ok' it's have unique
 	 * new login into the chat-db. If a null it's no unique.
 	 * { login: elem }
@@ -34,10 +36,11 @@ export class fetchRequest {
 				"Content-Type": this.contentTypes as string
 			}
 		}
-
+		// debugger;
 		if (params['method'] === 'POST' && 'login' in requestBody) {
 			try {
-			params['body'] = JSON.stringify(requestBody);
+				params['body'] = JSON.stringify(requestBody);
+				// debugger;
 				return fetch(this.paths, params);
 			}
 			catch (e) {

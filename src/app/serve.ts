@@ -8,17 +8,16 @@ const cors = require('@koa/cors')
 const WS = require('ws');
 const { koaBody } = require('koa-body');
 const { v4 } = require('uuid');
+const { streamEvents } = require('http-event-stream');
+const participant = require('./db');
 
 
-
-const ind = v4();
+let ind = '';
 const app = new Koa();
 app.use(Logger());
 const router = new Router();
-
 let body: any = { login: '' };
-let loginsList: any[] = [];
-// const loginsList = new Set();
+let listId: any[] = [];
 app
 	.use(cors({
 		'Access-Control-Allow-Origin': '*',
@@ -27,24 +26,68 @@ app
 	}))
 	.use(json());
 
-router.get('/', async (ctx: any) => { ctx.response.body = { 'Logins': loginsList } });
+router.get('/', async (ctx: any) => {
+
+	ctx.response.body = { 'Logins': participant.logins }
+});
+router.get('/sse', async (ctx: any) => {
+
+	streamEvents(ctx.req, ctx.res, {
+		async fetch(lastEventId: any) {
+			console.log('Aborted link whith server and List a message ID wich cant sent: ', lastEventId);
+			listId.push(lastEventId);
+			return listId
+		},
+		async stream(sse: any) {
+			/**
+			 * sending datas to the client
+			 */
+			participant.listener((item: any) => {
+				console.log("server ITEM:", item)
+				sse.sendEvent({
+					data: JSON.stringify(item),
+					id: v4()
+				});
+			});
+			return () => { }
+		}
+
+	});
+
+	ctx.respond = false
+});
 
 router.post('/', koaBody({ urlencoded: true }), async (ctx: any) => {
 	body = ctx.request.body;
 	console.log('request.POST_BODY: ', body,);
 	if (!body) return
 
+	if ('ind' in body) {
+		// debugger;
+		/* получаем пользователя уже со статусом и в сети */
+		participant.logins.forEach((item: any) => {
+			if (item['ind'] === body['ind']) item['network'] = body['network'];
+			console.log('TEST 0', item);
+		});
+		return
+	}
 
-	let arrFilter = loginsList.filter((item) => { if (item['login'] === body['login']) return 1 });
+	/**
+	 * If a arrFilter has value 'Ok' it's means that this's' filter's value was founded.
+	 * If 'Ok' it means a 'Login'  this's a unique.
+	*/
+	let arrFilter = participant.logins.filter((item: any) => { if (item['login'] === body['login']) return 1 });
 	let status = arrFilter.length === 0 ? 'Ok' : 'Exist';
 
+	console.log('TEST Status 01: ', status);
 
 	if (status !== 'Exist') {
+		ind = makeUniqueId(v4());
+		console.log('TEST Status 02: ', status);
 		Object(body)['ind'] = ind;
-		loginsList.push(body);
+		participant.adds(body);
 		ctx.response.body = { 'status': status, 'ind': ind };
 		console.log('request.SEND_BODY: ', ctx.response.body,);
-		// console.log('serve', ctx.response.body)
 		return
 	}
 	ctx.response.body = { 'status': status };
@@ -72,3 +115,8 @@ server.listen(port, (err: any) => {
 	console.log('Start listens by a 7070 port')
 });
 
+function makeUniqueId(str: string) {
+	const respons = participant.logins.some((item: any) => { if (item.ind === str) str });
+	if (respons) makeUniqueId(str);
+	return str;
+}

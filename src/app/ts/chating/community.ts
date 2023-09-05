@@ -1,8 +1,8 @@
 export class Commune {
 	person: object;
 	constructor(person = {}) {
-		/* Получаю объект пользователя из БД как только появляется кто-то новый.*/
-		/** Если статус объекта офнлайн , он удаляется из БД  */
+		/* Here inserting user's objects wich's sending the message to a chat .
+		/**Entire message history is saved in the chat if the user logs out */
 		this.person = person;
 	}
 }

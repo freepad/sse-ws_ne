@@ -6063,6 +6063,11 @@ http-errors@~1.6.2:
     setprototypeof "1.1.0"
     statuses ">= 1.4.0 < 2"
 
+http-event-stream@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/http-event-stream/-/http-event-stream-0.2.0.tgz#235856fe58bda005ba0bb74c412ef34bda2cbe8b"
+  integrity sha512-gk7/tj887DXFixfgHHzkDATnpqVKNuekt2M82w/+N6shK6FX7EVMUoSia2NkUg9gabp2DM3/dnFCuGw2NV6c/Q==
+
 http-parser-js@>=0.5.1:
   version "0.5.8"
   resolved "https://registry.npmjs.org/http-parser-js/-/http-parser-js-0.5.8.tgz"
@@ -9422,7 +9427,7 @@ punycode@^2.1.0, punycode@^2.1.1, punycode@^2.3.0:
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.3.0.tgz"
   integrity sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==
 
-puppeteer-core@21.1.1, puppeteer-core@^21.1.1:
+puppeteer-core@21.1.1:
   version "21.1.1"
   resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-21.1.1.tgz#59be20b6f69acc2139ba2d9e02a33793b59254ff"
   integrity sha512-Tlcajcf44zwfa9Sbwv3T8BtaNMJ69wtpHIxwl2NOBTyTK3D1wppQovXTjfw0TDOm3a16eCfQ+5BMi3vRQ4kuAQ==
