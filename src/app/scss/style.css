@@ -85,20 +85,22 @@ div,
 }
 
 .chattalks {
+
   position: relative;
   flex-direction: column;
   flex-wrap: nowrap;
   align-content: space-between;
-  padding: 15px 20px 8px 20px;
+	padding: 15px 20px 90px 20px;
   width: 100%;
   max-width: 697px;
   min-height: inherit;
+	max-height: 725px;
 }
 .chattalks > div {
   flex-direction: column;
   flex-wrap: nowrap;
   padding-right: 21px;
-  overflow-y: hidden;
+	overflow-y: scroll;
 }
 .chattalks > div:last-of-type {
 	box-sizing: border-box;
@@ -108,6 +110,7 @@ div,
 		width: 100%;
 	max-width: calc(665px - 40px);
   height: 55px;
+	overflow-y: auto;
 }
 #chat>div.chattalks>div:nth-child(2)>form {
 	display: inline-block;

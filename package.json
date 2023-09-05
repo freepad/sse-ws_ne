@@ -57,7 +57,7 @@
     "build": "webpack --mode=prodaction --config ./webpack.config.js",
     "build:dev": "webpack --config ./webpack.dev.js",
     "watch": "webpack --watch",
-    "start": "nodemon --watch ./ --ext js,css,scss,html --ignore dist  ./src/app/serve.ts",
+		"start": "nodemon --watch ./ --ignore dist  ./src/app/serve.ts",
     "serve": "webpack serve --port=8080",
     "unit": "jest --env=jsdom  --watch --colors --config=./unit.config.js",
     "e2e": "jest --env=jest-environment-jsdom  --watch --colors --config=./puppeteer.config.js ",

@@ -1,7 +1,7 @@
 
 const participants = {
 	logins: ([] as any[]),
-
+	chattings: ([] as any[]),
 	handlers: ([] as any[]),
 
 	adds(item: any) {

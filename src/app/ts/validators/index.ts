@@ -13,3 +13,4 @@ export const checkLoginValidate = (elem: string) => {
 		&& (inputArray as any).input.length === (inputArray as any)[0].length) { return true }
 	else if (inputArray !== null || (inputArray === null && elem !== undefined)) { return false }
 };
+
