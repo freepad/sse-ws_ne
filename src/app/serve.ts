@@ -43,7 +43,7 @@ router.get('/sse', async (ctx: any) => {
 			 * sending datas to the client
 			 */
 			participant.listener((item: any) => {
-				console.log("server ITEM:", item)
+				console.log("SSE server ITEM:", item)
 				sse.sendEvent({
 					data: JSON.stringify(item),
 					id: v4()
@@ -56,22 +56,58 @@ router.get('/sse', async (ctx: any) => {
 
 	ctx.respond = false
 });
+router.post('/chat', koaBody({ urlencoded: true }), async (ctx: any) => {
+	/* получаем пользователя уже со статусом и в сети */
+	body = ctx.request.body;
+	console.log('BODY REQ: ', body);
+	// for (let elem in Object.values(participant.logins)) {
+	// console.log('Elem IN OBj:', elem)
+	// console.log('LOGIN?: ', body['login'], Object.values(participant.logins));
+	// console.log('LOGIN?: ', body['login'] in Object.values(participant.logins));
+	// }
+	// ind = body['ind'];;
+	// if (body['login'] in Object.values(participant.logins)) {
+	const result = participant.logins.some((item: any) => {
+		console.log('TEST item 0', item);
+		console.log('TEST network 1', 'network' in item);
+		if (item['ind'] === body['ind'] && 'network' in item) {
+			console.log('TEST chat 2', participant.chattings);
+			participant.chattings.push({ ind: body['ind'], message: body['message'] });
+			ctx.response.body = { 'status': 'Messaage Ok' }
+		}
+		else if (item['login'] === body['login']) {
+			item['ind'] = body['ind'];
+			item['network'] = body['network']
+			participant.chattings.push({ ind: body['ind'], message: body['message'] });
+			ctx.response.body = { 'status': 'Messaage Ok' }
+		}
+		console.log('CHATTINGS: ', participant.chattings);
+	});
 
+	console.log(" 'ind' in body: ", 'ind' in body, body);
+	if (!result && 'ind' in body) {
+		participant.logins['login'];
+		participant.logins['ind'] = body['ind'];
+		participant.logins['network'] = body['network']
+
+		participant.chattings.push({ ind: body['ind'], message: body['message'] });
+		ctx.response.body = { 'status': 'Messaage Ok' }
+		console.log('CHATTINGS 2: ', participant.chattings);
+	}
+	else if (result) {
+		ctx.response.body = { 'status': 'Messaage Ok' }
+		console.log('CHATTINGS 3: ', participant.chattings);
+	}
+	// }
+	console.log('CHATTINGS 4: ', participant.chattings);
+	console.log('CHATE LEN: ', participant.chattings.length)
+	ind = '';
+	body = '';
+})
 router.post('/', koaBody({ urlencoded: true }), async (ctx: any) => {
 	body = ctx.request.body;
 	console.log('request.POST_BODY: ', body,);
 	if (!body) return
-
-	if ('ind' in body) {
-		// debugger;
-		/* получаем пользователя уже со статусом и в сети */
-		participant.logins.forEach((item: any) => {
-			if (item['ind'] === body['ind']) item['network'] = body['network'];
-			console.log('TEST 0', item);
-		});
-		return
-	}
-
 	/**
 	 * If a arrFilter has value 'Ok' it's means that this's' filter's value was founded.
 	 * If 'Ok' it means a 'Login'  this's a unique.

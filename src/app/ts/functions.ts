@@ -1,5 +1,5 @@
 const { UsersNetwork } = require("./chating/users.ts");
-let { fetchRequest } = require("./fech-request");
+let { FetchRequest } = require("./fech-request");
 const { checkLoginValidate } = require("./validators");
 
 /* -----FORM a checkins new Login.  ----- Start*/
@@ -17,7 +17,7 @@ export const handlers = {
 	*/
 
 	EventUsersLoads() {
-		const req = new fetchRequest();
+		const req = new FetchRequest();
 
 		req.makeGetRequest()
 			.then((result: any) => { return result.json() })
@@ -48,7 +48,7 @@ export const handlers = {
 			e.preventDefault();
 
 			/* remove a form uathorization */
-			const req = new fetchRequest();
+			const req = new FetchRequest();
 			if (inputValue.length == 0) { return }
 			identificationNewUser(req);
 		}
@@ -103,12 +103,27 @@ export const handlers = {
 		function eventPublicMessage(e: KeyboardEvent) {
 			if (e.key === 'Enter') {
 				const data = (e.target as HTMLInputElement).value as string;
-
-
 				const boxForMessages = document.querySelector('.chattalks > div:first-of-type') as HTMLElement;
-
 				boxForMessages.insertAdjacentHTML('beforeend', handlers.posts(data, login));
-				debugger;
+
+				console.log('OOP: ', "Messege: " + data + " Login: " + newPerson.addPropertiesUser.login + " ID: " + newPerson.addPropertiesUser.ind);
+				/**-------------------*/
+				const req = new FetchRequest();
+				req.paths = 'http://localhost:7070/chat';
+				req.makePostRequest({
+					message: data,
+					login: newPerson.addPropertiesUser.login,
+					ind: newPerson.addPropertiesUser.ind,
+					network: newPerson.addPropertiesUser.network,
+				})
+					.then((result: any) => {
+						const resp = result.json();
+						debugger;
+						return resp
+					})
+					.then((result: any) => {
+						console.log('CHAT: ', result);
+					});
 				(e.target as HTMLInputElement).value = '';
 
 			}
@@ -156,6 +171,7 @@ function identificationNewUser(req: any) {
 			return result.json();
 		})
 		.then((result: any): boolean => {
+
 			const pesponse = Object.values(result)[0] === 'Ok' ? true : false;
 			const myLogin = document.querySelector(`div[data-num="${result.ind}"]`);
 			myLogin?.classList.add('you');

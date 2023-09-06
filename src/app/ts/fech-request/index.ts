@@ -1,6 +1,6 @@
 /* -----Sents and accepts to/of the server-----  Start*/
 
-export class fetchRequest {
+export class FetchRequest {
 	paths: any;
 	contentTypes: string;
 
@@ -17,13 +17,16 @@ export class fetchRequest {
 		this.contentTypes = str;
 	}
 	/**
-	 * TODO: function geting It's keep a new lodin name which a user input for a autorisation to the chat
-	 * @param elem: this's type 'object' . It's keep a new data.
+	 * Function geting It's keep a new lodin name which a user input for a autorisation to the chat
+	 * @params elem: this's type 'object' . It's keep a new data.
 	 * @returns respons of 'localhost:7070'. Respons keeps it in self the 'OK' or null. If 'Ok' it's have unique
 	 * new login into the chat-db. If a null it's no unique.
 	 * { login: elem }
 	 */
-	async makePostRequest(elem: object) { return this.#fetchRequestToServer('POST', elem) }
+	async makePostRequest(elem: object) {
+		// debugger;
+		return this.#fetchRequestToServer('POST', elem)
+	}
 
 	async makeGetRequest() { return this.#fetchRequestToServer('GET'); }
 

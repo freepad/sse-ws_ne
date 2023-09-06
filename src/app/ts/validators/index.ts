@@ -5,7 +5,6 @@
 - * @param elem: This's an input field (from popUp box for a uatorization).
 - * returns won't be
 - */
-
 export const checkLoginValidate = (elem: string) => {
 	const regexp = new RegExp(/^[a-zA-Z]\w{3,}/, 'i');
 	let inputArray = regexp.exec(elem);
