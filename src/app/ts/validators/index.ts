@@ -6,8 +6,10 @@
 - * returns won't be
 - */
 export const checkLoginValidate = (elem: string) => {
+
 	const regexp = new RegExp(/^[a-zA-Z]\w{3,}/, 'i');
 	let inputArray = regexp.exec(elem);
+	console.log('Влидатор: ', inputArray)
 	if (inputArray !== null
 		&& (inputArray as any).input.length === (inputArray as any)[0].length) { return true }
 	else if (inputArray !== null || (inputArray === null && elem !== undefined)) { return false }

@@ -1,5 +1,5 @@
-const WS = require('ws');
+// const WS = require('ws');
 
-if (typeof window === 'undefined') {
-	global.WS = WS;
-}
+// if (typeof window === 'undefined') {
+// 	global.WS = WS;
+// }

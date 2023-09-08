@@ -1,158 +1,98 @@
-const path = require('path');
-const http = require('http');
-const Koa = require('koa');
-const json = require('koa-json');
-const Router = require('koa-router');
-const Logger = require('koa-logger');
-const cors = require('@koa/cors')
-const WS = require('ws');
-const { koaBody } = require('koa-body');
-const { v4 } = require('uuid');
-const { streamEvents } = require('http-event-stream');
-const participant = require('./db');
+const http = require('http'),
+	Koa = require('koa'),
+	json = require('koa-json'),
+	cors = require('@koa/cors'),
+	// Router = require('koa-router'),
+	Logger = require('koa-logger'),
+	WS = require('ws'),
+	{ koaBody } = require('koa-body'),
+	{ v4 } = require('uuid'),
+	db = require('./db'),
+	// websockify = require('koa-websocket'),
+	// router = new Router(),
+	// app = websockify(new Koa());
+	app = new Koa();
+// server = http.createServer(app.callback(), (req, res) => {
+// 	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:7071'); // Замените 'http://example.com' на домен вашего клиента
+// 	res.setHeader('Access-Control-Allow-Credentials', 'true');
+// 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+
+// 	// ... остальной код серверной логики ...
+// }),.
 
 
-let ind = '';
-const app = new Koa();
-app.use(Logger());
-const router = new Router();
-let body: any = { login: '' };
-let listId: any[] = [];
-app
-	.use(cors({
-		'Access-Control-Allow-Origin': '*',
-		'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-		'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE, OPTIONS',
-	}))
-	.use(json());
+// app.use((ctx: any, next: any) => {
+// 	const origin = ctx.request.get('Origin');
+// 	if (!origin) {
+// 		return next();
+// 	}
 
-router.get('/', async (ctx: any) => {
+// 	const headers = { 'Access-Control-Allow-Origin': '*', };
 
-	ctx.response.body = { 'Logins': participant.logins }
-});
-router.get('/sse', async (ctx: any) => {
+// 	if (ctx.request.method !== 'OPTIONS') {
+// 		ctx.response.set({ ...headers });
+// 		try {
+// 			return next();
+// 		} catch (e: any) {
+// 			e.headers = { ...e.headers, ...headers };
+// 			throw e;
+// 		}
+// 		}
 
-	streamEvents(ctx.req, ctx.res, {
-		async fetch(lastEventId: any) {
-			console.log('Aborted link whith server and List a message ID wich cant sent: ', lastEventId);
-			listId.push(lastEventId);
-			return listId
-		},
-		async stream(sse: any) {
-			/**
-			 * sending datas to the client
-			 */
-			participant.listener((item: any) => {
-				console.log("SSE server ITEM:", item)
-				sse.sendEvent({
-					data: JSON.stringify(item),
-					id: v4()
-				});
-			});
-			return () => { }
-		}
+// 	if (ctx.request.get('Access-Control-Request-Method')) {
+// 		ctx.response.set({
+// 			...headers,
+// 			'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH',
+// 		});
 
+// 		if (ctx.request.get('Access-Control-Request-Headers')) {
+// 			ctx.response.set('Access-Control-Allow-Headers', ctx.request.get('Access-Control-Request-Headers'));
+// 		}
+
+// 		ctx.response.status = 204;
+// 	}
+// });
+
+// let connections: any[] = [];
+// app
+// 	.use(cors({
+// 		'Access-Control-Allow-Origin': '*',
+// 		'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+// 		'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE, OPTIONS',
+// 	}))
+// 	.use(json());
+// app.use(Logger());
+const server = http.createServer(app.callback());
+
+const webSocketServer = new WS.Server({ server });
+
+webSocketServer.on('connection', (ws: any) => {
+	ws.on('message', (m: any) => {
+		webSocketServer.clients.forEach((client: any) => client.send(m));
+		console.log('server MESSAGE: ', m);
 	});
 
-	ctx.respond = false
-});
-router.post('/chat', koaBody({ urlencoded: true }), async (ctx: any) => {
-	/* получаем пользователя уже со статусом и в сети */
-	body = ctx.request.body;
-	console.log('BODY REQ: ', body);
-	// for (let elem in Object.values(participant.logins)) {
-	// console.log('Elem IN OBj:', elem)
-	// console.log('LOGIN?: ', body['login'], Object.values(participant.logins));
-	// console.log('LOGIN?: ', body['login'] in Object.values(participant.logins));
-	// }
-	// ind = body['ind'];;
-	// if (body['login'] in Object.values(participant.logins)) {
-	const result = participant.logins.some((item: any) => {
-		console.log('TEST item 0', item);
-		console.log('TEST network 1', 'network' in item);
-		if (item['ind'] === body['ind'] && 'network' in item) {
-			console.log('TEST chat 2', participant.chattings);
-			participant.chattings.push({ ind: body['ind'], message: body['message'] });
-			ctx.response.body = { 'status': 'Messaage Ok' }
-		}
-		else if (item['login'] === body['login']) {
-			item['ind'] = body['ind'];
-			item['network'] = body['network']
-			participant.chattings.push({ ind: body['ind'], message: body['message'] });
-			ctx.response.body = { 'status': 'Messaage Ok' }
-		}
-		console.log('CHATTINGS: ', participant.chattings);
-	});
+	ws.on("error", (e: any) => ws.send(e));
 
-	console.log(" 'ind' in body: ", 'ind' in body, body);
-	if (!result && 'ind' in body) {
-		participant.logins['login'];
-		participant.logins['ind'] = body['ind'];
-		participant.logins['network'] = body['network']
-
-		participant.chattings.push({ ind: body['ind'], message: body['message'] });
-		ctx.response.body = { 'status': 'Messaage Ok' }
-		console.log('CHATTINGS 2: ', participant.chattings);
-	}
-	else if (result) {
-		ctx.response.body = { 'status': 'Messaage Ok' }
-		console.log('CHATTINGS 3: ', participant.chattings);
-	}
-	// }
-	console.log('CHATTINGS 4: ', participant.chattings);
-	console.log('CHATE LEN: ', participant.chattings.length)
-	ind = '';
-	body = '';
+	ws.send('Hi there, I am a WebSocket server');
 })
-router.post('/', koaBody({ urlencoded: true }), async (ctx: any) => {
-	body = ctx.request.body;
-	console.log('request.POST_BODY: ', body,);
-	if (!body) return
-	/**
-	 * If a arrFilter has value 'Ok' it's means that this's' filter's value was founded.
-	 * If 'Ok' it means a 'Login'  this's a unique.
-	*/
-	let arrFilter = participant.logins.filter((item: any) => { if (item['login'] === body['login']) return 1 });
-	let status = arrFilter.length === 0 ? 'Ok' : 'Exist';
 
-	console.log('TEST Status 01: ', status);
+// app
+// 	.use(router.routes())
+// 	.use(router.allowedMethods());
 
-	if (status !== 'Exist') {
-		ind = makeUniqueId(v4());
-		console.log('TEST Status 02: ', status);
-		Object(body)['ind'] = ind;
-		participant.adds(body);
-		ctx.response.body = { 'status': status, 'ind': ind };
-		console.log('request.SEND_BODY: ', ctx.response.body,);
-		return
-	}
-	ctx.response.body = { 'status': status };
-	arrFilter = [];
-});
-
-app
-	.use(router.routes())
-	.use(router.allowedMethods());
-
-const server = http.createServer(app.callback())
-const wsServer = new WS.Server({ server });
-
-wsServer.on('connection', (ws: any) => ws.send('Hello Ws connection:'));
-wsServer.on('opent', (ws: any) => ws.send('Hello Ws OPEN:'));
-wsServer.on('close', (ws: any) => ws.send('Hello Ws CLOSE:'));
-wsServer.on('error', (ws: any) => ws.send('Hello Ws ERROR:'));
-
-const port = 7070;
-server.listen(port, (err: any) => {
+const port = process.env.PORT || 7070;
+app.listen(7070, (err: any) => {
 	if (err) {
-		console.error('Port 7070, we gets Err: ', err);
+		console.error('Port, we gets Err: ', err);
 		return
 	}
-	console.log('Start listens by a 7070 port')
+	console.warn('Server started on localhost:', port);
 });
 
-function makeUniqueId(str: string) {
-	const respons = participant.logins.some((item: any) => { if (item.ind === str) str });
-	if (respons) makeUniqueId(str);
-	return str;
-}
+
+// function makeUniqueId(str: string) {
+// 	const respons = db.logins.some((item: any) => { if (item.id === str) str });
+// 	if (respons) makeUniqueId(str);
+// 	return str;
+// }
