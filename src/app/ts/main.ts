@@ -6,13 +6,13 @@ const {WSocket }=require('./websockets');
 
 
 document.addEventListener('DOMContentLoaded', () => {
-	const wsConnection = new WSocket("ws://localhost:7070");
+	
 	console.log('Страница загрузилась');
 	
 	const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
 	(body[0].querySelector('.chattalks > div:last-of-type') as HTMLElement).setAttribute('style', "display:none;")
 	
-	/* it for events by indentifikation a new Login - the start*/
+	/* it for events by indentifikation a new Login - start*/
 	body[0].insertAdjacentHTML("afterbegin", fun.forms());	
 	const formIdentification = body[0].querySelector('.author') as HTMLFormElement;
 	const input = body[0].querySelector('input') as HTMLInputElement;
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	formIdentification.addEventListener('keypress', async (e: any) => sendToServe(e));
 	formIdentification.addEventListener('click', async (e: any) => sendToServe(e));
 	
-	function sendToServe(e: any) {
+	async function sendToServe(e: any) {
 		if ((((e as MouseEvent).target as HTMLButtonElement).type === 'submit')
 			|| ((e as KeyboardEvent).key === 'Enter')
 		) {
@@ -36,12 +36,13 @@ document.addEventListener('DOMContentLoaded', () => {
 			console.log('SUBMIT'),
 			console.log('Прослушка -  получили событие Inpuut из формы New-Login');
 			resultOfFormIdentification = JSON.stringify(fun.author(e));
-			wsConnection.send(JSON.stringify(resultOfFormIdentification));			
-			wsConnection.onOpen(e);
-			wsConnection.onMessage(e);
-			wsConnection.onError(e); 
-			input.value = ''; 
+			const ws = await new WSocket("ws://localhost:7070");
+			
+			
+			ws.sends(JSON.stringify(resultOfFormIdentification));			
+			 
 		}
 	}
-	/* it for events by indentifikation a new Login - the end*/
+	/* it for events by indentifikation a new Login - start*/
 });
+
