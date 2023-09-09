@@ -39,7 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			const ws = await new WSocket("ws://localhost:7070");
 			
 			
-			ws.sends(JSON.stringify(resultOfFormIdentification));			
+			ws.sends(JSON.stringify(resultOfFormIdentification));	
+		input.value = '';
 			 
 		}
 	}

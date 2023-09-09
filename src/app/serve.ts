@@ -1,14 +1,10 @@
-
-
 const http = require('http'),
 	Koa = require('koa'),
 	json = require('koa-json'),
 	cors = require('@koa/cors'),
 
 	// Router = require('koa-router'),
-// websockify = require('koa-websocket'),
 // router = new Router(),
-// app = websockify(new Koa()),
 	Logger = require('koa-logger'),
 	WS = require('ws'),
 	{ koaBody } = require('koa-body'),
@@ -19,6 +15,7 @@ const http = require('http'),
 const server = http.createServer(app.callback);
 const webSocketServer = new WS.Server({ server });
 let newClient = {};
+
 webSocketServer.on('connection', (ws: any) => {
 	ws.on('message', (m: any) => {
 		console.log('SERVER_: ', typeof JSON.parse(JSON.parse(m)), JSON.parse(JSON.parse(m)));
@@ -28,34 +25,12 @@ webSocketServer.on('connection', (ws: any) => {
 		if (result === undefined) {
 			newClient = { login: message['newLogin'], id: makeUniqueId(v4()) };
 			db.logins.push(newClient);
-			// webSocketServer.clients.forEach((client: any) => client.send(JSON.stringify(newClient)));
-
-
-			console.log('TYU: ', JSON.stringify(newClient))
-			const tyu = JSON.stringify(newClient);
-			ws.send(tyu);
+			webSocketServer.clients.forEach((client: any) => client.send(JSON.stringify(newClient)));
 		};
 	});
-
-
-	// if (JSON.stringify(newClient) !== '{}') {
-	// }
-
 	ws.on("error", (e: any) => ws.send(e));
-
-	// ws.send('Hi there, I am a WebSocket server');
 });
 server.listen(7070, () => console.log("Server started"));
-
-
-
-// app
-// 	.use(router.routes())
-// 	.use(router.allowedMethods());
-
-
-
-
 
 function makeUniqueId(str: string) {
 	const respons = db.logins.some((item: any) => { if (item.id === str) str });
