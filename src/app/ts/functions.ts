@@ -2,6 +2,10 @@ const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLEleme
 const { WSocket } = require('./websockets');
 let newLogin: any[] = [];
 const { UsersNetwork } = require('./users');
+const { ChatSqreen } = require('./chat');
+
+const chatInput = body[0].querySelector('.chattalks input') as HTMLElement;
+const chat = new ChatSqreen(chatInput);
 
 export const fun = {
 	forms() {
@@ -43,6 +47,7 @@ export const fun = {
 	 * и загрывает соединение
 	 */
 	loadPage() {
+		newLogin = [];
 		const wsLoadPage = new WSocket("ws://localhost:7070/");
 
 		// debugger;
@@ -144,7 +149,9 @@ export function addLogin(elem: HTMLCollectionOf<HTMLElement>) {
 				const boxContainsUser = document.querySelectorAll('.accaunts');
 				boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', persone.addUser);
 
-				debugger;
+				// debugger;
+				elem[0].querySelector('.chattalks > div:last-of-type')
+					?.removeAttribute('style');
 				elem[0].querySelector('.author')?.remove()
 			}
 			else if (req.length < 3) {
@@ -175,7 +182,9 @@ function addUser(data: any) {
 	});
 
 	persone.addId = data['id'];
-	// debugger;
+	persone.addId;
+	chat.userChat = persone;
+
 	return persone;
 }
 
@@ -187,3 +196,9 @@ function addUserStyle() {
 
 }
 /* it for events by indentifikation a new Login - start*/
+// прослушка на "input" которая отправляет отправку сообщений
+chat.listenerInputChat;
+const sqreenChat = body[0].querySelector('.chattalks > div') as HTMLElement;
+chat.sendMessage = sqreenChat;
+debugger
+// }
