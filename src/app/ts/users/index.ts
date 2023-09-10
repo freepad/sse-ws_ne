@@ -13,17 +13,17 @@ class Users {
 
 class UsersHtml extends Users {
 	status: boolean;
-	templateHtml: HTMLElement;
+	#templateHtml: HTMLElement;
 
 	constructor(newLogin: string) {
 		super(newLogin)
 		this.status = false;
-		this.templateHtml = document.createElement('div') as HTMLElement;
+		this.#templateHtml = document.createElement('div') as HTMLElement;
 	}
 
 	private crateUserHtml() {
 
-		const div: HTMLElement = this.templateHtml;
+		const div: HTMLElement = this.#templateHtml;
 		const divImg = div.cloneNode(true);
 		(divImg as HTMLElement).className = 'preview';
 		const divLogin = div.cloneNode(true);
@@ -44,19 +44,19 @@ class UsersHtml extends Users {
 
 		(div as HTMLElement).className = `accaunt__online_one`;
 
-		this.templateHtml = div as HTMLElement;
+		this.#templateHtml = div as HTMLElement;
 		// debugger
 		// return this.templateHtml;
 	}
 
-	get addAllUser() {
+	/* get addAllUser() {
 		this.crateUserHtml();
 		return this.templateHtml
-	}
+	 }*/
 
-	get addOneUser(): HTMLElement {
+	get addUser() {
 		this.crateUserHtml();
-		return this.templateHtml
+		return this.#templateHtml
 	}
 
 }

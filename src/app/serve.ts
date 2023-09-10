@@ -11,25 +11,31 @@ const http = require('http'),
 	{ v4 } = require('uuid'),
 	db = require('./db'),
 	app = new Koa();
-
 const server = http.createServer(app.callback);
-const webSocketServer = new WS.Server({ server });
+const wss = new WS.Server({ server });
 let newClient = {};
 
-webSocketServer.on('connection', (ws: any) => {
+	
+wss.on('connection', (ws: any, req:any) => {	
 	ws.on('message', (m: any) => {
-		console.log('SERVER_: ', typeof JSON.parse(JSON.parse(m)), JSON.parse(JSON.parse(m)));
+	console.log(`WebSocket req: ${req.url}`);
+		/* console.log('SERVER_: ', typeof JSON.parse(JSON.parse(m)), JSON.parse(JSON.parse(m))); */
 		const message = JSON.parse(JSON.parse(m));
 		const result = db.logins.find((elem: any) => elem['login'] === message['newLogin']);
 		console.log('RESULT: ', result);
 		if (result === undefined) {
 			newClient = { login: message['newLogin'], id: makeUniqueId(v4()) };
 			db.logins.push(newClient);
-			webSocketServer.clients.forEach((client: any) => client.send(JSON.stringify(newClient)));
+			wss.clients.forEach((client: any) => client.send(JSON.stringify(newClient)));
+		}
+		else{
+			newClient = {};
+			wss.clients.forEach((client: any) => client.send(JSON.stringify(newClient)));
 		};
 	});
 	ws.on("error", (e: any) => ws.send(e));
 });
+
 server.listen(7070, () => console.log("Server started"));
 
 function makeUniqueId(str: string) {
