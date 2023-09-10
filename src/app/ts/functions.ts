@@ -28,8 +28,8 @@ export const fun = {
 	</section>`
 	},
 
-	author(event: any) {
-		console.log('Старт author()')
+	idForn(event: any) {
+		console.log('Старт idForn()')
 
 
 
@@ -45,7 +45,8 @@ export const fun = {
 
 		}
 
-	}
+	},
+	loadPage() { }
 }
 
 /* it for events by indentifikation a new Login - start*/
@@ -89,7 +90,7 @@ export function addLogin(elem: HTMLCollectionOf<HTMLElement>) {
 		e.preventDefault();
 		if (input.value.length < 1) { console.log('Длина INPUT = 0:', input.value.length); return }
 		console.log('Прослушка -  получили событие Inpuut из формы New-Login');
-		const resultOfFormIdentification = JSON.stringify(fun.author(e));
+		const resultOfFormIdentification = JSON.stringify(fun.idForn(e));
 		ws.sends(JSON.stringify(resultOfFormIdentification));
 		input.value = ''
 	}
@@ -153,3 +154,4 @@ function addUserStyle() {
 
 
 /* it for events by indentifikation a new Login - start*/
+
