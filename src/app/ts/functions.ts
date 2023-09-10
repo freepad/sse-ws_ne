@@ -3,12 +3,6 @@ const { WSocket } = require('./websockets');
 let newLogin: any[] = [];
 const { UsersNetwork } = require('./users');
 
-
-// export function generates(generate: any) {
-// 	newLogin.push((generate));
-// 	return newLogin
-// }
-
 export const fun = {
 	forms() {
 		return `<section class="author">
@@ -30,9 +24,6 @@ export const fun = {
 
 	idForn(event: any) {
 		console.log('Старт idForn()')
-
-
-
 		if ((((event as MouseEvent).target as HTMLButtonElement).type === 'submit'
 			|| (event as KeyboardEvent).key === 'Enter')) {
 			const form = body[0].querySelector('.author') as HTMLFormElement;
@@ -41,16 +32,57 @@ export const fun = {
 			event.preventDefault();
 			console.log('Прослушка - получили данные для отправки на сервер из формы New-Login');
 			return { newLogin: input.value }
-
-
 		}
-
 	},
-	loadPage() { }
+
+	/**
+	 * После того как DOM-страницы загрузался
+	 * Открывает соединение на сервер.
+	 * делает запрос зарегистрированных пользователей из "/" адреса
+	 * Если есть пользователи, загружает их на страницу.
+	 * и загрывает соединение
+	 */
+	loadPage() {
+		const wsLoadPage = new WSocket("ws://localhost:7070/");
+
+		// debugger;
+		wsLoadPage.onMessage = async (e: any) => {
+			// debugger;
+			const data = JSON.parse(e.data);
+			console.log('DATA: ', data);
+			// debugger;
+			if (data['users'].length < 1) {
+				wsLoadPage.onClose();
+				return
+			}
+			await Array.from(data['users']).forEach((elem: any) => {
+
+				const persone = addUser(elem);
+
+				const boxContainsUser = document.querySelectorAll('.accaunts');
+				boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', persone.addUser);
+			});
+			wsLoadPage.onClose();
+		}
+		const request = JSON.stringify({ users: [] });
+		wsLoadPage.sends(request);
+
+	}
+
 }
 
 /* it for events by indentifikation a new Login - start*/
-
+/**
+ *
+ * @param elem: HTMLElement формы для ридентификации
+ * Запускает прослешку событий на нажетие
+ *  - клавиши "Enter"
+ *  - click по "subnite"
+ *
+ * События вызывыют под-функцию "sendToServe".
+ * Отправляет имя логина н сервер. Проверяется - зарегистрирован или нет.
+	 *  Если нет то объект нового пользователя вставляется в левый контейнер чата.
+ */
 export function addLogin(elem: HTMLCollectionOf<HTMLElement>) {
 	elem[0].insertAdjacentHTML("afterbegin", fun.forms());
 	const formIdentification = body[0].querySelector('.author') as HTMLFormElement;
@@ -61,9 +93,6 @@ export function addLogin(elem: HTMLCollectionOf<HTMLElement>) {
 		console.warn("Note: User's browser id ofline now!");
 	});
 
-
-
-
 	formIdentification.addEventListener('keypress', (e: any) => {
 		if ((e as KeyboardEvent).key === 'Enter') {
 			// debugger;
@@ -71,7 +100,6 @@ export function addLogin(elem: HTMLCollectionOf<HTMLElement>) {
 			addUserStyle();
 		};
 	});
-
 	formIdentification.addEventListener('click', (e: any) => {
 		if (((e as MouseEvent).target as HTMLButtonElement).type === 'submit') {
 			// debugger;
@@ -83,8 +111,9 @@ export function addLogin(elem: HTMLCollectionOf<HTMLElement>) {
 
 
 	async function sendToServe(e: any) {
-		const ws = new WSocket("ws://localhost:7070");
-		// debugger
+		const ws = new WSocket("ws://localhost:7070/login");
+
+		// debugger}
 		ws.onMessage = getNewLogin();
 		// debugger;
 		e.preventDefault();
@@ -103,37 +132,25 @@ export function addLogin(elem: HTMLCollectionOf<HTMLElement>) {
 	 * @returns void
 	 */
 	function getNewLogin() {
+		// debugger;
 		return (e: any) => {
 			const req: string = e.data;
 			// debugger;
 			if (req.length > 2) {
 				const data = JSON.parse(e.data);
+				const persone = addUser(data);
 
-				const persone = new UsersNetwork(data['login']);
-				// debugger;
-				if (navigator.onLine) {
-					persone.onOrOfLine = 'onLine';
-					// debugger;
-				}
-
-				console.log('User is now online');
-				window.addEventListener("offline", (event) => {
-					console.log('User is now offline');
-					persone.onOrOfLine = 'offline';
-				});
-
-				persone.addId = data['id'];
-				// debugger;
 
 				const boxContainsUser = document.querySelectorAll('.accaunts');
 				boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', persone.addUser);
-				// debugger;
+
+				debugger;
 				elem[0].querySelector('.author')?.remove()
 			}
 			else if (req.length < 3) {
 				const p = elem[0].querySelector('.not') as HTMLInputElement;
 				if (p) p.remove();
-				debugger
+				// debugger
 				const input = elem[0].querySelector('.author') as HTMLInputElement;
 				input.insertAdjacentHTML('beforeend', ('<p class="not" style="color:red;">Пользователь уже зарегистрирован</p>' as any));
 
@@ -143,6 +160,25 @@ export function addLogin(elem: HTMLCollectionOf<HTMLElement>) {
 
 }
 
+function addUser(data: any) {
+	const persone = new UsersNetwork(data['login']);
+	// debugger;
+	if (navigator.onLine) {
+		persone.onOrOfLine = 'onLine';
+		// debugger;
+	}
+
+	console.log('User is now online');
+	window.addEventListener("offline", (event) => {
+		console.log('User is now offline');
+		persone.onOrOfLine = 'offline';
+	});
+
+	persone.addId = data['id'];
+	// debugger;
+	return persone;
+}
+
 function addUserStyle() {
 	setTimeout(() => {
 		const users = document.querySelectorAll('.accaunt__online_one');
@@ -150,8 +186,4 @@ function addUserStyle() {
 	}, 700);
 
 }
-
-
-
 /* it for events by indentifikation a new Login - start*/
-

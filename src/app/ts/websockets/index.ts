@@ -1,3 +1,15 @@
+/**
+ * Класс для работы с "WebSocket" протоколом.
+ * Запускает прослушку событий:
+ * - 'open';
+ * - 'message';
+ * -'close'.
+ *  Каждое событие запускает фукцию по умолчанию.
+ * Каждую функцию можно переписать под свои условия.
+ *
+ *  Есть фунция зкрытия соединения.
+ *  Она возвращает соманду - закрыть соединение.
+ */
 export class WSocket {
 	socket: any;
 	handlers: any;
@@ -11,12 +23,17 @@ export class WSocket {
 		});
 
 		this.socket.addEventListener('message', (e: any) => {
-			console.log('onMESSAGE: ', this.onMessage);
 			this.onMessage(e);
 		});
 
 		this.socket.addEventListener('close', (e: any) => {
-			this.onClose(e);
+
+			if (e.wasClean) {
+				console.log('WebSocket connection closed clean!');
+			}
+			else {
+				console.log('WebSocket connection closed aborted!');
+			}
 		});
 
 		this.socket.addEventListener('error', (e: any) => {
@@ -44,29 +61,21 @@ export class WSocket {
 
 	onMessage = (e: any) => {
 		console.log('WebSocket Received message: ', e.data);
-
 	};
 
-	onClose(e: any) {
-
-		if (e.wasClean) {
-			console.log('WebSocket connection closed clean!');
-		}
-		else {
-			console.log('WebSocket connection closed aborted!');
-		}
+	onClose() {
+		return this.socket.close();
 	};
 
 	onError(e: any) {
 		console.log('WebSocket error: ', e);
 	}
 
-	sends(data: string) {
+	sends(datas: string) {
 		console.log('DataSend!');
-		this.handlers.data.push(data);
+		this.handlers.data.push(datas);
 	};
 
-	// getMessage(){
 
 }
 
