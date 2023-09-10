@@ -84,7 +84,7 @@ export function addLogin(elem: HTMLCollectionOf<HTMLElement>) {
 	async function sendToServe(e: any) {
 		const ws = new WSocket("ws://localhost:7070");
 		// debugger
-		ws.onMessage = getMessageOfServer();
+		ws.onMessage = getNewLogin();
 		// debugger;
 		e.preventDefault();
 		if (input.value.length < 1) { console.log('Длина INPUT = 0:', input.value.length); return }
@@ -101,7 +101,7 @@ export function addLogin(elem: HTMLCollectionOf<HTMLElement>) {
 	 *  Если нет то объект нового пользователя вставляется в левый контейнер чата.
 	 * @returns void
 	 */
-	function getMessageOfServer() {
+	function getNewLogin() {
 		return (e: any) => {
 			const req: string = e.data;
 			// debugger;
