@@ -97,6 +97,3 @@ export function addUser(data: any) {
 chat.listenerInputChat;
 const sqreenChat = body[0].querySelector('.chattalks > div') as HTMLElement;
 chat.sendMessage = sqreenChat;
-debugger
-// }
-
