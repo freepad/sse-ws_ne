@@ -47,7 +47,7 @@ class UsersHtml extends Users {
 		this.#templateHtml = div as HTMLElement;
 		// debugger
 		// return this.templateHtml;
-		}
+	}
 
 	get addUser() {
 		this.crateUserHtml();

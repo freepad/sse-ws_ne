@@ -12,17 +12,29 @@ export class ChatSqreen {
 		this.user;
 		const mess = (this.messageHtml as HTMLInputElement).value;
 		debugger;
-		this.sqreenChat.insertAdjacentHTML('beforeend', (`<div>${mess}</div>` as any));
+		this.sqreenChat.insertAdjacentHTML('beforeend', (`<div class="post">
+					<div class="post-accaunt sourcename">${this.user.login}</div>
+					<div class="date">01:25 20.03.2019</div>
+					<div class="text">${mess} </div>
+				</div>` as any));
+
+		const postOfChat = JSON.stringify({
+			id: this.user.addId,
+			idMessage: null,
+			message: mess,
+		})
+		this.server(postOfChat);
 	}
 
+	/**
+	 * Получаем объект пользователя со все его свойствами.
+	 *  Это альтернатива для наследования
+	 */
 	set userChat(user: object) {
-		// debugger;
+
 		this.user = user;
 	}
-
-	/* get userChat() {
-		return this.user
-	} */
+	server = (str: string) => { }// в функциях прописать сервер отправку и рассылку сообщений
 	/*
 	* Получаем контейнет экран с ссобщения чата
 	*/

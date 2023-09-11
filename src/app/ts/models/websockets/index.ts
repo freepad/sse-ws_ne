@@ -55,6 +55,9 @@ export class WSocket {
 			this.socket.send(this.handlers.data[0]);
 			this.handlers.data = [];
 		} else {
+			/**
+			 * Если БД пустая
+			 */
 			console.error('Not datas for a Sehding');
 		}
 	};
