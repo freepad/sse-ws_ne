@@ -10,19 +10,26 @@ export class ChatSqreen {
 			if ((e as KeyboardEvent).key === 'Enter') {
 				e.preventDefault();
 				debugger;
-				this.onKeypress(e);
+				// this.onKeypress(e);
+				let mess = (this.messageHtml as HTMLInputElement).value;
+				const postOfChat = {
+					message: mess,
+				}
+				this.server(postOfChat);
+				mess = '';
+
 			}
 		});
 	};
 
-	private onKeypress(e: any) {
-		let mess = (this.messageHtml as HTMLInputElement).value;
-		const postOfChat = {
-			message: mess,
-		}
-		this.server(postOfChat);
-		mess = '';
-	};
+	// private onKeypress(e: any) {
+	// 	let mess = (this.messageHtml as HTMLInputElement).value;
+	// 	const postOfChat = {
+	// 		message: mess,
+	// 	}
+	// 	this.server(postOfChat);
+	// 	mess = '';
+	// };
 
 	/**
 	 * Получаем объект пользователя со все его свойствами.
