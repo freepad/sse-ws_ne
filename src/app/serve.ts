@@ -1,3 +1,5 @@
+// Server
+
 let postId = 0;
 const http = require('http'),
 	Koa = require('koa'),
@@ -17,7 +19,6 @@ let newClient = {};
 
 wss.on('connection', (ws: any, req: any) => {
 	ws.on('message', (m: any) => {
-
 		let url = req.url.slice(0,);
 		console.log('URL: ', typeof url, url)
 		if (url.indexOf('/login') !== (-1)) {
@@ -49,6 +50,12 @@ wss.on('connection', (ws: any, req: any) => {
 			const id = makePostId(postId, db.posts);
 			console.log('POAT ID: ', id);
 
+			// need take a login name
+			console.log('SErrver LOGINS: ', db.logins);
+			const login = db.logins.filter((item: any) => { if (item['id'] === onePost['id']) return item['login'] });
+			onePost['login'] = login[0]['login'];
+
+			console.log('SErver onePOST: ', onePost);
 			newPost = { idPost: id, post: onePost }
 			db.posts.push(newPost)
 			newPost = JSON.stringify(newPost);
@@ -79,3 +86,5 @@ function makePostId(ind: number, database: any) {
 	postId = ind - 1;
 	return ind;
 }
+
+// Server

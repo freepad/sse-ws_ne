@@ -38,7 +38,7 @@ export function addLogin(elem: HTMLCollectionOf<HTMLElement>) {
 }
 
 /**
- * Обновляем внешний вид логина в коловнке чата.
+ * Обновляем внешний вид логина в колонке чата.
  */
 function addUserStyle() {
 	setTimeout(() => {
@@ -47,3 +47,5 @@ function addUserStyle() {
 	}, 700);
 
 }
+
+// functions

@@ -8,6 +8,7 @@ export class ChatSqreen {
 		this.messageHtml.parentElement?.addEventListener('keypress', (e: any) => {
 			if ((e as KeyboardEvent).key === 'Enter') {
 				e.preventDefault();
+				debugger;
 				this.onKeypress(e);
 			}
 		});
@@ -41,3 +42,4 @@ export class ChatSqreen {
 				</div>` as any));
 	}
 }
+// Chat model

@@ -49,10 +49,6 @@ export class WSocket {
 	onMessage = (e: any) => { console.log('WebSocket Received message: ', e.data) };
 	onClose() { return this.socket.close() };
 	onError(e: any) { console.log('WebSocket error: ', e) };
-
-
-
-
 }
 
-
+// WebSocets
