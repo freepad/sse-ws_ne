@@ -1,7 +1,7 @@
 
 const myDb = {
 	logins: ([] as any[]),
-	chattings: ([] as any[]),
+	posts: ([] as any[]),
 	handlers: ([] as any[]),
 
 	/**
