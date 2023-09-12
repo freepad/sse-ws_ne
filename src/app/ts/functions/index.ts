@@ -37,7 +37,6 @@ export function addLogin(elem: HTMLCollectionOf<HTMLElement>) {
 	});
 }
 
-
 /**
  * Обновляем внешний вид логина в коловнке чата.
  */
@@ -48,5 +47,3 @@ function addUserStyle() {
 	}, 700);
 
 }
-
-
