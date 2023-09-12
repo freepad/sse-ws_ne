@@ -49,3 +49,17 @@ function addUserStyle() {
 }
 
 // functions
+
+export function getMetaDataUser() {
+
+	let userId: any = {};
+	const boxContainsUser = document.querySelector('.you')
+		?.querySelector('.sourcename');
+	debugger
+	if (boxContainsUser?.hasAttribute('data-num')) {
+		userId = { id: boxContainsUser?.getAttribute('data-num') };
+	}
+
+	return userId
+
+}

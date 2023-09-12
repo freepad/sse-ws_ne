@@ -3,10 +3,11 @@ const { WSocket } = require('../../models/websockets');
 const { UsersNetwork } = require('../../models/users');
 const { ChatSqreen } = require('../../models/chat');
 const { fun } = require('../../functions/forms/logins');
+const { getMetaDataUser } = require('../../functions');
 
 const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
 const chatInput = body[0].querySelector('.chattalks input') as HTMLElement;
-const chat = new ChatSqreen(chatInput);
+
 
 /**
 	 * Обработчик который отправляет имя логина н сервер. Проверяется - зарегистрирован или нет.
@@ -27,13 +28,12 @@ export async function sendToServe(e: any) {
 }
 
 /**
- * Отправляем отправляет имя логина н сервер. Проверяется - зарегистрирован или нет.
- *  Если нет то объект нового пользователя вставляется в левый контейнер чата.
+ * Функция отправляется на сервер , чтоб получить результат проверки логина
+ * зарегистрирован или нет.
+ * Если нет то объект нового пользователя вставляется в левый контейнер чата.
  * @returns void
  */
 function getNewLogin() {
-
-
 	return (e: any) => {
 		const req: string = e.data;
 
@@ -71,28 +71,47 @@ function getNewLogin() {
  */
 export function addUser(data: any) {
 	const persone = new UsersNetwork(data['login']);
+
+	/* User network's status is checking  - start */
 	if (navigator.onLine) persone.onOrOfLine = 'onLine';
 
 	window.addEventListener("offline", (event) => {
 		persone.onOrOfLine = 'offline';
 	});
+	/* User network's status is checking  - finish */
 
 	persone.addId = data['id'];
 	persone.addId;
 
-	chat.userChat = persone;
+	// chat.userChat = persone;
 	return persone;
 }
 
+
 /* it for events by indentifikation a new Login - start*/
 const sqreenChat = body[0].querySelector('.chattalks > div:first-of-type') as HTMLElement;
+
+
+
+
+
+
+const chat = new ChatSqreen(chatInput);// !!!!!!!!!
 chat.sendMessage = sqreenChat;
 
 chat.server = (elem: any) => {
-	const wsChat = new WSocket("ws://localhost:7070/chat");
-	let post = JSON.stringify(elem);
-	wsChat.sends(post);
-	wsChat.onMessage = getNewPost();
+	// debugger;
+	const user = getMetaDataUser();
+	// chat.userChat(user);
+	debugger;
+	if ('id' in user) {
+		elem['id'] = user['id'];
+		const wsChat = new WSocket("ws://localhost:7070/chat");
+		let post = JSON.stringify(elem);
+		wsChat.sends(post);
+		wsChat.onMessage = getNewPost();
+	}
+	return
 }
 
 
