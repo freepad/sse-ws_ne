@@ -10,19 +10,26 @@ export class ChatSqreen {
 			if ((e as KeyboardEvent).key === 'Enter') {
 				e.preventDefault();
 				debugger;
-				this.onKeypress(e);
+				// this.onKeypress(e);
+				let mess = (this.messageHtml as HTMLInputElement).value;
+				const postOfChat = {
+					message: mess,
+				}
+				this.server(postOfChat);
+				mess = '';
+
 			}
 		});
 	};
 
-	private onKeypress(e: any) {
-		let mess = (this.messageHtml as HTMLInputElement).value;
-		const postOfChat = {
-			message: mess,
-		}
-		this.server(postOfChat);
-		mess = '';
-	};
+	// private onKeypress(e: any) {
+	// 	let mess = (this.messageHtml as HTMLInputElement).value;
+	// 	const postOfChat = {
+	// 		message: mess,
+	// 	}
+	// 	this.server(postOfChat);
+	// 	mess = '';
+	// };
 
 	/**
 	 * Получаем объект пользователя со все его свойствами.
@@ -35,15 +42,8 @@ export class ChatSqreen {
 
 	server = (str: any) => { };// в функциях прописать сервер отправку и рассылку сообщений
 	/*
-	* Получаем контейнет экран с ссобщения чата
+	* Получаем экран чата
 	*/
-	set sendMessage(sqreenChat: HTMLElement) { this.sqreenChat = sqreenChat };
-	// get sendMessage() {
-	// 	return this.sqreenChat.insertAdjacentHTML('beforeend', (`<div class="post">
-	// 				<div class="post-accaunt sourcename">${this.user}</div>
-	// 				<div class="date">01:25 20.03.2019</div>
-	// 				<div class="text">${'mess'} </div>
-	// 			</div>` as any));
-	// }
+	set getSqreenChat(sqreenChat: HTMLElement) { this.sqreenChat = sqreenChat };
 }
 // Chat model

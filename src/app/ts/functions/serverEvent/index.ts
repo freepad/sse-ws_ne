@@ -1,4 +1,3 @@
-// ServerEvents
 const { WSocket } = require('../../models/websockets');
 const { UsersNetwork } = require('../../models/users');
 const { ChatSqreen } = require('../../models/chat');
@@ -7,8 +6,8 @@ const { getMetaDataUser } = require('../../functions');
 
 const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
 const chatInput = body[0].querySelector('.chattalks input') as HTMLElement;
-
-
+let wsChat: any;
+let ws: any;
 /**
 	 * Обработчик который отправляет имя логина н сервер. Проверяется - зарегистрирован или нет.
 	 * @param e: событие.
@@ -16,15 +15,24 @@ const chatInput = body[0].querySelector('.chattalks input') as HTMLElement;
 	 */
 export async function sendToServe(e: any) {
 	const input = body[0].querySelector('.login input') as HTMLInputElement;
-	const ws = new WSocket("ws://localhost:7070/login");
+	if (wsChat === undefined
+		|| (wsChat
+			&& (wsChat.readyState === 0 || wsChat.readyState > 1))) {
+		ws = new WSocket("ws://localhost:7070/login");
+	}
 	ws.onMessage = getNewLogin();
 
 	e.preventDefault();
 	if (input.value.length < 1) return
 
 	const resultOfFormIdentification = JSON.stringify(fun.idForn(e));
-	ws.sends(JSON.stringify(resultOfFormIdentification));
+	debugger;
+	ws.sends(resultOfFormIdentification);
+
+	ws.onOpen();
+
 	input.value = ''
+	return
 }
 
 /**
@@ -90,35 +98,34 @@ export function addUser(data: any) {
 
 /* it for events by indentifikation a new Login - start*/
 const sqreenChat = body[0].querySelector('.chattalks > div:first-of-type') as HTMLElement;
-
-
-
-
-
-
 const chat = new ChatSqreen(chatInput);// !!!!!!!!!
-chat.sendMessage = sqreenChat;
+chat.getSqreenChat = sqreenChat;
 
 chat.server = (elem: any) => {
 	// debugger;
 	const user = getMetaDataUser();
-	// chat.userChat(user);
-	debugger;
 	if ('id' in user) {
 		elem['id'] = user['id'];
-		const wsChat = new WSocket("ws://localhost:7070/chat");
+		// debugger;
+		if (wsChat === undefined
+			|| (wsChat
+				&& (wsChat.readyState === 0 || wsChat.readyState > 1))) {
+			wsChat = new WSocket("ws://localhost:7070/chat");
+
+		}
 		let post = JSON.stringify(elem);
 		wsChat.sends(post);
+		// wsChat.onOpen();
 		wsChat.onMessage = getNewPost();
+		return
 	}
-	return
 }
 
 
 function getNewPost() {
 	return (e: any) => {
 		const data = JSON.parse(e.data);
-		debugger;
+		// debugger;
 		if (("idPost" in data) === false) return
 		const post = data['post']['message'];
 		// const user = chat.user.login;
@@ -129,6 +136,8 @@ function getNewPost() {
 					<div class="date">01:25 20.03.2019</div>
 					<div class="text">${post} </div>
 				</div>` as any));
+		// wsChat.onClose();
 	}
 }
+
 // ServerEvents
