@@ -41,7 +41,7 @@ export class WSocket {
 
 		if (this.handlers.data.length > 0) {
 			const data = this.handlers.data[0];
-			debugger
+			// debugger
 			const send = this.socket.send;
 			// this.waiteForConnection(
 			// 	send,
