@@ -18,12 +18,14 @@ export class WSocket {
 		// debugger;
 
 		this.socket.addEventListener('open', (e: any) => {
-			console
+			// console
 			this.onOpen();
 		});
 
 		this.socket.addEventListener('message', (e: any) => {
 			this.onMessage(e);
+
+
 		});
 
 		this.socket.addEventListener('close', (e: any) => {
@@ -43,7 +45,6 @@ export class WSocket {
 
 		this.handlers = {
 			open: [],
-
 			close: [],
 			data: []
 		};
@@ -55,9 +56,6 @@ export class WSocket {
 			this.socket.send(this.handlers.data[0]);
 			this.handlers.data = [];
 		} else {
-			/**
-			 * Если БД пустая
-			 */
 			console.error('Not datas for a Sehding');
 		}
 	};

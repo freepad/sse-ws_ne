@@ -26,14 +26,14 @@ export function addLogin(elem: HTMLCollectionOf<HTMLElement>) {
 
 	formIdentification.addEventListener('keypress', (e: any) => {
 		if ((e as KeyboardEvent).key === 'Enter') {
-			debugger;
+			// debugger;
 			sendToServe(e);
 			addUserStyle();
 		};
 	});
 	formIdentification.addEventListener('click', (e: any) => {
 		if (((e as MouseEvent).target as HTMLButtonElement).type === 'submit') {
-			debugger;
+			// debugger;
 			sendToServe(e);
 			addUserStyle();
 		};
@@ -51,3 +51,5 @@ function addUserStyle() {
 	}, 700);
 
 }
+
+
