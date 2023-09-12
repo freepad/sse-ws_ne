@@ -35,15 +35,8 @@ export class ChatSqreen {
 
 	server = (str: any) => { };// в функциях прописать сервер отправку и рассылку сообщений
 	/*
-	* Получаем контейнет экран с ссобщения чата
+	* Получаем экран чата
 	*/
-	set sendMessage(sqreenChat: HTMLElement) { this.sqreenChat = sqreenChat };
-	// get sendMessage() {
-	// 	return this.sqreenChat.insertAdjacentHTML('beforeend', (`<div class="post">
-	// 				<div class="post-accaunt sourcename">${this.user}</div>
-	// 				<div class="date">01:25 20.03.2019</div>
-	// 				<div class="text">${'mess'} </div>
-	// 			</div>` as any));
-	// }
+	set getSqreenChat(sqreenChat: HTMLElement) { this.sqreenChat = sqreenChat };
 }
 // Chat model

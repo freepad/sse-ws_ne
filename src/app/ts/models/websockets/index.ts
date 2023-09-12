@@ -15,7 +15,6 @@ export class WSocket {
 	handlers: any;
 	constructor(url: string) {
 		this.socket = new WebSocket(url);
-
 		this.socket.addEventListener('open', (e: any) => { this.onOpen() });
 		this.socket.addEventListener('message', (e: any) => { this.onMessage(e); });
 		this.socket.addEventListener('close', (e: any) => {
@@ -33,6 +32,7 @@ export class WSocket {
 
 	sends(datas: string) {
 		console.log('DataSend!');
+		// this.socket.addEventListener('open', (e: any) => this.onOpen());
 		this.handlers.data.push(datas);
 	};
 
@@ -43,12 +43,22 @@ export class WSocket {
 			this.handlers.data = [];
 		} else {
 			console.error('Not datas for a Sehding');
+			this.handlers.data = [];
 		}
+		// this.socket.removeEventListener('open', (e: any) => this.onOpen());
 	};
+	get readyState() {
+		return this.socket.readyState
+	}
 
 	onMessage = (e: any) => { console.log('WebSocket Received message: ', e.data) };
 	onClose() { return this.socket.close() };
 	onError(e: any) { console.log('WebSocket error: ', e) };
+
+	listener = () => {
+
+
+	}
 }
 
 // WebSocets

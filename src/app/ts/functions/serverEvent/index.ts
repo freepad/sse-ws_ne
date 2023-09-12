@@ -7,7 +7,7 @@ const { getMetaDataUser } = require('../../functions');
 
 const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
 const chatInput = body[0].querySelector('.chattalks input') as HTMLElement;
-
+let wsChat: any;
 
 /**
 	 * Обработчик который отправляет имя логина н сервер. Проверяется - зарегистрирован или нет.
@@ -90,23 +90,21 @@ export function addUser(data: any) {
 
 /* it for events by indentifikation a new Login - start*/
 const sqreenChat = body[0].querySelector('.chattalks > div:first-of-type') as HTMLElement;
-
-
-
-
-
-
 const chat = new ChatSqreen(chatInput);// !!!!!!!!!
-chat.sendMessage = sqreenChat;
+chat.getSqreenChat = sqreenChat;
 
 chat.server = (elem: any) => {
 	// debugger;
 	const user = getMetaDataUser();
-	// chat.userChat(user);
-	debugger;
 	if ('id' in user) {
 		elem['id'] = user['id'];
-		const wsChat = new WSocket("ws://localhost:7070/chat");
+		debugger;
+		if (wsChat === undefined
+			|| (wsChat
+				&& (wsChat.readyState === 0 || wsChat.readyState > 1))) {
+			wsChat = new WSocket("ws://localhost:7070/chat");
+
+		}
 		let post = JSON.stringify(elem);
 		wsChat.sends(post);
 		wsChat.onMessage = getNewPost();
@@ -129,6 +127,7 @@ function getNewPost() {
 					<div class="date">01:25 20.03.2019</div>
 					<div class="text">${post} </div>
 				</div>` as any));
+		// wsChat.onClose();
 	}
 }
 // ServerEvents
