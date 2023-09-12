@@ -2,24 +2,19 @@ export class ChatSqreen {
 	user: any;
 	messageHtml: HTMLElement
 	sqreenChat: any;
+
 	constructor(elem: HTMLElement) {
 		this.messageHtml = elem;
 		this.messageHtml.parentElement?.addEventListener('keypress', (e: any) => {
 			if ((e as KeyboardEvent).key === 'Enter') {
-				debugger;
 				e.preventDefault();
 				this.onKeypress(e);
 			}
 		});
-
-		/* this.user = user; */
 	};
 
 	private onKeypress(e: any) {
 		let mess = (this.messageHtml as HTMLInputElement).value;
-		// debugger;
-
-
 		const postOfChat = {
 			id: this.user.addId,
 			message: mess,
@@ -32,18 +27,12 @@ export class ChatSqreen {
 	 * Получаем объект пользователя со все его свойствами.
 	 *  Это альтернатива для наследования
 	 */
-	set userChat(user: object) {
-
-		this.user = user;
-	};
+	set userChat(user: object) { this.user = user };
 	server = (str: any) => { };// в функциях прописать сервер отправку и рассылку сообщений
 	/*
 	* Получаем контейнет экран с ссобщения чата
 	*/
-	set sendMessage(sqreenChat: HTMLElement) {
-		this.sqreenChat = sqreenChat;
-
-	}
+	set sendMessage(sqreenChat: HTMLElement) { this.sqreenChat = sqreenChat };
 	get sendMessage() {
 		return this.sqreenChat.insertAdjacentHTML('beforeend', (`<div class="post">
 					<div class="post-accaunt sourcename">${this.user}</div>
@@ -51,5 +40,4 @@ export class ChatSqreen {
 					<div class="text">${'mess'} </div>
 				</div>` as any));
 	}
-
 }

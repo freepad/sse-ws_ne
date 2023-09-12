@@ -15,33 +15,14 @@ export class WSocket {
 	handlers: any;
 	constructor(url: string) {
 		this.socket = new WebSocket(url);
-		// debugger;
 
-		this.socket.addEventListener('open', (e: any) => {
-			// console
-			this.onOpen();
-		});
-
-		this.socket.addEventListener('message', (e: any) => {
-			this.onMessage(e);
-
-
-		});
-
+		this.socket.addEventListener('open', (e: any) => { this.onOpen() });
+		this.socket.addEventListener('message', (e: any) => { this.onMessage(e); });
 		this.socket.addEventListener('close', (e: any) => {
-
-			if (e.wasClean) {
-				console.log('WebSocket connection closed clean!');
-			}
-			else {
-				console.log('WebSocket connection closed aborted!');
-			}
+			if (e.wasClean) { console.log('WebSocket connection closed clean!') }
+			else { console.log('WebSocket connection closed aborted!') };
 		});
-
-		this.socket.addEventListener('error', (e: any) => {
-			this.onError(e);
-		});
-
+		this.socket.addEventListener('error', (e: any) => { this.onError(e) });
 
 		this.handlers = {
 			open: [],
@@ -49,6 +30,11 @@ export class WSocket {
 			data: []
 		};
 	}
+
+	sends(datas: string) {
+		console.log('DataSend!');
+		this.handlers.data.push(datas);
+	};
 
 	onOpen() {
 		console.log('WebSocket connection opened!');
@@ -60,22 +46,11 @@ export class WSocket {
 		}
 	};
 
-	onMessage = (e: any) => {
-		console.log('WebSocket Received message: ', e.data);
-	};
+	onMessage = (e: any) => { console.log('WebSocket Received message: ', e.data) };
+	onClose() { return this.socket.close() };
+	onError(e: any) { console.log('WebSocket error: ', e) };
 
-	onClose() {
-		return this.socket.close();
-	};
 
-	onError(e: any) {
-		console.log('WebSocket error: ', e);
-	}
-
-	sends(datas: string) {
-		console.log('DataSend!');
-		this.handlers.data.push(datas);
-	};
 
 
 }

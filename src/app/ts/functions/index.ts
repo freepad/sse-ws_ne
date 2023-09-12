@@ -18,22 +18,19 @@ export function addLogin(elem: HTMLCollectionOf<HTMLElement>) {
 	elem[0].insertAdjacentHTML("afterbegin", fun.forms());
 	const formIdentification = body[0].querySelector('.author') as HTMLFormElement;
 
-	console.log("Получили форму для регистрации New Login!");
-	// debugger;
 	window.addEventListener('offline', (e: any) => {
 		console.warn("Note: User's browser id ofline now!");
 	});
 
 	formIdentification.addEventListener('keypress', (e: any) => {
 		if ((e as KeyboardEvent).key === 'Enter') {
-			// debugger;
 			sendToServe(e);
 			addUserStyle();
 		};
 	});
 	formIdentification.addEventListener('click', (e: any) => {
 		if (((e as MouseEvent).target as HTMLButtonElement).type === 'submit') {
-			// debugger;
+
 			sendToServe(e);
 			addUserStyle();
 		};

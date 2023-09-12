@@ -4,8 +4,6 @@ const http = require('http'),
 	json = require('koa-json'),
 	cors = require('@koa/cors'),
 
-	// Router = require('koa-router'),
-// router = new Router(),
 	Logger = require('koa-logger'),
 	WS = require('ws'),
 	{ koaBody } = require('koa-body'),
@@ -20,7 +18,6 @@ let newClient = {};
 wss.on('connection', (ws: any, req: any) => {
 	ws.on('message', (m: any) => {
 
-		/* console.log('SERVER_: ', typeof JSON.parse(JSON.parse(m)), JSON.parse(JSON.parse(m))); */
 		let url = req.url.slice(0,);
 		console.log('URL: ', typeof url, url)
 		if (url.indexOf('/login') !== (-1)) {
@@ -51,10 +48,9 @@ wss.on('connection', (ws: any, req: any) => {
 			let newPost = {};
 			const id = makePostId(postId, db.posts);
 			console.log('POAT ID: ', id);
-			// newPost['idPost'] = id;
-			// newPost['post'] = post;
+
 			newPost = { idPost: id, post: onePost }
-			db.posts.push(newPost)//!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			db.posts.push(newPost)
 			newPost = JSON.stringify(newPost);
 			wss.clients.forEach((client: any) => {
 				client.send(newPost);
