@@ -112,5 +112,4 @@ function getNewPost() {
 				</div>` as any));
 	}
 }
-
 // ServerEvents
