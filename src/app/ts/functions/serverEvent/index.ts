@@ -124,8 +124,4 @@ chat.server = (elem: any) => {
 		return
 	}
 }
-
-
-
-
 // ServerEvents

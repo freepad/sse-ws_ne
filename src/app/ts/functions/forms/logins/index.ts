@@ -75,8 +75,6 @@ export const fun = {
 				debugger;
 				const boxContainsUser = document.querySelectorAll('.accaunts');
 				boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', persone.addUser);
-
-
 			});
 
 			/** к постам присваеваем логины */
@@ -84,9 +82,7 @@ export const fun = {
 				for (let i = 0; i < data['users'].length; i++) {
 					if (item['post']['id'].indexOf(data['users'][i]['id']) >= 0) {
 						item['login'] = data['users'][i]['login'];
-
 					}
-
 				}
 			});
 
@@ -101,7 +97,6 @@ export const fun = {
 					<div class="date">01:25 20.03.2019</div>
 					<div class="text">${post} </div>
 				</div>` as any));
-				// postReSort.shift();
 			});
 			sqreenChat.remove();
 			postReSort = [];
