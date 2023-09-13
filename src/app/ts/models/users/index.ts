@@ -99,7 +99,7 @@ export class userChat {
 	}
 
 	set userChat(user: object) {
-		debugger;
+		// debugger;
 		this.user = user;
 	}
 

@@ -54,7 +54,7 @@ export const fun = {
 			// debugger;
 			if (data['users'].length < 1) {
 				wsLoadPage.onClose();
-				return
+				return data
 			}
 			await Array.from(data['users']).forEach((elem: any) => {
 
@@ -64,9 +64,12 @@ export const fun = {
 				boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', persone.addUser);
 			});
 			wsLoadPage.onClose();
+
+			return data
 		}
 		const request = JSON.stringify({ users: [] });
 		wsLoadPage.sends(request);
+		wsLoadPage.onOpen();
 
 	}
 

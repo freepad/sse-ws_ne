@@ -24,15 +24,21 @@ export function addLogin(elem: HTMLCollectionOf<HTMLElement>) {
 
 	formIdentification.addEventListener('keypress', (e: any) => {
 		if ((e as KeyboardEvent).key === 'Enter') {
-			sendToServe(e);
-			addUserStyle();
+			sendToServe(e)
+				.then(() => {
+					addUserStyle();
+				});
 		};
 	});
 	formIdentification.addEventListener('click', (e: any) => {
 		if (((e as MouseEvent).target as HTMLButtonElement).type === 'submit') {
 
-			sendToServe(e);
-			addUserStyle();
+			sendToServe(e)
+				.then(() => {
+					addUserStyle();
+					//
+
+				});
 		};
 	});
 }
@@ -40,18 +46,23 @@ export function addLogin(elem: HTMLCollectionOf<HTMLElement>) {
 /**
  * Обновляем внешний вид логина в колонке чата.
  */
+let i = 0;
 function addUserStyle() {
-	setTimeout(() => {
+	// setTimeout(() => {
+	let user: Element[] = [];
 		const users = document.querySelectorAll('.accaunt__online_one');
-		users[users.length - 1].classList.add('you');
-	}, 700);
+	user = Array.from(users).filter((elem: any) => { if (elem.className.includes('imNew')) return elem });
+	// debugger;
+	if (user.length > 0) {
+		user[0].classList.remove('imNew');
+		user[0].classList.add('you');
+		return
+	}
+	setTimeout(() => addUserStyle(), 1000);
 
 }
 
-// functions
-
 export function getMetaDataUser() {
-
 	let userId: any = {};
 	const boxContainsUser = document.querySelector('.you')
 		?.querySelector('.sourcename');
@@ -59,7 +70,6 @@ export function getMetaDataUser() {
 	if (boxContainsUser?.hasAttribute('data-num')) {
 		userId = { id: boxContainsUser?.getAttribute('data-num') };
 	}
-
 	return userId
 
 }

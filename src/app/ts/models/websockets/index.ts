@@ -41,16 +41,11 @@ export class WSocket {
 
 		if (this.handlers.data.length > 0) {
 			const data = this.handlers.data[0];
-			debugger
-			const send = this.socket.send;
-			// this.waiteForConnection(
-			// 	send,
-			// 	data,
-			// 	1000
-			// );
+			// debugger
+			// const send = this.socket.send;
 			if (this.readyState === 1) {
 				console.log('WebSocket connection opened!');
-				send(data);
+				this.socket.send(data);
 				this.handlers.data = [];
 			} else {
 				setTimeout(() => this.onOpen(), 1000);

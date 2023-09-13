@@ -26,7 +26,7 @@ export async function sendToServe(e: any) {
 	if (input.value.length < 1) return
 
 	const resultOfFormIdentification = JSON.stringify(fun.idForn(e));
-	debugger;
+	// debugger;
 	ws.sends(resultOfFormIdentification);
 
 	ws.onOpen();
@@ -50,8 +50,12 @@ function getNewLogin() {
 			if (("login" in data) === false) return
 			const persone = addUser(data);
 
+
 			const boxContainsUser = document.querySelectorAll('.accaunts');
-			boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', persone.addUser);
+			const newUser = persone.addUser;
+			newUser.classList.add('imNew');
+			// debugger;
+			boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', newUser);
 
 			body[0].querySelector('.chattalks > div:last-of-type')
 				?.removeAttribute('style');
@@ -115,7 +119,7 @@ chat.server = (elem: any) => {
 		}
 		let post = JSON.stringify(elem);
 		wsChat.sends(post);
-		// wsChat.onOpen();
+		wsChat.onOpen();
 		wsChat.onMessage = getNewPost();
 		return
 	}

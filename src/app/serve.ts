@@ -22,7 +22,8 @@ wss.on('connection', (ws: any, req: any) => {
 		let url = req.url.slice(0,);
 		if (url.indexOf('/login') !== (-1)) {
 
-		const message = JSON.parse(JSON.parse(m));
+			const message = JSON.parse(m);
+			console.log('message: ', message);
 			const result = db.logins.find((elem: any) => elem['login'] === message['newLogin']);
 		if (result === undefined) {
 			newClient = { login: message['newLogin'], id: makeUniqueId(v4(), db.logins) };
@@ -36,8 +37,12 @@ wss.on('connection', (ws: any, req: any) => {
 		}
 		else if (req.url === '/' && req.url.length === 1) {
 			// отправка логинов при загрузке страницы.
+			console.log('Start load the page');
 			const logins = JSON.stringify({ users: db.logins });
+			console.log('LOGINS: ', logins);
 			ws.send(logins);
+			console.log('DB logins is sended');
+			console.log('/* --------------- *\\')
 		}
 		else if (url.indexOf('/chat') !== (-1)) {
 			let onePost = JSON.parse(m);

@@ -37,7 +37,7 @@ export class ChatSqreen {
 	 */
 	set userChat(user: object) {
 		this.user = user;
-		debugger;
+		// debugger;
 	};
 
 	server = (str: any) => { };// в функциях прописать сервер отправку и рассылку сообщений
