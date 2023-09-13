@@ -50,14 +50,14 @@ export const fun = {
 			// debugger;
 			const data = JSON.parse(e.data);
 			console.log('DATA: ', data);
-			// debugger;
 			if (data['users'].length < 1) {
 				wsLoadPage.onClose();
 				return data
 			}
 			let postReSort: any[] = [];
+			debugger;
 			/** сортировка */
-			if (data['posts'].length > 0) {
+			if (data['posts'] && data['posts'].length > 0) {
 				postReSort = await Array.from(data['posts']).sort((postA: any, postB: any): number => {
 					let int: number = 0;
 					int = postA['idPost'] > postB['idPost'] ? -1 : 1;
