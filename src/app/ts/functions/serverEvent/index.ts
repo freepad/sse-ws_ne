@@ -2,7 +2,7 @@ const { WSocket } = require('../../models/websockets');
 const { UsersNetwork } = require('../../models/users');
 const { ChatSqreen } = require('../../models/chat');
 const { fun } = require('../../functions/forms/logins');
-const { getMetaDataUser } = require('../../functions');
+const { getMetaDataUser, getNewPost } = require('../../functions');
 
 const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
 const chatInput = body[0].querySelector('.chattalks input') as HTMLElement;
@@ -26,11 +26,9 @@ export async function sendToServe(e: any) {
 	if (input.value.length < 1) return
 
 	const resultOfFormIdentification = JSON.stringify(fun.idForn(e));
-	debugger;
 	ws.sends(resultOfFormIdentification);
 
 	ws.onOpen();
-
 	input.value = ''
 	return
 }
@@ -50,8 +48,12 @@ function getNewLogin() {
 			if (("login" in data) === false) return
 			const persone = addUser(data);
 
+
 			const boxContainsUser = document.querySelectorAll('.accaunts');
-			boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', persone.addUser);
+			const newUser = persone.addUser;
+			newUser.classList.add('imNew');
+			// debugger;
+			boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', newUser);
 
 			body[0].querySelector('.chattalks > div:last-of-type')
 				?.removeAttribute('style');
@@ -63,11 +65,11 @@ function getNewLogin() {
 			if (p) p.remove();
 
 			const input = body[0].querySelector('.author') as HTMLInputElement;
-			input.insertAdjacentHTML('beforeend', ('<p class="not" style="color:red;">Пользователь уже зарегистрирован</p>' as any));
+			if (input) {
+				input.insertAdjacentHTML('beforeend', ('<p class="not" style="color:red;">Пользователь уже зарегистрирован</p>' as any));
+			}
 		}
 	}
-
-
 }
 
 /**
@@ -89,49 +91,35 @@ export function addUser(data: any) {
 	/* User network's status is checking  - finish */
 
 	persone.addId = data['id'];
-	persone.addId;
-
-	// chat.userChat = persone;
 	return persone;
 }
 
 
 /* it for events by indentifikation a new Login - start*/
 const sqreenChat = body[0].querySelector('.chattalks > div:first-of-type') as HTMLElement;
-const chat = new ChatSqreen(chatInput);// !!!!!!!!!
+const chat = new ChatSqreen(chatInput);
 chat.getSqreenChat = sqreenChat;
 
 chat.server = (elem: any) => {
-	// debugger;
 	const user = getMetaDataUser();
 	if ('id' in user) {
 		elem['id'] = user['id'];
+<<<<<<< HEAD
 		const wsChat = new WSocket("ws://localhost:7070/chat");
+=======
+
+		if (wsChat === undefined
+			|| (wsChat
+				&& (wsChat.readyState === 0 || wsChat.readyState > 1))) {
+			wsChat = new WSocket("ws://localhost:7070/chat");
+		}
+
+>>>>>>> v4
 		let post = JSON.stringify(elem);
 		wsChat.sends(post);
-		// wsChat.onOpen();
+		wsChat.onOpen();
 		wsChat.onMessage = getNewPost();
 		return
 	}
 }
-
-
-function getNewPost() {
-	return (e: any) => {
-		const data = JSON.parse(e.data);
-		// debugger;
-		if (("idPost" in data) === false) return
-		const post = data['post']['message'];
-		// const user = chat.user.login;
-		const user = data['post']['login'];
-
-		sqreenChat.insertAdjacentHTML('beforeend', (`<div class="post">
-					<div class="post-accaunt sourcename">${user}</div>
-					<div class="date">01:25 20.03.2019</div>
-					<div class="text">${post} </div>
-				</div>` as any));
-		// wsChat.onClose();
-	}
-}
-
 // ServerEvents

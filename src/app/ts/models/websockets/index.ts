@@ -32,7 +32,6 @@ export class WSocket {
 
 	sends(datas: string) {
 		console.log('DataSend!');
-		// this.socket.addEventListener('open', (e: any) => this.onOpen());
 		this.handlers.data.push(datas);
 		return
 	};
@@ -42,16 +41,11 @@ export class WSocket {
 		if (this.handlers.data.length > 0) {
 			const data = this.handlers.data[0];
 			// debugger
-			const send = this.socket.send;
-			// this.waiteForConnection(
-			// 	send,
-			// 	data,
-			// 	1000
-			// );
 			if (this.readyState === 1) {
 				console.log('WebSocket connection opened!');
-				send(data);
+				this.socket.send(data);
 				this.handlers.data = [];
+				return
 			} else {
 				setTimeout(() => this.onOpen(), 1000);
 
@@ -60,12 +54,8 @@ export class WSocket {
 			console.error('Not datas for a Sehding');
 			this.handlers.data = [];
 		}
-		// this.socket.removeEventListener('open', (e: any) => this.onOpen());
 	};
-	get readyState() {
-		return this.socket.readyState
-	}
-
+	get readyState() { return this.socket.readyState }
 	onMessage = (e: any) => { console.log('WebSocket Received message: ', e.data) };
 	onClose() { return this.socket.close() };
 	onError(e: any) { console.log('WebSocket error: ', e) };
