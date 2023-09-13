@@ -26,11 +26,9 @@ export async function sendToServe(e: any) {
 	if (input.value.length < 1) return
 
 	const resultOfFormIdentification = JSON.stringify(fun.idForn(e));
-	// debugger;
 	ws.sends(resultOfFormIdentification);
 
 	ws.onOpen();
-
 	input.value = ''
 	return
 }
@@ -67,11 +65,11 @@ function getNewLogin() {
 			if (p) p.remove();
 
 			const input = body[0].querySelector('.author') as HTMLInputElement;
-			input.insertAdjacentHTML('beforeend', ('<p class="not" style="color:red;">Пользователь уже зарегистрирован</p>' as any));
+			if (input) {
+				input.insertAdjacentHTML('beforeend', ('<p class="not" style="color:red;">Пользователь уже зарегистрирован</p>' as any));
+			}
 		}
 	}
-
-
 }
 
 /**
@@ -93,30 +91,26 @@ export function addUser(data: any) {
 	/* User network's status is checking  - finish */
 
 	persone.addId = data['id'];
-	persone.addId;
-
-	// chat.userChat = persone;
 	return persone;
 }
 
 
 /* it for events by indentifikation a new Login - start*/
 const sqreenChat = body[0].querySelector('.chattalks > div:first-of-type') as HTMLElement;
-const chat = new ChatSqreen(chatInput);// !!!!!!!!!
+const chat = new ChatSqreen(chatInput);
 chat.getSqreenChat = sqreenChat;
 
 chat.server = (elem: any) => {
-	// debugger;
 	const user = getMetaDataUser();
 	if ('id' in user) {
 		elem['id'] = user['id'];
-		// debugger;
+
 		if (wsChat === undefined
 			|| (wsChat
 				&& (wsChat.readyState === 0 || wsChat.readyState > 1))) {
 			wsChat = new WSocket("ws://localhost:7070/chat");
-
 		}
+
 		let post = JSON.stringify(elem);
 		wsChat.sends(post);
 		wsChat.onOpen();
