@@ -66,10 +66,29 @@ export function getMetaDataUser() {
 	let userId: any = {};
 	const boxContainsUser = document.querySelector('.you')
 		?.querySelector('.sourcename');
-	debugger
+	// debugger
 	if (boxContainsUser?.hasAttribute('data-num')) {
 		userId = { id: boxContainsUser?.getAttribute('data-num') };
 	}
 	return userId
 
+}
+
+const sqreenChat = body[0].querySelector('.chattalks > div:first-of-type') as HTMLElement;
+export function getNewPost() {
+	return (e: any) => {
+		const data = JSON.parse(e.data);
+		// debugger;
+		if (("idPost" in data) === false) return
+		const post = data['post']['message'];
+		// const user = chat.user.login;
+		const user = data['post']['login'];
+
+		sqreenChat.insertAdjacentHTML('beforeend', (`<div class="post">
+					<div class="post-accaunt sourcename">${user}</div>
+					<div class="date">01:25 20.03.2019</div>
+					<div class="text">${post} </div>
+				</div>` as any));
+		// wsChat.onClose();
+	}
 }

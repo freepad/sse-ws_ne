@@ -2,7 +2,8 @@ let newLogin: any[] = [];
 const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;;
 const { WSocket } = require('../../../models/websockets');
 const { addUser } = require('../../serverEvent');
-
+const { getNewPost } = require('../../index');
+let postNamed: any;
 export const fun = {
 	forms() {
 		return `<section class="author">
@@ -56,13 +57,61 @@ export const fun = {
 				wsLoadPage.onClose();
 				return data
 			}
-			await Array.from(data['users']).forEach((elem: any) => {
+			let postReSort: any[] = [];
+			/** сортировка */
+			if (data['posts'].length > 0) {
+				postReSort = await Array.from(data['posts']).sort((postA: any, postB: any): number => {
+					let int: number = 0;
+					int = postA['idPost'] > postB['idPost'] ? -1 : 1;
+					return int
+				});
+			};
+
+			// debugger;
+			/* выкладываем пользователей */
+			Array.from(data['users']).forEach((elem: any) => {
 
 				const persone = addUser(elem);
-
+				debugger;
 				const boxContainsUser = document.querySelectorAll('.accaunts');
 				boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', persone.addUser);
+
+
 			});
+
+			/** к постам присваеваем логины */
+			postReSort.forEach((item: any) => {
+				for (let i = 0; i < data['users'].length; i++) {
+					if (item['post']['id'].indexOf(data['users'][i]['id']) >= 0) {
+						item['login'] = data['users'][i]['login'];
+
+					}
+
+				}
+			});
+
+			/** выкладываем посты  */
+			/**Выкладываем посты в экран чата */
+			const sqreenChat = body[0].querySelector('.chattalks > div:first-of-type') as HTMLElement;
+			postReSort.forEach((item: any) => {
+				const user: string = item['login'];
+				const post: string = item['post']['message'];
+				sqreenChat.insertAdjacentHTML('afterbegin', (`<div class="post">
+					<div class="post-accaunt sourcename">${user}</div>
+					<div class="date">01:25 20.03.2019</div>
+					<div class="text">${post} </div>
+				</div>` as any));
+				// postReSort.shift();
+			});
+			sqreenChat.remove();
+			postReSort = [];
+			// Object
+			// id
+			// :
+			// "3b95dd5e-fc60-40be-8bed-0cbb9739fd37"
+			// login
+			// :
+			// "RRRR"
 			wsLoadPage.onClose();
 
 			return data

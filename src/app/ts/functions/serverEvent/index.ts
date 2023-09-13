@@ -2,7 +2,7 @@ const { WSocket } = require('../../models/websockets');
 const { UsersNetwork } = require('../../models/users');
 const { ChatSqreen } = require('../../models/chat');
 const { fun } = require('../../functions/forms/logins');
-const { getMetaDataUser } = require('../../functions');
+const { getMetaDataUser, getNewPost } = require('../../functions');
 
 const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
 const chatInput = body[0].querySelector('.chattalks input') as HTMLElement;
@@ -126,22 +126,6 @@ chat.server = (elem: any) => {
 }
 
 
-function getNewPost() {
-	return (e: any) => {
-		const data = JSON.parse(e.data);
-		// debugger;
-		if (("idPost" in data) === false) return
-		const post = data['post']['message'];
-		// const user = chat.user.login;
-		const user = data['post']['login'];
 
-		sqreenChat.insertAdjacentHTML('beforeend', (`<div class="post">
-					<div class="post-accaunt sourcename">${user}</div>
-					<div class="date">01:25 20.03.2019</div>
-					<div class="text">${post} </div>
-				</div>` as any));
-		// wsChat.onClose();
-	}
-}
 
 // ServerEvents
