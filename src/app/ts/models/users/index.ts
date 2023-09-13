@@ -4,6 +4,7 @@ class Users {
 	constructor(newLogin: string) {
 		this.login = newLogin;
 		this.#ind = '';
+
 	}
 	set addId(ind: string) {
 		this.#ind = ind;
@@ -61,6 +62,9 @@ export class UsersNetwork extends UsersHtml {
 	constructor(newLogin: string) {
 		super(newLogin)
 		this.network = 'ofline';
+		window.addEventListener("offline", (event) => {
+
+		});
 	}
 
 	/**
@@ -71,16 +75,13 @@ export class UsersNetwork extends UsersHtml {
 	}
 
 	get onOrOfLine(): string { return this.network }
-
 	get addPropertiesUser() {
 		return {
 			login: this.login,
 			ind: this.addId,
 			network: this.onOrOfLine,
 		}
-
 	}
-
 }
 
 export class userChat {

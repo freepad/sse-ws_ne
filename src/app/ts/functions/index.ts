@@ -20,20 +20,19 @@ export function addLogin(elem: HTMLCollectionOf<HTMLElement>) {
 	elem[0].insertAdjacentHTML("afterbegin", fun.forms());
 	const formIdentification = body[0].querySelector('.author') as HTMLFormElement;
 
-	window.addEventListener('offline', (e: any) => {
-		console.warn("Note: User's browser id ofline now!");
-	});
 
 	formIdentification.addEventListener('keypress', (e: any) => {
 		if ((e as KeyboardEvent).key === 'Enter') {
 			sendToServe(e)
 				.then(() => { addUserStyle() });
+			// .then(() => windowsOfflineUser());
 		};
 	});
 	formIdentification.addEventListener('click', (e: any) => {
 		if (((e as MouseEvent).target as HTMLButtonElement).type === 'submit') {
 			sendToServe(e)
 				.then(() => { addUserStyle() });
+			// .then(() => windowsOfflineUser());
 		};
 	});
 }
@@ -71,22 +70,40 @@ export function getNewPost() {
 		debugger;
 		if (("idPost" in data) === false) return
 		const post = data['post']['message'];
-		const user = data['post']['login'];
+		let user = data['post']['login'];
 
 		/**Все посты , отправленные пользователем проходят через БД. Пожьлму, получаем данные  */
 		const ImUser = document.querySelector('.you') as HTMLElement; // Получаем id-пользователя
-		const postConyains = `<div class="post-accaunt sourcename">${user}</div>
+		const postConyains = `</div>
 					<div class="date">01:25 20.03.2019</div>
 					<div class="text">${post} </div>
 				</div>`
 
 		if ((ImUser.querySelector('div:last-of-type') as HTMLElement).hasAttribute('data-num')
 			&& ((ImUser.querySelector('div:last-of-type') as HTMLElement).getAttribute('data-num') as string).indexOf(data['post']['id']) >= 0) {
-			sqreenChat.insertAdjacentHTML('beforeend', (`<div class="post your-post">` + postConyains as any)); // помечаем авторские посты
+			user = 'You';
+			sqreenChat.insertAdjacentHTML('beforeend', (`<div class="post your-post">
+			<div class="post-accaunt sourcename">${user}` + postConyains as any)); // помечаем авторские посты
 			return
 		}
-		sqreenChat.insertAdjacentHTML('beforeend', (`<div class="post">` + postConyains as any));
+		sqreenChat.insertAdjacentHTML('beforeend', (`<div class="post">
+		<div class="post-accaunt sourcename">${user}` + postConyains as any));
+
+
 	}
 }
+
+// function windowsOfflineUser() {
+// 	const user = document.querySelector(`.you`) as HTMLElement;
+// 	if (!user) {
+// 		setInterval(() => windowsOfflineUser(), 1000);
+// 		return
+// 	}
+// 	return window.addEventListener('offline', (e: any) => {
+// 		console.warn("Note: User's browser id ofline now!");
+// 		user.remove();
+// 	});
+
+// }
 
 // function

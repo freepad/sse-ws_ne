@@ -18,6 +18,23 @@ let newClient = {};
 
 
 wss.on('connection', (ws: any, req: any) => {
+	// console.log(wss);
+	ws.on('close', () => {
+		if (ws.readyState === WS.CLOSED) {
+			console.log('WebSocket connection closed',);
+		} else {
+			console.log('WebSocket connection closing',);
+		}
+	});
+	/***
+	 * Статус ONLINE необходимо присваивать НА сервере после того как сработает CONECTION.
+	 * Присваиваем статус ONLINE кдиенту.
+	 *
+	 * На загрузку страниц ставить фильтер ONLINE.
+	 *
+	 * После следим за CLOSED. Сработало, значит Обновляем список клиентов
+	 */
+
 	ws.on('message', (m: any) => {
 
 		let url = req.url.slice(0,);
@@ -114,3 +131,4 @@ function makePostId(ind: number, database: any) {
 }
 
 // Server
+// https://discord.com/channels/@me/1067365554438017084/1151487583503790090
