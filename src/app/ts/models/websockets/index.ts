@@ -18,14 +18,11 @@ export class WSocket {
 		this.url = url;
 		this.socket = new WebSocket(this.url);
 		this.socket.addEventListener('open', (e: any) => { /*this.onOpen()*/  console.log('OPEN') });
-		this.socket.addEventListener('message', (e: any) => { this.onMessage(e); });
+		this.socket.addEventListener('message', (e: any) => {
+			console.log("WS message-URL: ", e.target.url);
+			this.onMessage(e);
+		});
 		this.socket.addEventListener('close', (e: any) => {
-			// this.closing(e);
-			if (e.code === 1001) {
-				this.url = "ws://localhost:7070/";
-				this.socket.send('{"Login": "NoN"}')
-				// this.closing(e)
-			};
 			if (e.wasClean) { console.log('WebSocket connection closed clean!') }
 			else { console.log('WebSocket connection closed aborted!') };
 		});

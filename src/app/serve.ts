@@ -30,11 +30,12 @@ wss.on('connection', (ws: any, req: any) => {
 	ws.on('message', (m: any) => {
 		ws.onclose = (e: any) => {
 			const message = JSON.parse(m);
+			console.log(message);
 			if (e.code === 1001) {
-
+				console.log('closed MESSAGE START: ');
 				if ('id' in message) db.logins = db.logins.filter((item: any) => item['id'] !== message['id'])
 				else db.logins = db.logins.filter((item: any) => item['login'] !== message['newLogin']);
-				postmane = db.logins;
+				postmane = { users: db.logins };
 				loginPoster();
 
 				console.log('closed MESSAGE: ', message, req.url);
@@ -42,7 +43,7 @@ wss.on('connection', (ws: any, req: any) => {
 			}
 		}
 		let url = req.url.slice(0,);
-		if (url.indexOf('/login') !== (-1)) {
+		if (url.indexOf('/login') >= 0 && url.length > 1) {
 			/** ДОБАВИТЬ ЛОГИН */
 			/**
 			 * Получаем логин
@@ -62,7 +63,7 @@ wss.on('connection', (ws: any, req: any) => {
 
 			wss.clients.forEach((client: any) => client.send(JSON.stringify(newClient)));
 		}
-		else if (req.url === '/' && req.url.length === 1) {
+		else if (url.length === 1) { //  && req.url.length === 1
 			/** ЗАГРУЗКА СТРАНИЦЫ */
 			// отправка логинов при загрузке страницы.
 			console.log('Start load the page');
@@ -71,7 +72,7 @@ wss.on('connection', (ws: any, req: any) => {
 			loginPoster();
 			/**------------------------------------------------------- */
 		}
-		else if (url.indexOf('/chat') !== (-1)) {
+		else if (url.length > 1 && url.indexOf('/chat') !== (-1)) {
 			/** РАБОТА ЧАТА */
 			let onePost = JSON.parse(m);
 			if (db['posts'].length > 100) db['posts'].pop();

@@ -18,11 +18,14 @@ export async function sendToServe(e: any) {
 	if (wsChat === undefined
 		|| (wsChat
 			&& (wsChat.readyState === 0 || wsChat.readyState > 1))) {
+		console.log('/login URL')
 		ws = new WSocket("ws://localhost:7070/login");
 	}
-	ws.onMessage = getLogin();
+	ws.onMessage = getNewLogin();
 
 	e.preventDefault();
+	if (input.value.length < 1) return
+
 	const resultOfFormIdentification = JSON.stringify(fun.idForn(e));
 	ws.sends(resultOfFormIdentification);
 
@@ -37,20 +40,21 @@ export async function sendToServe(e: any) {
  * Если нет то объект нового пользователя вставляется в левый контейнер чата.
  * @returns void
  */
-function getLogin() {/*************сделать updataLogin************** */
+function getNewLogin() {
 	return (e: any) => {
 		const req: string = e.data;
 
 		if (req.length > 2) {
 			const data = JSON.parse(e.data);
 			if (("login" in data) === false) return
+			const persone = addUser(data);
 
-			const persone = addUser(data);// look at the lines below.
+
 			const boxContainsUser = document.querySelectorAll('.accaunts');
-			const newHtmlUser = persone.addUser;
-			newHtmlUser.classList.add('imNew');
+			const newUser = persone.addUser;
+			newUser.classList.add('imNew');
 			// debugger;
-			boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', newHtmlUser);
+			boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', newUser);
 
 			body[0].querySelector('.chattalks > div:last-of-type')
 				?.removeAttribute('style');
@@ -73,8 +77,6 @@ function getLogin() {/*************сделать updataLogin************** */
  * На входе получаем данные из БД и к объекту заполняем значение свойств.
  * Если предоставленные пользователем логин уже был зарегисрированный, функция
  * остаётся в режиме ожидания.
- *
- * Шаблон на выходе: {login: < user-name >, ind:< string >, network:< online/offline > }
  * @param data: Данные
  * @returns обект со свеми его свойствами.
  */
@@ -107,6 +109,7 @@ chat.server = (elem: any) => {
 		if (wsChat === undefined
 			|| (wsChat
 				&& (wsChat.readyState === 0 || wsChat.readyState > 1))) {
+			console.log('/chat URL')
 			wsChat = new WSocket("ws://localhost:7070/chat");
 		}
 
@@ -114,10 +117,7 @@ chat.server = (elem: any) => {
 		wsChat.sends(post);
 		wsChat.onOpen();
 		wsChat.onMessage = getNewPost();
-
 		return
 	}
 }
-
-
 // ServerEvents

@@ -4,6 +4,7 @@ let newLogin: any[] = [];
 const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;;
 const { WSocket } = require('../../../models/websockets');
 const { addUser } = require('../../serverEvent');
+let wsLoadPage: any;
 
 export const fun = {
 	forms() {
@@ -39,24 +40,32 @@ export const fun = {
 	 * Открывает соединение на сервер.
 	 * делает запрос зарегистрированных пользователей из "/" адреса
 	 * Если есть пользователи, загружает их на страницу.
-	 * и загрывает соединение
+	//  * и загрывает соединени??????????
 	 */
 	loadPage() {
-		newLogin = [];
-		const wsLoadPage = new WSocket("ws://localhost:7070/");
 
+		newLogin = [];
+		if (wsLoadPage === undefined
+			|| (wsLoadPage
+				&& (wsLoadPage.readyState === 0 || wsLoadPage.readyState > 1))) {
+			console.log('/ URL')
+
+			wsLoadPage = new WSocket("ws://localhost:7070/");
+		}
 		// debugger;
 		wsLoadPage.onMessage = async (e: any) => {
+			// debugger;
+			// if (e.target.url === 'ws://localhost:7070/') { }
 			const data = JSON.parse(e.data);
 			debugger;
-			console.log('DATA: ', data, typeof data);
-			if (data['users'] && data['users'].length < 1) {
-			// wsLoadPage.onClose();
+			console.log('DATA: ', data);
+			if ('users' in data && data['users'].length < 1) {
+				wsLoadPage.onClose();
 				return data
 			}
 			let postReSort: any[] = [];
 			debugger;
-			/** сортировка */
+			/** сортировка данных из db */
 			if (data['posts'] && data['posts'].length > 0) {
 				postReSort = await Array.from(data['posts']).sort((postA: any, postB: any): number => {
 					let int: number = 0;
@@ -66,11 +75,13 @@ export const fun = {
 			};
 
 			/* выкладываем пользователей */
+			if ('users' in data) {
 			Array.from(data['users']).forEach((elem: any) => {
 				const persone = addUser(elem);
 				const boxContainsUser = document.querySelectorAll('.accaunts');
 				boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', persone.addUser);
 			});
+			}
 
 			/** к постам из БД присваеваем логины */
 			postReSort.forEach((item: any) => {
@@ -96,13 +107,14 @@ export const fun = {
 			});
 
 			postReSort = [];
-			wsLoadPage.onClose();
+			// wsLoadPage.onClose();
 			return data
 		}
 		const request = JSON.stringify({ users: [] });
 		wsLoadPage.sends(request);
 		wsLoadPage.onOpen();
 	}
+
 }
 
 // function / forms
