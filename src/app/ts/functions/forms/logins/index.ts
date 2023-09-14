@@ -47,11 +47,11 @@ export const fun = {
 
 		// debugger;
 		wsLoadPage.onMessage = async (e: any) => {
-			// debugger;
 			const data = JSON.parse(e.data);
+			debugger;
 			console.log('DATA: ', data, typeof data);
-			if (data['users'].length < 1) {
-				wsLoadPage.onClose();
+			if (data['users'] && data['users'].length < 1) {
+			// wsLoadPage.onClose();
 				return data
 			}
 			let postReSort: any[] = [];

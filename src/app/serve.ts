@@ -14,7 +14,6 @@ const http = require('http'),
 	app = new Koa();
 const server = http.createServer(app.callback);
 const wss = new WS.Server({ server });
-const userSocketMap = new Map(); // references between clients and a socket
 let newClient = {};
 let postmane: any;
 
@@ -30,17 +29,11 @@ wss.on('connection', (ws: any, req: any) => {
 
 	ws.on('message', (m: any) => {
 		ws.onclose = (e: any) => {
-			console.log('CLOSE: ', e.code, typeof e.code);
-			let i: number;
 			const message = JSON.parse(m);
 			if (e.code === 1001) {
 
-				console.log(db.logins);
-				console.log('close DELETE: :', message['newLogin'], message['id'])
-				if ('id' in message) {
-					db.logins = db.logins.filter((item: any) => item['id'] !== message['id'])
-				}
-				else { db.logins = db.logins.filter((item: any) => item['login'] !== message['newLogin']) }
+				if ('id' in message) db.logins = db.logins.filter((item: any) => item['id'] !== message['id'])
+				else db.logins = db.logins.filter((item: any) => item['login'] !== message['newLogin']);
 				postmane = db.logins;
 				loginPoster();
 
@@ -64,8 +57,6 @@ wss.on('connection', (ws: any, req: any) => {
 			if (result === undefined) {
 				newClient = { login: message['newLogin'], id: makeUniqueId(v4(), db['logins']) };
 				db['logins'].push(newClient);
-				console.log('NEWcLIENT: ', db['logins'][db['logins'].length - 1]['id']);
-				userSocketMap.set(message['newLogin'], db['logins'][db['logins'].length - 1]['id']);
 			}
 			else newClient = {};
 
@@ -75,7 +66,7 @@ wss.on('connection', (ws: any, req: any) => {
 			/** ЗАГРУЗКА СТРАНИЦЫ */
 			// отправка логинов при загрузке страницы.
 			console.log('Start load the page');
-			postmane = ['posts'].length > 0 ? { users: db['logins'], posts: db['posts'] } : { users: db['logins'] };
+			postmane = db['posts'].length > 0 ? { users: db['logins'], posts: db['posts'] } : { users: db['logins'] };
 
 			loginPoster();
 			/**------------------------------------------------------- */
@@ -126,9 +117,7 @@ function makePostId(ind: number, database: any) {
 	ind++;
 	const respons = database.some((item: any) => { if (item.idPost === (ind - 1)) (ind - 1) });
 
-	if (respons) {
-		makePostId((ind + 1), database)
-	};
+	if (respons) makePostId((ind + 1), database);
 	postId = ind - 1;
 	return ind;
 }

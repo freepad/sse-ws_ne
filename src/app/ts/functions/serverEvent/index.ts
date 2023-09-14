@@ -37,7 +37,7 @@ export async function sendToServe(e: any) {
  * Если нет то объект нового пользователя вставляется в левый контейнер чата.
  * @returns void
  */
-function getLogin() {/*************************** */
+function getLogin() {/*************сделать updataLogin************** */
 	return (e: any) => {
 		const req: string = e.data;
 
