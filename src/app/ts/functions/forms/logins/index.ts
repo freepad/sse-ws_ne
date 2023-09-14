@@ -49,7 +49,7 @@ export const fun = {
 		wsLoadPage.onMessage = async (e: any) => {
 			// debugger;
 			const data = JSON.parse(e.data);
-			console.log('DATA: ', data);
+			console.log('DATA: ', data, typeof data);
 			if (data['users'].length < 1) {
 				wsLoadPage.onClose();
 				return data

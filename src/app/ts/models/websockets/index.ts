@@ -13,15 +13,19 @@
 export class WSocket {
 	socket: any;
 	handlers: any;
+	url: string;
 	constructor(url: string) {
-		this.socket = new WebSocket(url);
+		this.url = url;
+		this.socket = new WebSocket(this.url);
 		this.socket.addEventListener('open', (e: any) => { /*this.onOpen()*/  console.log('OPEN') });
 		this.socket.addEventListener('message', (e: any) => { this.onMessage(e); });
 		this.socket.addEventListener('close', (e: any) => {
+			// this.closing(e);
+			this.closing(e);
 			if (e.wasClean) { console.log('WebSocket connection closed clean!') }
 			else { console.log('WebSocket connection closed aborted!') };
 		});
-		this.socket.addEventListener('error', (e: any) => { this.onError(e) });
+		this.socket.addEventListener('error', (e: any) => { });
 
 		this.handlers = {
 			open: [],
@@ -37,27 +41,34 @@ export class WSocket {
 	};
 
 	onOpen() {
-
+		let data: string = '';
 		if (this.handlers.data.length > 0) {
-			const data = this.handlers.data[0];
+			data = this.handlers.data[0];
 			// debugger
 			if (this.readyState === 1) {
 				console.log('WebSocket connection opened!');
 				this.socket.send(data);
-				this.handlers.data = [];
+				this.handlers.data.pop();
 				return
 			} else {
 				setTimeout(() => this.onOpen(), 1000);
 
 			}
-		} else {
+		}
+		else if (this.readyState > 1) {
+			data = this.handlers.data[0];
+			this.socket.send(data);
+			this.handlers.data.pop();
+		}
+		else {
 			console.error('Not datas for a Sehding');
-			this.handlers.data = [];
+			this.handlers.data.pop();
 		}
 	};
 	get readyState() { return this.socket.readyState }
 	onMessage = (e: any) => { console.log('WebSocket Received message: ', e.data) };
 	onClose() { return this.socket.close() };
+	closing = (e: any) => { console.log('here is your handler'); };
 	onError(e: any) { console.log('WebSocket error: ', e) };
 }
 

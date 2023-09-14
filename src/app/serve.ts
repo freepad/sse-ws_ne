@@ -14,18 +14,11 @@ const http = require('http'),
 	app = new Koa();
 const server = http.createServer(app.callback);
 const wss = new WS.Server({ server });
+const userSocketMap = new Map(); // references between clients and a socket
 let newClient = {};
-
+let postmane: any;
 
 wss.on('connection', (ws: any, req: any) => {
-	// console.log(wss);
-	ws.on('close', () => {
-		if (ws.readyState === WS.CLOSED) {
-			console.log('WebSocket connection closed',);
-		} else {
-			console.log('WebSocket connection closing',);
-		}
-	});
 	/***
 	 * Статус ONLINE необходимо присваивать НА сервере после того как сработает CONECTION.
 	 * Присваиваем статус ONLINE кдиенту.
@@ -36,7 +29,25 @@ wss.on('connection', (ws: any, req: any) => {
 	 */
 
 	ws.on('message', (m: any) => {
+		ws.onclose = (e: any) => {
+			console.log('CLOSE: ', e.code, typeof e.code);
+			let i: number;
+			const message = JSON.parse(m);
+			if (e.code === 1001) {
 
+				console.log(db.logins);
+				console.log('close DELETE: :', message['newLogin'], message['id'])
+				if ('id' in message) {
+					db.logins = db.logins.filter((item: any) => item['id'] !== message['id'])
+				}
+				else { db.logins = db.logins.filter((item: any) => item['login'] !== message['newLogin']) }
+				postmane = db.logins;
+				loginPoster();
+
+				console.log('closed MESSAGE: ', message, req.url);
+				console.log('closed LOGINS: ', db.logins);
+			}
+		}
 		let url = req.url.slice(0,);
 		if (url.indexOf('/login') !== (-1)) {
 			/** ДОБАВИТЬ ЛОГИН */
@@ -50,13 +61,13 @@ wss.on('connection', (ws: any, req: any) => {
 			const message = JSON.parse(m);
 			console.log('message: ', message);
 			const result = db['logins'].find((elem: any) => elem['login'] === message['newLogin']);
-		if (result === undefined) {
-			newClient = { login: message['newLogin'], id: makeUniqueId(v4(), db['logins']) };
-			db['logins'].push(newClient);
-		}
-		else {
-			newClient = {};
-			};
+			if (result === undefined) {
+				newClient = { login: message['newLogin'], id: makeUniqueId(v4(), db['logins']) };
+				db['logins'].push(newClient);
+				console.log('NEWcLIENT: ', db['logins'][db['logins'].length - 1]['id']);
+				userSocketMap.set(message['newLogin'], db['logins'][db['logins'].length - 1]['id']);
+			}
+			else newClient = {};
 
 			wss.clients.forEach((client: any) => client.send(JSON.stringify(newClient)));
 		}
@@ -64,19 +75,14 @@ wss.on('connection', (ws: any, req: any) => {
 			/** ЗАГРУЗКА СТРАНИЦЫ */
 			// отправка логинов при загрузке страницы.
 			console.log('Start load the page');
-			let logins: any;
+			postmane = ['posts'].length > 0 ? { users: db['logins'], posts: db['posts'] } : { users: db['logins'] };
 
-			logins = db['posts'].length > 0 ? JSON.stringify({ users: db['logins'], posts: db['posts'] }) : JSON.stringify({ users: db['logins'] });
-			console.log('LOGINS: ', logins);
-			ws.send(logins);
-			console.log('DB logins is sended');
-			console.log('/* --------------- *\\')
+			loginPoster();
+			/**------------------------------------------------------- */
 		}
 		else if (url.indexOf('/chat') !== (-1)) {
 			/** РАБОТА ЧАТА */
-
 			let onePost = JSON.parse(m);
-			let newPost = {};
 			if (db['posts'].length > 100) db['posts'].pop();
 			const id = makePostId(postId, db['posts']);
 			postId = id;
@@ -95,15 +101,12 @@ wss.on('connection', (ws: any, req: any) => {
 			console.log('SErver onePOST: ', onePost);
 
 			/**Шаблон для БД
-			 * db['posts'] = [{"idPost":1,"post":{"message":"text-text-text","id":"ad42549b-14d4-43bd-941b-d79aa1e47080"ЪЪъ
+			 * db['posts'] = [{"idPost":1,"post":{"message":"text-text-text","id":"ad42549b-14d4-43bd-941b-d79aa1e47080"}}]
 			 */
-			newPost = { idPost: id, post: onePost }
-			db['posts'].push(newPost)
-			newPost = JSON.stringify(newPost);
 
-			Array.from(wss.clients)
-				.filter((client: any) => client.readyState === WS.OPEN)
-				.forEach((client: any) => client.send(newPost));
+			postmane = { idPost: id, post: onePost }
+			db['posts'].push(postmane);
+			loginPoster();
 		}
 	});
 	ws.on("error", (e: any) => ws.send(e));
@@ -128,6 +131,26 @@ function makePostId(ind: number, database: any) {
 	};
 	postId = ind - 1;
 	return ind;
+}
+/**
+ * При вызоые отбирает клиентов которые еще в сети
+ * и проводит им рассылку просто логина или логина с сообщением.
+ */
+function loginPoster() {
+	console.log('POSTMANE was TYPE: ', typeof postmane);
+	postmane = JSON.stringify(postmane);
+
+	Array.from(wss.clients)
+		.filter((clients: any) => clients.readyState === WS.OPEN)
+		.forEach((clients: any) => {
+
+			console.log('POSTMANE: ', postmane);
+			clients.send(postmane);
+
+			console.log('DB logins is sended');
+			console.log('/* --------------- *\\')
+
+		})
 }
 
 // Server

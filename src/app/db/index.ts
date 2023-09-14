@@ -1,6 +1,6 @@
 
 const myDb = {
-	logins: ([] as any[]),
+	logins: ([] as any[]), // [ { login: 'RRRR', id: '7ef88beb-37ef-4806-9a8b-6ac6632828df' } ]
 	posts: ([] as any[]),
 	handlers: ([] as any[]),
 
