@@ -67,7 +67,8 @@ const sqreenChat = body[0].querySelector('.chattalks > div:first-of-type') as HT
 export function getNewPost() {
 	return (e: any) => {
 		const data = JSON.parse(e.data);
-		debugger;
+
+		if (e.target.url !== "ws://localhost:7070/chat") return
 		if (("idPost" in data) === false) return
 		const post = data['post']['message'];
 		let user = data['post']['login'];

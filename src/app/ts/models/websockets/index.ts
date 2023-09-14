@@ -13,13 +13,14 @@
 export class WSocket {
 	socket: any;
 	handlers: any;
-	url: string;
+	// url: string;
 	constructor(url: string) {
-		this.url = url;
-		this.socket = new WebSocket(this.url);
+		// this.url = url;
+		this.socket = new WebSocket(url);
 		this.socket.addEventListener('open', (e: any) => { /*this.onOpen()*/  console.log('OPEN') });
 		this.socket.addEventListener('message', (e: any) => {
-			console.log("WS message-URL: ", e.target.url);
+			console.log("WS message-URL: ", e.target.url, e.code);
+
 			this.onMessage(e);
 		});
 		this.socket.addEventListener('close', (e: any) => {

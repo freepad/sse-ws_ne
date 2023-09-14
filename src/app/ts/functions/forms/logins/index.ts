@@ -51,20 +51,21 @@ export const fun = {
 			console.log('/ URL')
 
 			wsLoadPage = new WSocket("ws://localhost:7070/");
+
 		}
 		// debugger;
 		wsLoadPage.onMessage = async (e: any) => {
-			// debugger;
-			// if (e.target.url === 'ws://localhost:7070/') { }
+			console.log('DATA: ', e.target.url === "ws://localhost:7070/");
+			if (e.target.url !== "ws://localhost:7070/") return
 			const data = JSON.parse(e.data);
-			debugger;
+			// debugger;
 			console.log('DATA: ', data);
 			if ('users' in data && data['users'].length < 1) {
 				wsLoadPage.onClose();
 				return data
 			}
 			let postReSort: any[] = [];
-			debugger;
+			// debugger;
 			/** сортировка данных из db */
 			if (data['posts'] && data['posts'].length > 0) {
 				postReSort = await Array.from(data['posts']).sort((postA: any, postB: any): number => {

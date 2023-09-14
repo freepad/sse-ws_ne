@@ -3,7 +3,7 @@ const { UsersNetwork } = require('../../models/users');
 const { ChatSqreen } = require('../../models/chat');
 const { fun } = require('../../functions/forms/logins');
 const { getMetaDataUser, getNewPost } = require('../../functions');
-
+const url = "ws://localhost:7070"
 const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
 const chatInput = body[0].querySelector('.chattalks input') as HTMLElement;
 let wsChat: any;
@@ -19,8 +19,9 @@ export async function sendToServe(e: any) {
 		|| (wsChat
 			&& (wsChat.readyState === 0 || wsChat.readyState > 1))) {
 		console.log('/login URL')
-		ws = new WSocket("ws://localhost:7070/login");
+		ws = new WSocket(url + "/login");
 	}
+
 	ws.onMessage = getNewLogin();
 
 	e.preventDefault();
@@ -29,7 +30,9 @@ export async function sendToServe(e: any) {
 	const resultOfFormIdentification = JSON.stringify(fun.idForn(e));
 	ws.sends(resultOfFormIdentification);
 
+
 	ws.onOpen();
+
 	input.value = ''
 	return
 }
@@ -43,7 +46,7 @@ export async function sendToServe(e: any) {
 function getNewLogin() {
 	return (e: any) => {
 		const req: string = e.data;
-
+		if (e.target.url !== url + "/login") return
 		if (req.length > 2) {
 			const data = JSON.parse(e.data);
 			if (("login" in data) === false) return
@@ -103,6 +106,7 @@ chat.getSqreenChat = sqreenChat;
 
 chat.server = (elem: any) => {
 	const user = getMetaDataUser();
+
 	if ('id' in user) {
 		elem['id'] = user['id'];
 
@@ -110,14 +114,16 @@ chat.server = (elem: any) => {
 			|| (wsChat
 				&& (wsChat.readyState === 0 || wsChat.readyState > 1))) {
 			console.log('/chat URL')
-			wsChat = new WSocket("ws://localhost:7070/chat");
+			wsChat = new WSocket(url + "/chat");
 		}
 
 		let post = JSON.stringify(elem);
 		wsChat.sends(post);
 		wsChat.onOpen();
 		wsChat.onMessage = getNewPost();
+
 		return
 	}
 }
+
 // ServerEvents

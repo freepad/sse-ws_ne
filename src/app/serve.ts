@@ -28,21 +28,22 @@ wss.on('connection', (ws: any, req: any) => {
 	 */
 
 	ws.on('message', (m: any) => {
+		let url = req.url.slice(0,);
 		ws.onclose = (e: any) => {
 			const message = JSON.parse(m);
 			console.log(message);
 			if (e.code === 1001) {
-				console.log('closed MESSAGE START: ');
+				console.log('closed MESSAGE START: ', 'Url: ' + url);
 				if ('id' in message) db.logins = db.logins.filter((item: any) => item['id'] !== message['id'])
 				else db.logins = db.logins.filter((item: any) => item['login'] !== message['newLogin']);
 				postmane = { users: db.logins };
-				loginPoster();
+				loginPoster(postmane);
 
 				console.log('closed MESSAGE: ', message, req.url);
 				console.log('closed LOGINS: ', db.logins);
 			}
 		}
-		let url = req.url.slice(0,);
+
 		if (url.indexOf('/login') >= 0 && url.length > 1) {
 			/** ДОБАВИТЬ ЛОГИН */
 			/**
@@ -69,7 +70,7 @@ wss.on('connection', (ws: any, req: any) => {
 			console.log('Start load the page');
 			postmane = db['posts'].length > 0 ? { users: db['logins'], posts: db['posts'] } : { users: db['logins'] };
 
-			loginPoster();
+			loginPoster(postmane);
 			/**------------------------------------------------------- */
 		}
 		else if (url.length > 1 && url.indexOf('/chat') !== (-1)) {
@@ -98,7 +99,7 @@ wss.on('connection', (ws: any, req: any) => {
 
 			postmane = { idPost: id, post: onePost }
 			db['posts'].push(postmane);
-			loginPoster();
+			loginPoster(postmane);
 		}
 	});
 	ws.on("error", (e: any) => ws.send(e));
@@ -126,16 +127,16 @@ function makePostId(ind: number, database: any) {
  * При вызоые отбирает клиентов которые еще в сети
  * и проводит им рассылку просто логина или логина с сообщением.
  */
-function loginPoster() {
-	console.log('POSTMANE was TYPE: ', typeof postmane);
-	postmane = JSON.stringify(postmane);
+function loginPoster(elem: any) {
+	console.log('POSTMANE was TYPE: ', typeof elem);
+	elem = JSON.stringify(elem);
 
 	Array.from(wss.clients)
 		.filter((clients: any) => clients.readyState === WS.OPEN)
 		.forEach((clients: any) => {
 
-			console.log('POSTMANE: ', postmane);
-			clients.send(postmane);
+			console.log('elem: ', elem);
+			clients.send(elem);
 
 			console.log('DB logins is sended');
 			console.log('/* --------------- *\\')
