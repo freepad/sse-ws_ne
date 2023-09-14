@@ -93,18 +93,3 @@ export function getNewPost() {
 
 	}
 }
-
-// function windowsOfflineUser() {
-// 	const user = document.querySelector(`.you`) as HTMLElement;
-// 	if (!user) {
-// 		setInterval(() => windowsOfflineUser(), 1000);
-// 		return
-// 	}
-// 	return window.addEventListener('offline', (e: any) => {
-// 		console.warn("Note: User's browser id ofline now!");
-// 		user.remove();
-// 	});
-
-// }
-
-// function
