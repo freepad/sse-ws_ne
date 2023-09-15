@@ -26,6 +26,8 @@ export class WSocket {
 		this.socket.addEventListener('close', (e: any) => {
 			if (e.wasClean) { console.log('WebSocket connection closed clean!') }
 			else { console.log('WebSocket connection closed aborted!') };
+			console.log('WS closed Event: ', e['message']);
+
 		});
 		this.socket.addEventListener('error', (e: any) => { });
 

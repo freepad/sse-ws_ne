@@ -25,21 +25,41 @@ wss.on('connection', (ws: any, req: any) => {
 		ws.onclose = (e: any) => {
 			const message = JSON.parse(m);
 			console.log(message);
+			console.log('closed db.logins BEFORE; ', db['logins']);
 			if (e.code === 1001) {
 				/** ЗАКРЫЛ СТРАНИЦУ */
+				console.log('closed: ', e.code);
 				console.log('closed MESSAGE START: ', 'Url SOURCE: ' + url);
 				console.log('closed MESSAGE: ', message);
-				if ('id' in message) db['logins'] = db['logins'].filter((item: any) => item['id'] !== message['id'])
+				let metaData = {};
+				if ('id' in message) {
+					db['logins'] = db['logins'].filter((item: any) => item['id'] !== message['id'])
+
+					metaData = { id: message['id'] };
+				}
 
 				/** FILTER: Формируем новый список User-ов.
 					 Кто покинул страницу - удаляется из списка */
-				else db['logins'] = db['logins'].filter((item: any) => item['login'] !== message['newLogin']);
+				else if ('newLogin' in message) {
+					let userForRemove = db['logins'].filter((item: any) => {
 
-				/** Template: {"users":[{"login":"< nickname >","id":"< index-user >"}]} */
-				postmane = { users: db['logins'] };
-				poster(postmane);
+						console.log('closed db.logins AFTER ; ', db['logins'], item['login'] === message['newLogin']);
+						item['login'] === message['newLogin']
+					});
+					db['logins'] = db['logins'].filter((item: any) => item['login'] !== message['newLogin']);
 
-				console.log('closed LOGINS: ', db.logins);
+					console.log('closed USERfORrEMOVE: ', userForRemove);
+					metaData = { id: userForRemove['id'] };
+					// userForRemove = undefined;
+				}
+				if ('id'.indexOf(String(Object.keys(metaData))) >= 0) {
+					/** Template: {"users":[{"login":"< nickname >","id":"< index-user >"}], idDelete:{id: < index-user >}} */
+					postmane = { users: db['logins'], idDelete: metaData };
+					console.log('closed POSTMANE before POSTER: ', postmane);
+					poster(postmane);
+
+					console.log('closed LOGINS: ', db.logins);
+				}
 			}
 		}
 

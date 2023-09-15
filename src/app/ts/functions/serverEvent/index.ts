@@ -8,7 +8,7 @@ const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLEleme
 const chatInput = body[0].querySelector('.chattalks input') as HTMLElement;
 let wsChat: any;
 let ws: any;
-/**
+/** 
  	 * Handler для событий из формы регистрации логина.
 	 * Отправляем логин на сервер.
 	 * @param e: event.
@@ -34,7 +34,7 @@ export async function sentNewLogin(e: any) {
 	return
 }
 
-/**
+/** HANDLER
  * Данные отправленнвне на сервер, там проверка нового логина.
  * Полученные данные (логин после проверки ) - объект пользователя вставляется в левый контейнер чата.
  * @returns handler для event: 'message'
@@ -48,7 +48,7 @@ function getNewLogin() {
 			if (("login" in data) === false) return
 			/** Template {login: < nik-name >, network: < on or of line >, id: < index user >} */
 			const boxContainsUser = document.querySelectorAll('.accaunts');
-
+			// debugger;
 			const persone = addPropertiesUser(data);
 			const newUser = persone['addHtmlUser'];
 			// debugger;

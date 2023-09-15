@@ -3,7 +3,7 @@
 let newLogin: any[] = [];
 const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;;
 const { WSocket } = require('../../../models/websockets');
-const { addUser: addPropertiesUser } = require('../../serverEvent');
+const { addPropertiesUser } = require('../../serverEvent');
 let wsLoadPage: any;
 const mapListUsers = new Map();
 
@@ -61,10 +61,7 @@ export const fun = {
 			const data = JSON.parse(e.data);
 			// debugger;
 			console.log('DATA: ', data);
-			if ('users' in data && data['users'].length < 1) {
-				// wsLoadPage.onClose();
-				return data
-			}
+			if ('users' in data && data['users'].length < 1) data;
 			let postReSort: any[] = [];
 			// debugger;
 			/** сортировка данных из db */
@@ -78,15 +75,25 @@ export const fun = {
 
 			/* выкладываем пользователей */
 			if ('users' in data) {
+				// debugger;
+				if ('idDelete' in data) {
+					debugger;
+					mapListUsers.delete(data['idDelete']['id']);
+					(body[0].querySelector('.accaunts') as HTMLElement)
+						.replaceChildren('');
+
+					debugger;
+				}
 				Array.from(data['users']).forEach((elem: any) => {
-					debugger
-					if (mapListUsers.get(elem['login']) !== elem['id']) {
-						mapListUsers.set(elem['login'], elem['id'])
+					console.log('выкладываем пользователей : ', elem);
+					if (mapListUsers.get(elem['id']) !== elem['login']) {
+						mapListUsers.set(elem['id'], elem['login'])
+					// debugger
 						const persone = addPropertiesUser(elem);
 
 
 				const boxContainsUser = document.querySelectorAll('.accaunts');
-						boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', persone.addHTMLUser);
+						boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', (persone.addHtmlUser as HTMLElement));
 					}
 			});
 			}

@@ -74,6 +74,7 @@ export function getNewPost() {
 		const ImUser = document.querySelector('.you') as HTMLElement; // Получаем id-пользователя
 		const postConyains = `</div>
 					<div class="date">01:25 20.03.2019</div>
+					<div class="text">${post}</div>
 				</div>`
 
 		if ((ImUser.querySelector('div:last-of-type') as HTMLElement).hasAttribute('data-num')
