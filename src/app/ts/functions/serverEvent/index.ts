@@ -9,39 +9,35 @@ const chatInput = body[0].querySelector('.chattalks input') as HTMLElement;
 let wsChat: any;
 let ws: any;
 /**
-	 * Обработчик который отправляет имя логина н сервер. Проверяется - зарегистрирован или нет.
-	 * @param e: событие.
+ 	 * Handler для событий из формы регистрации логина.
+	 * Отправляем логин на сервер.
+	 * @param e: event.
 	 * @returns void
 	 */
-export async function sendToServe(e: any) {
+export async function sentNewLogin(e: any) {
+	e.preventDefault();
 	const input = body[0].querySelector('.login input') as HTMLInputElement;
-	if (wsChat === undefined
-		|| (wsChat
-			&& (wsChat.readyState === 0 || wsChat.readyState > 1))) {
+	if (ws === undefined
+		|| (ws
+			&& (ws.readyState === 0 || ws.readyState > 1))) {
 		console.log('/login URL')
 		ws = new WSocket(url + "/login");
 	}
-
 	ws.onMessage = getNewLogin();
 
-	e.preventDefault();
 	if (input.value.length < 1) return
-
+	/**Template: { newLogin: input.value } */
 	const resultOfFormIdentification = JSON.stringify(fun.idForn(e));
 	ws.sends(resultOfFormIdentification);
-
-
 	ws.onOpen();
-
 	input.value = ''
 	return
 }
 
 /**
- * Функция отправляется на сервер , чтоб получить результат проверки логина
- * зарегистрирован или нет.
- * Если нет то объект нового пользователя вставляется в левый контейнер чата.
- * @returns void
+ * Данные отправленнвне на сервер, там проверка нового логина.
+ * Полученные данные (логин после проверки ) - объект пользователя вставляется в левый контейнер чата.
+ * @returns handler для event: 'message'
  */
 function getNewLogin() {
 	return (e: any) => {
@@ -50,8 +46,8 @@ function getNewLogin() {
 		if (req.length > 2) {
 			const data = JSON.parse(e.data);
 			if (("login" in data) === false) return
+			/** Template {login: < nik-name >, network: < on or of line >, id: < index user >} */
 			const persone = addPropertiesUser(data);
-
 
 			const boxContainsUser = document.querySelectorAll('.accaunts');
 			const newUser = persone.addHTMLUser;
@@ -77,11 +73,10 @@ function getNewLogin() {
 }
 
 /**
- * На входе получаем данные из БД и к объекту заполняем значение свойств.
- * Если предоставленные пользователем логин уже был зарегисрированный, функция
- * остаётся в режиме ожидания.
+ * На входе получаем данные из БД.
+ * Объект заполняем значениями свойств.
  * @param data: Данные
- * @returns обект со свеми его свойствами.
+ * @returns обект.
  */
 export function addPropertiesUser(data: any) {
 	const persone = new UsersNetwork(data['login']);
@@ -95,6 +90,7 @@ export function addPropertiesUser(data: any) {
 	/* User network's status is checking  - finish */
 
 	persone.addId = data['id'];
+	/** {login: < nik-name >, network: < on or of line >, id: < index user >} */
 	return persone;
 }
 

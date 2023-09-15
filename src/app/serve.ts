@@ -18,47 +18,47 @@ let newClient = {};
 let postmane: any;
 
 wss.on('connection', (ws: any, req: any) => {
-	/***
-	 * Статус ONLINE необходимо присваивать НА сервере после того как сработает CONECTION.
-	 * Присваиваем статус ONLINE кдиенту.
-	 *
-	 * На загрузку страниц ставить фильтер ONLINE.
-	 *
-	 * После следим за CLOSED. Сработало, значит Обновляем список клиентов
-	 */
-
 	ws.on('message', (m: any) => {
 		let url = req.url.slice(0,);
 		ws.onclose = (e: any) => {
 			const message = JSON.parse(m);
 			console.log(message);
 			if (e.code === 1001) {
-				console.log('closed MESSAGE START: ', 'Url: ' + url);
-				if ('id' in message) db.logins = db.logins.filter((item: any) => item['id'] !== message['id'])
-				else db.logins = db.logins.filter((item: any) => item['login'] !== message['newLogin']);
-				postmane = { users: db.logins };
+				/** ЗАКРЫЛ СТРАНИЦУ */
+				console.log('closed MESSAGE START: ', 'Url SOURCE: ' + url);
+				console.log('closed MESSAGE: ', message);
+				if ('id' in message) db['logins'] = db['logins'].filter((item: any) => item['id'] !== message['id'])
+
+				/** FILTER: Формируем новый список User-ов.
+					 Кто покинул страницу - удаляется из списка */
+				else db['logins'] = db['logins'].filter((item: any) => item['login'] !== message['newLogin']);
+
+				/** Template: {"users":[{"login":"< nickname >","id":"< index-user >"}]} */
+				postmane = { users: db['logins'] };
 				loginPoster(postmane);
 
-				console.log('closed MESSAGE: ', message, req.url);
 				console.log('closed LOGINS: ', db.logins);
 			}
 		}
 
 		if (url.indexOf('/login') >= 0 && url.length > 1) {
-			/** ДОБАВИТЬ ЛОГИН */
+			/** ПОЛУЧИЛИ ЛОГИН */
 			/**
 			 * Получаем логин
 			 * Присваеваем ID
 			 * Рассылка по клиентам
-			 * Шаблон
-			 * {"users":[{"login":"Tratatuy","id":"ad42549b-14d4-43bd-941b-d79aa1e47080"}]
+			 * Шаблон БД 'logins'
+			 * {"users":[{"login":"< nickname >","id":"< index-user >"}]
 			 */
 			const message = JSON.parse(m);
 			console.log('message: ', message);
+
+			/** FILTER: Проверяется - зарегистрирован или нет. */
 			const result = db['logins'].find((elem: any) => elem['login'] === message['newLogin']);
 			if (result === undefined) {
 				newClient = { login: message['newLogin'], id: makeUniqueId(v4(), db['logins']) };
 				db['logins'].push(newClient);
+				/**------------------------------------------------------- */
 			}
 			else newClient = {};
 
@@ -79,27 +79,33 @@ wss.on('connection', (ws: any, req: any) => {
 			if (db['posts'].length > 100) db['posts'].pop();
 			const id = makePostId(postId, db['posts']);
 			postId = id;
-			console.log('New post-ID: ', postId);
 			// need take a login name
 			/**
-			 * Шаблон данных в момент загрузки страницы
-			 *  {"users":[{"login":"Tratatuy","id":"ad42549b-14d4-43bd-941b-d79aa1e47080"}],
-			 * 		"posts":[{"idPost":1,"post":{"message":"text-text-text","id":"ad42549b-14d4-43bd-941b-d79aa1e47080","login":"Tratatuy"}}]}
-			 *  "const login = db['logins'].filter()" - В БД поступает сообщение отправленное пользователем. Задача фильтра  - найти логин автора сообщения.
-			 * Логин найден и сообщение проходит рассылку .
+			 * Templates: данные НА САЙТ
+			 *  A: (for box users) - {"users":[{"login":"< nickname >","id":"< index-user >"}]} - a box users
+			 *  B: (for box a list posts ) - {"posts":[
+			 * 				{"idPost":1,
+			 * 					"post":{"message":
+			 * 							"< text-for-chat >",
+			 * 							"id":"< index-user >",
+			 * 							"login":"< autor-this-message >"}}]}
+			 * Total view: {A, B}
+			 *
+			 *  Filter: "const login = db['logins'].filter()"
+			 *  В БД поступает сообщение отправленное пользователем. Задача фильтра  - найти логин автора сообщения.
+			 *  Логин найден и сообщение проходит рассылку .
 			 */
 			const login = db['logins'].filter((item: any) => { if (item['id'] === onePost['id']) return item['login'] });
 			onePost['login'] = login[0]['login'];
 
 			console.log('SErver onePOST: ', onePost);
-
-			/**Шаблон для БД
-			 * db['posts'] = [{"idPost":1,"post":{"message":"text-text-text","id":"ad42549b-14d4-43bd-941b-d79aa1e47080"}}]
+			/**Шаблон НА САЙТ/БД 'posts'
+			 * db['posts'] = [{"idPost":1,"post":{"message":"< text-for-chat >","id":"< index-user >"}}]
 			 */
-
 			postmane = { idPost: id, post: onePost }
 			db['posts'].push(postmane);
 			loginPoster(postmane);
+			/**------------------------------------------------------- */
 		}
 	});
 	ws.on("error", (e: any) => ws.send(e));

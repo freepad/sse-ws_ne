@@ -1,7 +1,7 @@
 // function
 
 const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
-const { sendToServe } = require('./serverEvent');
+const { sentNewLogin } = require('./serverEvent');
 const { fun } = require('./forms/logins');
 
 /* it for events by indentifikation a new Login - start*/
@@ -12,9 +12,8 @@ const { fun } = require('./forms/logins');
  *  - клавиши "Enter"
  *  - click по "subnite"
  *
- * События вызывыют под-функцию "sendToServe".
- * Отправляет имя логина н сервер. Проверяется - зарегистрирован или нет.
-	 *  Если нет то объект нового пользователя вставляется в левый контейнер чата.
+ * События вызывыют под-функцию "sentNewLogin".
+ * "sentNewLogin" Отправляет имя нового логина на сервер.
  */
 export function addLogin(elem: HTMLCollectionOf<HTMLElement>) {
 	elem[0].insertAdjacentHTML("afterbegin", fun.forms());
@@ -23,13 +22,13 @@ export function addLogin(elem: HTMLCollectionOf<HTMLElement>) {
 
 	formIdentification.addEventListener('keypress', (e: any) => {
 		if ((e as KeyboardEvent).key === 'Enter') {
-			sendToServe(e)
+			sentNewLogin(e)
 				.then(() => { addUserStyle() });
 		};
 	});
 	formIdentification.addEventListener('click', (e: any) => {
 		if (((e as MouseEvent).target as HTMLButtonElement).type === 'submit') {
-			sendToServe(e)
+			sentNewLogin(e)
 				.then(() => { addUserStyle() });
 		};
 	});

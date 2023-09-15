@@ -36,12 +36,7 @@ export class WSocket {
 		};
 	}
 
-	sends(datas: string) {
-		console.log('DataSend!');
-		this.handlers.data.push(datas);
-		return
-	};
-
+	sends(datas: string) { this.handlers.data.push(datas) };
 	onOpen() {
 		let data: string = '';
 		if (this.handlers.data.length > 0) {
@@ -52,10 +47,7 @@ export class WSocket {
 				this.socket.send(data);
 				this.handlers.data.pop();
 				return
-			} else {
-				setTimeout(() => this.onOpen(), 1000);
-
-			}
+			} else setTimeout(() => this.onOpen(), 1000);
 		}
 		else if (this.readyState > 1) {
 			data = this.handlers.data[0];
@@ -67,6 +59,7 @@ export class WSocket {
 			this.handlers.data.pop();
 		}
 	};
+
 	get readyState() { return this.socket.readyState }
 	onMessage = (e: any) => { console.log('WebSocket Received message: ', e.data) };
 	onClose() { return this.socket.close() };
