@@ -25,14 +25,12 @@ export function addLogin(elem: HTMLCollectionOf<HTMLElement>) {
 		if ((e as KeyboardEvent).key === 'Enter') {
 			sendToServe(e)
 				.then(() => { addUserStyle() });
-			// .then(() => windowsOfflineUser());
 		};
 	});
 	formIdentification.addEventListener('click', (e: any) => {
 		if (((e as MouseEvent).target as HTMLButtonElement).type === 'submit') {
 			sendToServe(e)
 				.then(() => { addUserStyle() });
-			// .then(() => windowsOfflineUser());
 		};
 	});
 }
@@ -77,7 +75,6 @@ export function getNewPost() {
 		const ImUser = document.querySelector('.you') as HTMLElement; // Получаем id-пользователя
 		const postConyains = `</div>
 					<div class="date">01:25 20.03.2019</div>
-					<div class="text">${post} </div>
 				</div>`
 
 		if ((ImUser.querySelector('div:last-of-type') as HTMLElement).hasAttribute('data-num')

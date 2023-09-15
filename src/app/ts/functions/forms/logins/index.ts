@@ -3,8 +3,9 @@
 let newLogin: any[] = [];
 const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;;
 const { WSocket } = require('../../../models/websockets');
-const { addUser } = require('../../serverEvent');
+const { addUser: addPropertiesUser } = require('../../serverEvent');
 let wsLoadPage: any;
+const mapListUsers = new Map();
 
 export const fun = {
 	forms() {
@@ -61,7 +62,7 @@ export const fun = {
 			// debugger;
 			console.log('DATA: ', data);
 			if ('users' in data && data['users'].length < 1) {
-				wsLoadPage.onClose();
+				// wsLoadPage.onClose();
 				return data
 			}
 			let postReSort: any[] = [];
@@ -77,10 +78,16 @@ export const fun = {
 
 			/* выкладываем пользователей */
 			if ('users' in data) {
-			Array.from(data['users']).forEach((elem: any) => {
-				const persone = addUser(elem);
+				Array.from(data['users']).forEach((elem: any) => {
+					debugger
+					if (mapListUsers.get(elem['login']) !== elem['id']) {
+						mapListUsers.set(elem['login'], elem['id'])
+						const persone = addPropertiesUser(elem);
+
+
 				const boxContainsUser = document.querySelectorAll('.accaunts');
-				boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', persone.addUser);
+						boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', persone.addHTMLUser);
+					}
 			});
 			}
 
@@ -97,6 +104,7 @@ export const fun = {
 			/**Выкладываем посты в экран чата */
 			const sqreenChat = body[0].querySelector('.chattalks > div:first-of-type') as HTMLElement;
 			postReSort.forEach((item: any) => {
+
 				const user: string = item['login'];
 				const post: string = item['post']['message'];
 

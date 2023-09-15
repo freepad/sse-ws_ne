@@ -50,11 +50,11 @@ function getNewLogin() {
 		if (req.length > 2) {
 			const data = JSON.parse(e.data);
 			if (("login" in data) === false) return
-			const persone = addUser(data);
+			const persone = addPropertiesUser(data);
 
 
 			const boxContainsUser = document.querySelectorAll('.accaunts');
-			const newUser = persone.addUser;
+			const newUser = persone.addHTMLUser;
 			newUser.classList.add('imNew');
 			// debugger;
 			boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', newUser);
@@ -83,7 +83,7 @@ function getNewLogin() {
  * @param data: Данные
  * @returns обект со свеми его свойствами.
  */
-export function addUser(data: any) {
+export function addPropertiesUser(data: any) {
 	const persone = new UsersNetwork(data['login']);
 
 	/* User network's status is checking  - start */

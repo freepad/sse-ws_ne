@@ -50,7 +50,7 @@ class UsersHtml extends Users {
 		// return this.templateHtml;
 	}
 
-	get addUser() {
+	get addHtmlUser() {
 		this.crateUserHtml();
 		return this.#templateHtml
 	}
