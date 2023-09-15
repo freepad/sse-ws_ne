@@ -44,7 +44,7 @@ wss.on('connection', (ws: any, req: any) => {
 					let userForRemove = db['logins'].filter((item: any) => {
 
 						console.log('closed db.logins AFTER ; ', db['logins'], item['login'] === message['newLogin']);
-						item['login'] === message['newLogin']
+						if (item['login'] === message['newLogin']) return item
 					});
 					db['logins'] = db['logins'].filter((item: any) => item['login'] !== message['newLogin']);
 
@@ -73,13 +73,15 @@ wss.on('connection', (ws: any, req: any) => {
 			 * {"users":[{"login":"< nickname >","id":"< index-user >"}]
 			 */
 			const message = JSON.parse(m);
-			console.log('message: ', message);
+			console.log('/Login: message: ', message);
 			console.log('URL from /login', url);
 			/** FILTER: Проверяется - зарегистрирован или нет. */
 			const result = db['logins'].find((elem: any) => elem['login'] === message['newLogin']);
 			if (result === undefined) {
 				newClient = { login: message['newLogin'], id: makeUniqueId(v4(), db['logins']) };
+				console.log('/Login: newClient', newClient);
 				db['logins'].push(newClient);
+				console.log('/Login: db[logins]', db['logins'])
 				console.log('/* --------------- *\\')
 				/**------------------------------------------------------- */
 			}
