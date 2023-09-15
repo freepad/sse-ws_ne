@@ -6,7 +6,7 @@ const { fun } = require('./forms/logins');
 
 /* it for events by indentifikation a new Login - start*/
 /**
- *
+ * РЕГИСТРАЦИЯ ЛОГИНА event
  * @param elem: HTMLElement формы для ридентификации
  * Запускает прослешку событий на нажетие
  *  - клавиши "Enter"

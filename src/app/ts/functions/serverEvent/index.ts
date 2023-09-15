@@ -47,13 +47,14 @@ function getNewLogin() {
 			const data = JSON.parse(e.data);
 			if (("login" in data) === false) return
 			/** Template {login: < nik-name >, network: < on or of line >, id: < index user >} */
-			const persone = addPropertiesUser(data);
-
 			const boxContainsUser = document.querySelectorAll('.accaunts');
-			const newUser = persone.addHTMLUser;
-			newUser.classList.add('imNew');
+
+			const persone = addPropertiesUser(data);
+			const newUser = persone['addHtmlUser'];
 			// debugger;
-			boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', newUser);
+			newUser.classList.add('imNew');
+			// boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', newUser);
+			boxContainsUser[0].insertAdjacentElement('beforeend', newUser);
 
 			body[0].querySelector('.chattalks > div:last-of-type')
 				?.removeAttribute('style');
@@ -81,7 +82,7 @@ function getNewLogin() {
 export function addPropertiesUser(data: any) {
 	const persone = new UsersNetwork(data['login']);
 
-	/* User network's status is checking  - start */
+	/* User network's status is checking ??  - start */
 	if (navigator.onLine) persone.onOrOfLine = 'onLine';
 
 	window.addEventListener("offline", (event) => {
@@ -90,6 +91,7 @@ export function addPropertiesUser(data: any) {
 	/* User network's status is checking  - finish */
 
 	persone.addId = data['id'];
+	persone.addHTMLUser;
 	/** {login: < nik-name >, network: < on or of line >, id: < index user >} */
 	return persone;
 }

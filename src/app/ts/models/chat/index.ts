@@ -6,8 +6,11 @@ export class ChatSqreen {
 
 	constructor(elem: HTMLElement) {
 		this.messageHtml = elem;
-		this.messageHtml.parentElement?.addEventListener('keypress', (e: any) => {
+
+		/** СООБЩЕНИЕ В ЧАТ event */
+		this.messageHtml?.parentElement?.parentElement?.parentElement?.addEventListener('keypress', (e: any) => {
 			if ((e as KeyboardEvent).key === 'Enter') {
+				// debugger;
 				e.preventDefault();
 				let mess = (this.messageHtml as HTMLInputElement).value;
 				const postOfChat = {
