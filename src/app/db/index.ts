@@ -1,10 +1,6 @@
 
 const myDb = {
-<<<<<<< HEAD
-	logins: ([] as any[]),
-=======
 	logins: ([] as any[]), // [ { login: 'RRRR', id: '7ef88beb-37ef-4806-9a8b-6ac6632828df' } ]
->>>>>>> v4.2
 	posts: ([] as any[]),
 	handlers: ([] as any[]),
 
