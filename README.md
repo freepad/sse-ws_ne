@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/m7rwpuj547x2gkcr/branch/master?svg=true)](https://ci.appveyor.com/project/Tryd0g0lik/sse-ws-ne/branch/master)
+
 # Домашнее задание к занятию "8. EventSource, Websockets"
 
 Правила сдачи задания:
