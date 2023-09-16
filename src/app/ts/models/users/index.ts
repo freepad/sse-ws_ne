@@ -65,11 +65,7 @@ export class UsersNetwork extends UsersHtml {
 		super(newLogin)
 		this.network = 'ofline';
 		window.addEventListener("offline", (event) => {
-<<<<<<< HEAD
-
-=======
 			// ???
->>>>>>> v4.2
 		});
 	}
 

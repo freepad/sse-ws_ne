@@ -16,13 +16,19 @@ export class WSocket {
 	// url: string;
 	constructor(url: string) {
 		this.socket = new WebSocket(url);
-		this.socket.addEventListener('open', (e: any) => { /*this.onOpen()*/  console.log('OPEN') });
-		this.socket.addEventListener('message', (e: any) => { this.onMessage(e); });
+		this.socket.addEventListener('open', (e: any) => { console.log('OPEN') });
+		this.socket.addEventListener('message', (e: any) => {
+			console.log("WS message-URL: ", e.target.url, e.code);
+
+			this.onMessage(e);
+		});
 		this.socket.addEventListener('close', (e: any) => {
 			if (e.wasClean) { console.log('WebSocket connection closed clean!') }
 			else { console.log('WebSocket connection closed aborted!') };
+			console.log('WS closed Event: ', e['message']);
+
 		});
-		this.socket.addEventListener('error', (e: any) => { this.onError(e) });
+		this.socket.addEventListener('error', (e: any) => { });
 
 		this.handlers = {
 			open: [],

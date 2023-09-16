@@ -56,7 +56,6 @@ export const fun = {
 		wsLoadPage.onMessage = async (e: any) => {
 			if (e.target.url !== "ws://localhost:7070/") return
 			const data = JSON.parse(e.data);
-
 			if ('users' in data && data['users'].length < 1) data;
 			let postReSort: any[] = [];
 			// debugger;
@@ -70,12 +69,11 @@ export const fun = {
 			};
 
 			/* выкладываем пользователей */
-
 			if ('users' in data) {
 				// debugger;
 				mapListUsers.clear();
 				(body[0].querySelector('.accaunts') as HTMLElement)
-					.replaceChildren('');
+						.replaceChildren('');
 
 				Array.from(data['users']).forEach((elem: any) => {
 					console.log('выкладываем пользователей : ', elem);
@@ -85,6 +83,7 @@ export const fun = {
 					boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', (persone.addHtmlUser as HTMLElement));
 			});
 			}
+
 			/** к постам из БД присваеваем логины */
 			postReSort.forEach((item: any) => {
 				for (let i = 0; i < data['users'].length; i++) {
@@ -96,20 +95,26 @@ export const fun = {
 
 			/** выкладываем посты  */
 			/**Выкладываем посты в экран чата */
-			const sqreenChat = body[0].querySelector('.chattalks > div:first-of-type') as HTMLElement;
-			postReSort.forEach((item: any) => {
-				const user: string = item['login'];
-				const post: string = item['post']['message'];
+			if (myId().length === 0) {
+				const sqreenChat = body[0].querySelector('.chattalks > div:first-of-type') as HTMLElement;
+				postReSort.forEach((item: any) => {
+					const user: string = item['login'];
+					const post: string = item['post']['message'];
 
-				sqreenChat.insertAdjacentHTML('afterbegin', (`<div class="post">
+					sqreenChat.insertAdjacentHTML('afterbegin', (`<div class="post">
 						<div class="post-accaunt sourcename">${user}</div>
 						<div class="date">01:25 20.03.2019</div>
 						<div class="text">${post} </div>
 					</div>` as any));
-			});
+				});
 
-			postReSort = [];
+				postReSort = [];
+			}
+			return data
 		}
+		const request = JSON.stringify({ users: [] });
+		wsLoadPage.sends(request);
+		wsLoadPage.onOpen();
 	}
 }
 
