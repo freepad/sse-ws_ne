@@ -1,9 +1,10 @@
 // function / forms
-
 let newLogin: any[] = [];
 const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;;
 const { WSocket } = require('../../../models/websockets');
-const { addUser } = require('../../serverEvent');
+const { addPropertiesUser, myId } = require('../../serverEvent');
+let wsLoadPage: any;
+const mapListUsers = new Map();
 
 export const fun = {
 	forms() {
@@ -39,24 +40,27 @@ export const fun = {
 	 * Открывает соединение на сервер.
 	 * делает запрос зарегистрированных пользователей из "/" адреса
 	 * Если есть пользователи, загружает их на страницу.
-	 * и загрывает соединение
+	//  * и загрывает соединени??????????
 	 */
 	loadPage() {
+		/** Первичная закгрузка страницы **/
 		newLogin = [];
-		const wsLoadPage = new WSocket("ws://localhost:7070/");
+		if (wsLoadPage === undefined
+			|| (wsLoadPage
+				&& (wsLoadPage.readyState === 0 || wsLoadPage.readyState > 1))) {
+			console.log('/ URL')
+			wsLoadPage = new WSocket("ws://localhost:7070/");
 
+		}
 		// debugger;
 		wsLoadPage.onMessage = async (e: any) => {
-			// debugger;
+			if (e.target.url !== "ws://localhost:7070/") return
 			const data = JSON.parse(e.data);
-			console.log('DATA: ', data);
-			if (data['users'].length < 1) {
-				wsLoadPage.onClose();
-				return data
-			}
+
+			if ('users' in data && data['users'].length < 1) data;
 			let postReSort: any[] = [];
-			debugger;
-			/** сортировка */
+			// debugger;
+			/** сортировка данных из db */
 			if (data['posts'] && data['posts'].length > 0) {
 				postReSort = await Array.from(data['posts']).sort((postA: any, postB: any): number => {
 					let int: number = 0;
@@ -66,12 +70,21 @@ export const fun = {
 			};
 
 			/* выкладываем пользователей */
-			Array.from(data['users']).forEach((elem: any) => {
-				const persone = addUser(elem);
-				const boxContainsUser = document.querySelectorAll('.accaunts');
-				boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', persone.addUser);
-			});
 
+			if ('users' in data) {
+				// debugger;
+				mapListUsers.clear();
+				(body[0].querySelector('.accaunts') as HTMLElement)
+					.replaceChildren('');
+
+				Array.from(data['users']).forEach((elem: any) => {
+					console.log('выкладываем пользователей : ', elem);
+					mapListUsers.set(elem['id'], elem['login'])
+					const persone = addPropertiesUser(elem);
+					const boxContainsUser = document.querySelectorAll('.accaunts');
+					boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', (persone.addHtmlUser as HTMLElement));
+			});
+			}
 			/** к постам из БД присваеваем логины */
 			postReSort.forEach((item: any) => {
 				for (let i = 0; i < data['users'].length; i++) {
@@ -89,19 +102,14 @@ export const fun = {
 				const post: string = item['post']['message'];
 
 				sqreenChat.insertAdjacentHTML('afterbegin', (`<div class="post">
-					<div class="post-accaunt sourcename">${user}</div>
-					<div class="date">01:25 20.03.2019</div>
-					<div class="text">${post} </div>
-				</div>` as any));
+						<div class="post-accaunt sourcename">${user}</div>
+						<div class="date">01:25 20.03.2019</div>
+						<div class="text">${post} </div>
+					</div>` as any));
 			});
 
 			postReSort = [];
-			wsLoadPage.onClose();
-			return data
 		}
-		const request = JSON.stringify({ users: [] });
-		wsLoadPage.sends(request);
-		wsLoadPage.onOpen();
 	}
 }
 

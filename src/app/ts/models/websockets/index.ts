@@ -13,6 +13,7 @@
 export class WSocket {
 	socket: any;
 	handlers: any;
+	// url: string;
 	constructor(url: string) {
 		this.socket = new WebSocket(url);
 		this.socket.addEventListener('open', (e: any) => { /*this.onOpen()*/  console.log('OPEN') });
@@ -30,34 +31,34 @@ export class WSocket {
 		};
 	}
 
-	sends(datas: string) {
-		console.log('DataSend!');
-		this.handlers.data.push(datas);
-		return
-	};
-
+	sends(datas: string) { this.handlers.data.push(datas) };
 	onOpen() {
-
+		let data: string = '';
 		if (this.handlers.data.length > 0) {
-			const data = this.handlers.data[0];
+			data = this.handlers.data[0];
 			// debugger
 			if (this.readyState === 1) {
 				console.log('WebSocket connection opened!');
 				this.socket.send(data);
-				this.handlers.data = [];
+				this.handlers.data.pop();
 				return
-			} else {
-				setTimeout(() => this.onOpen(), 1000);
-
-			}
-		} else {
+			} else setTimeout(() => this.onOpen(), 1000);
+		}
+		else if (this.readyState > 1) {
+			data = this.handlers.data[0];
+			this.socket.send(data);
+			this.handlers.data.pop();
+		}
+		else {
 			console.error('Not datas for a Sehding');
-			this.handlers.data = [];
+			this.handlers.data.pop();
 		}
 	};
+
 	get readyState() { return this.socket.readyState }
 	onMessage = (e: any) => { console.log('WebSocket Received message: ', e.data) };
 	onClose() { return this.socket.close() };
+	closing = (e: any) => { console.log('here is your handler'); };
 	onError(e: any) { console.log('WebSocket error: ', e) };
 }
 

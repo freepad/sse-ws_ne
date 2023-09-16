@@ -50,8 +50,10 @@ class UsersHtml extends Users {
 		// return this.templateHtml;
 	}
 
-	get addUser() {
+	get addHtmlUser() {
 		this.crateUserHtml();
+		console.log(this.#templateHtml);
+		// debugger;
 		return this.#templateHtml
 	}
 
@@ -63,7 +65,11 @@ export class UsersNetwork extends UsersHtml {
 		super(newLogin)
 		this.network = 'ofline';
 		window.addEventListener("offline", (event) => {
+<<<<<<< HEAD
 
+=======
+			// ???
+>>>>>>> v4.2
 		});
 	}
 
@@ -107,17 +113,16 @@ export class userChat {
 	get userChat() {
 		return this.user
 	}
+	// /** */
+	// get messageChat() {
+	// 	return this.messageHtml.parentElement?.addEventListener('keypress', (e: any) => {
+	// 		if ((e as KeyboardEvent).key === 'Enter') {
+	// 			// debugger;
+	// 			this.onKeypress(e);
+	// 		};
 
-	get messageChat() {
-		return this.messageHtml.parentElement?.addEventListener('keypress', (e: any) => {
-			if ((e as KeyboardEvent).key === 'Enter') {
-				// debugger;
-				this.onKeypress(e);
-			};
 
-
-
-		});
-	}
+	// 	});
+	// }
 
 }
