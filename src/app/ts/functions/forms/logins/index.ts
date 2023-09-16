@@ -76,17 +76,17 @@ export const fun = {
 			/* выкладываем пользователей */
 			if ('users' in data) {
 				// debugger;
-				if ('idDelete' in data) {
-					debugger;
-					mapListUsers.delete(data['idDelete']['id']);
+				// if ('update' in data) {
+				// debugger;
+				mapListUsers.clear();
 					(body[0].querySelector('.accaunts') as HTMLElement)
 						.replaceChildren('');
 
 					debugger;
-				}
+				// }
 				Array.from(data['users']).forEach((elem: any) => {
 					console.log('выкладываем пользователей : ', elem);
-					if (mapListUsers.get(elem['id']) !== elem['login']) {
+					// if (mapListUsers.get(elem['id']) !== elem['login']) {
 						mapListUsers.set(elem['id'], elem['login'])
 					// debugger
 						const persone = addPropertiesUser(elem);
@@ -94,7 +94,7 @@ export const fun = {
 
 				const boxContainsUser = document.querySelectorAll('.accaunts');
 						boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', (persone.addHtmlUser as HTMLElement));
-					}
+					// }
 			});
 			}
 

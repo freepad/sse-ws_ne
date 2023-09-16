@@ -8,7 +8,8 @@ const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLEleme
 const chatInput = body[0].querySelector('.chattalks input') as HTMLElement;
 let wsChat: any;
 let ws: any;
-/** 
+let thisIsMyId = '';
+/**
  	 * Handler для событий из формы регистрации логина.
 	 * Отправляем логин на сервер.
 	 * @param e: event.
@@ -48,10 +49,10 @@ function getNewLogin() {
 			if (("login" in data) === false) return
 			/** Template {login: < nik-name >, network: < on or of line >, id: < index user >} */
 			const boxContainsUser = document.querySelectorAll('.accaunts');
+			if (thisIsMyId.length < 5) thisIsMyId = data['id'];
 			// debugger;
 			const persone = addPropertiesUser(data);
 			const newUser = persone['addHtmlUser'];
-			// debugger;
 			newUser.classList.add('imNew');
 			// boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', newUser);
 			boxContainsUser[0].insertAdjacentElement('beforeend', newUser);
@@ -59,6 +60,7 @@ function getNewLogin() {
 			body[0].querySelector('.chattalks > div:last-of-type')
 				?.removeAttribute('style');
 			body[0].querySelector('.author')?.remove();
+
 		}
 
 		else if (req.length < 3) {
@@ -103,25 +105,28 @@ const chat = new ChatSqreen(chatInput);
 chat.getSqreenChat = sqreenChat;
 
 chat.server = (elem: any) => {
-	const user = getMetaDataUser();
+	const userId = myId();
 
-	if ('id' in user) {
-		elem['id'] = user['id'];
 
-		if (wsChat === undefined
-			|| (wsChat
-				&& (wsChat.readyState === 0 || wsChat.readyState > 1))) {
-			console.log('/chat URL')
-			wsChat = new WSocket(url + "/chat");
-		}
+	// debugger;
+	elem['id'] = userId;
 
-		let post = JSON.stringify(elem);
-		wsChat.sends(post);
-		wsChat.onOpen();
-		wsChat.onMessage = getNewPost();
-
-		return
+	if (wsChat === undefined
+		|| (wsChat
+			&& (wsChat.readyState === 0 || wsChat.readyState > 1))) {
+		console.log('/chat URL')
+		wsChat = new WSocket(url + "/chat");
 	}
+
+	let post = JSON.stringify(elem);
+	wsChat.sends(post);
+	wsChat.onOpen();
+	wsChat.onMessage = getNewPost();
+
+	return
 }
 
+export function myId() {
+	return thisIsMyId
+}
 // ServerEvents

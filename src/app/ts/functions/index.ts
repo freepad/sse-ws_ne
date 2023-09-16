@@ -1,7 +1,7 @@
 // function
 
 const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
-const { sentNewLogin } = require('./serverEvent');
+const { sentNewLogin, myId } = require('./serverEvent');
 const { fun } = require('./forms/logins');
 
 /* it for events by indentifikation a new Login - start*/
@@ -37,7 +37,6 @@ export function addLogin(elem: HTMLCollectionOf<HTMLElement>) {
 /**
  * Обновляем внешний вид логина в колонке чата.
  */
-let i = 0;
 function addUserStyle() {
 	let user: Element[] = [];
 	const users = document.querySelectorAll('.accaunt__online_one');
@@ -51,22 +50,13 @@ function addUserStyle() {
 	setTimeout(() => addUserStyle(), 1000);
 }
 
-export function getMetaDataUser() {
-	let userId: any = {};
-	const boxContainsUser = document.querySelector('.you')
-		?.querySelector('.sourcename');
-
-	if (boxContainsUser?.hasAttribute('data-num')) { userId = { id: boxContainsUser?.getAttribute('data-num') } }
-	return userId
-}
-
 const sqreenChat = body[0].querySelector('.chattalks > div:first-of-type') as HTMLElement;
 export function getNewPost() {
 	return (e: any) => {
 		const data = JSON.parse(e.data);
 
-		if (e.target.url !== "ws://localhost:7070/chat") return
-		if (("idPost" in data) === false) return
+		if (e.target.url !== "ws://localhost:7070/chat"
+			|| ("idPost" in data) === false) return
 		const post = data['post']['message'];
 		let user = data['post']['login'];
 
@@ -77,8 +67,9 @@ export function getNewPost() {
 					<div class="text">${post}</div>
 				</div>`
 
-		if ((ImUser.querySelector('div:last-of-type') as HTMLElement).hasAttribute('data-num')
-			&& ((ImUser.querySelector('div:last-of-type') as HTMLElement).getAttribute('data-num') as string).indexOf(data['post']['id']) >= 0) {
+		// if ((ImUser.querySelector('div:last-of-type') as HTMLElement).hasAttribute('data-num') /* you -------- */
+		debugger;
+		if (myId().length > 5 && myId().indexOf(data['post']['id']) >= 0) {
 			user = 'You';
 			sqreenChat.insertAdjacentHTML('beforeend', (`<div class="post your-post">
 			<div class="post-accaunt sourcename">${user}` + postConyains as any)); // помечаем авторские посты
@@ -90,3 +81,5 @@ export function getNewPost() {
 
 	}
 }
+
+

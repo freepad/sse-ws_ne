@@ -31,30 +31,18 @@ wss.on('connection', (ws: any, req: any) => {
 				console.log('closed: ', e.code);
 				console.log('closed MESSAGE START: ', 'Url SOURCE: ' + url);
 				console.log('closed MESSAGE: ', message);
-				let metaData = {};
-				if ('id' in message) {
-					db['logins'] = db['logins'].filter((item: any) => item['id'] !== message['id'])
-
-					metaData = { id: message['id'] };
-				}
+				if ('id' in message) db['logins'] = db['logins'].filter((item: any) => item['id'] !== message['id']);
 
 				/** FILTER: Формируем новый список User-ов.
 					 Кто покинул страницу - удаляется из списка */
-				else if ('newLogin' in message) {
-					let userForRemove = db['logins'].filter((item: any) => {
 
-						console.log('closed db.logins AFTER ; ', db['logins'], item['login'] === message['newLogin']);
-						if (item['login'] === message['newLogin']) return item
-					});
-					db['logins'] = db['logins'].filter((item: any) => item['login'] !== message['newLogin']);
+				else { db['logins'] = db['logins'].filter((item: any) => item['login'] !== message['newLogin']); }
+				// userForRemove = undefined;
 
-					console.log('closed USERfORrEMOVE: ', userForRemove);
-					metaData = { id: userForRemove['id'] };
-					// userForRemove = undefined;
-				}
-				if ('id'.indexOf(String(Object.keys(metaData))) >= 0) {
-					/** Template: {"users":[{"login":"< nickname >","id":"< index-user >"}], idDelete:{id: < index-user >}} */
-					postmane = { users: db['logins'], idDelete: metaData };
+				if ('id'.indexOf(String(Object.keys(message)))
+					|| 'newLogin'.indexOf(String(Object.keys(message))) >= 0) {
+					/** Template: {"users":[{"login":"< nickname >","id":"< index-user >"}], update:true} */
+					postmane = { users: db['logins'], update: true };
 					console.log('closed POSTMANE before POSTER: ', postmane);
 					poster(postmane);
 
@@ -103,6 +91,7 @@ wss.on('connection', (ws: any, req: any) => {
 
 			/** РАБОТА ЧАТА */
 			let onePost = JSON.parse(m);
+			console.log('Chat: Got the post: ', onePost)
 			if (db['posts'].length > 100) db['posts'].pop();
 			const id = makePostId(postId, db['posts']);
 			postId = id;
