@@ -1,50 +1,47 @@
-version: 1.0.{build}-{branch}
+version: 1.1.{build}-{branch}
 
-branches:
-# https://appveyor-staging.azurewebsites.net/docs/branches/
-  only:
-    - master
+
 
 image:
-  - Visual Studio 2019
+ - Visual Studio 2019
 
 platform:
   - x64
 
-init:
-  - git config -global core.autocrlf input
-
-stack:
-  - node 18.12.0
+stack: node 18.12.0
 
 cache:
-# https://appveyor-staging.azurewebsites.net/docs/build-cache/
   - node_modules
 
 install:
-  yarn add package.js
+ - yarn
 
-duild: off
-# https://appveyor-staging.azurewebsites.net/docs/build-configuration/
+build: off
+
 
 deploy: off
 
+branches:
+  only:
+    - master
 
-artifacts:
-# https://appveyor-staging.azurewebsites.net/docs/packaging-artifacts/
-  - path: \dist/to/file.exe
 
-after_build:
-  - yarn run build
-  - yarn run lint
-  - ps: Get-ChildItem .\*.nupkg | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
+build_script:
+  - yarn run start
+  - yarn run serve
+deploy_script:  # скрипт развёртывания
+# Конкретно шаг развертывания выполняется вот этим скриптом:
+# deploy_script: # скрипт развёртывания
 
-deploy_script:
 # https://www.appveyor.com/docs/how-to/git-push/
 # https://www.appveyor.com/docs/how-to/git-push/#adding-access-token-to-credential-store
-  - git config --global credential.helper store
+  - git config --global credential.helper store #включает кеширование учетных данных
   - git config --global user.name Tryd0g0lik
   - git config --global user.email work80@mail.ru
+  # При аутентификации с помощью токена доступа `x-oauth-basic` используется в качестве заглушки пароля
+  #- ps: Set-Content -Path  "$HOME/.git-credentials" -Value "https://$GITHUB_TOKEN:x-oauth-basic@github.com"  -NoNewline
   - ps: Write-Host "https://$GITHUB_TOKEN:x-oauth-basic@github.com" > "$HOME/.git-credentials" -NoNewline
 
-  - npm install push-dir --dir=dist --branch=master --force
+  - yarn add push-dir --dir=dist --branch=master --force
+# Обратите внимание на последнюю строчку, она отправляет собранное приложение на github pages, где оно будет доступно по
+# ссылке, которую я вам написал, а не той которую вы нашли в статье на другую тему.
