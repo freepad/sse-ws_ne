@@ -32,7 +32,7 @@ deploy: off
 
 artifacts:
 # https://appveyor-staging.azurewebsites.net/docs/packaging-artifacts/
-  - path: `\dist/to/file.exe`
+  - path: \dist/to/file.exe
 
 after_build:
   - yarn run build
