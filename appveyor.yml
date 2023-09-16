@@ -39,7 +39,7 @@ after_build:
   - yarn run lint
   - ps: Get-ChildItem .\*.nupkg | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
 
-deploy_script
+deploy_script:
 # https://www.appveyor.com/docs/how-to/git-push/
 # https://www.appveyor.com/docs/how-to/git-push/#adding-access-token-to-credential-store
   - git config --global credential.helper store
