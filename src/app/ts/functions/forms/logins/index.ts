@@ -73,7 +73,7 @@ export const fun = {
 				// debugger;
 				mapListUsers.clear();
 				(body[0].querySelector('.accaunts') as HTMLElement)
-						.replaceChildren('');
+					.replaceChildren('');
 
 				Array.from(data['users']).forEach((elem: any) => {
 					console.log('выкладываем пользователей : ', elem);
@@ -81,7 +81,7 @@ export const fun = {
 					const persone = addPropertiesUser(elem);
 					const boxContainsUser = document.querySelectorAll('.accaunts');
 					boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', (persone.addHtmlUser as HTMLElement));
-			});
+				});
 			}
 
 			/** к постам из БД присваеваем логины */

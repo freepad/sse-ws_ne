@@ -10,7 +10,7 @@ let wsChat: any;
 let ws: any;
 let thisIsMyId = '';
 /**
- 	 * Handler для событий из формы регистрации логина.
+		 * Handler для событий из формы регистрации логина.
 	 * Отправляем логин на сервер.
 	 * @param e: event.
 	 * @returns void
