@@ -13,15 +13,11 @@ export class ChatSqreen {
 				// debugger;
 				e.preventDefault();
 				let mess = (this.messageHtml as HTMLInputElement).value.slice(0,);
-				// debugger;
 				(this.messageHtml as HTMLInputElement).value = '';
-				const postOfChat = {
-					message: mess,
-				}
 
+				const postOfChat = { message: mess, }
 				this.server(postOfChat);
 				mess = '';
-
 			}
 		});
 	};

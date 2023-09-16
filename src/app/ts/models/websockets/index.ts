@@ -15,12 +15,8 @@ export class WSocket {
 	handlers: any;
 	// url: string;
 	constructor(url: string) {
-		// this.url = url;
-
 		this.socket = new WebSocket(url);
-
-
-		this.socket.addEventListener('open', (e: any) => { /*this.onOpen()*/  console.log('OPEN') });
+		this.socket.addEventListener('open', (e: any) => { console.log('OPEN') });
 		this.socket.addEventListener('message', (e: any) => {
 			console.log("WS message-URL: ", e.target.url, e.code);
 
