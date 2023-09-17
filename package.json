@@ -59,7 +59,6 @@
 		"build": "webpack --mode=prodaction --config ./webpack.config.js",
 		"build:dev": "webpack --config ./webpack.dev.js",
 		"watch": "webpack --watch",
-		"app": "cd src/app && yarn run start && cd ts && yarn run serve ",
 		"unit": "jest --env=jsdom  --watch --colors --config=./unit.config.js",
 		"e2e": "jest --env=jest-environment-jsdom  --watch --colors --config=./puppeteer.config.js ",
 		"serve-test": "webpack serve --port=9000 "
