@@ -41,6 +41,7 @@ deploy_script:  # скрипт развёртывания
   #- ps: Set-Content -Path  "$HOME/.git-credentials" -Value "https://$GITHUB_TOKEN:x-oauth-basic@github.com"  -NoNewline
   - ps: Write-Host "https://$GITHUB_TOKEN:x-oauth-basic@github.com" > "$HOME/.git-credentials" -NoNewline
 
-  - yarn add push-dir --dir=dist --branch=master --force
+  - yarn add push-dir --dir=dist --branch=master
+  # --force
 # Обратите внимание на последнюю строчку, она отправляет собранное приложение на github pages, где оно будет доступно по
 # ссылке, которую я вам написал, а не той которую вы нашли в статье на другую тему.

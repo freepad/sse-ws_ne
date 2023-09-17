@@ -1,0 +1,11 @@
+{
+	"name": "sse-ws_ne backend",
+	"version": "1.0.0",
+	"license": "MIT",
+	"devDependencies": {},
+	"scripts": {
+		"start": "nodemon  --watch ./ --ignore dist  ./serve.ts"
+	},
+	"description": "sse-ws_ne server beckend",
+	"dependencies": {}
+}

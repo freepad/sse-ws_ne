@@ -1,7 +1,6 @@
 {
 	"name": "sse-ws_ne",
 	"version": "1.0.0",
-	"main": "./src/app/index.js",
 	"license": "MIT",
 	"devDependencies": {
 		"@babel/cli": "^7.22.10",
@@ -60,9 +59,7 @@
 		"build": "webpack --mode=prodaction --config ./webpack.config.js",
 		"build:dev": "webpack --config ./webpack.dev.js",
 		"watch": "webpack --watch",
-		"start": "nodemon  --watch ./ --ignore dist  ./src/app/serve.ts",
-		"serve": "webpack serve --port=8080",
-		"app": "yarn run serve && yarn run start",
+		"app": "cd src/app && yarn run start && cd ts && yarn run serve ",
 		"unit": "jest --env=jsdom  --watch --colors --config=./unit.config.js",
 		"e2e": "jest --env=jest-environment-jsdom  --watch --colors --config=./puppeteer.config.js ",
 		"serve-test": "webpack serve --port=9000 "
