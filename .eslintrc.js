@@ -14,8 +14,5 @@ module.exports = {
 		"ecmaVersion": "latest"
 	},
 	"rules": {},
-	"parser": [
-		"babel-eslint",
-		"@typescript-eslint/parser"
-	]
+
 }
