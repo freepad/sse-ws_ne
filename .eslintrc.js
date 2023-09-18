@@ -5,14 +5,18 @@ module.exports = {
 		"es6": true,
 		"jest": true,
 	},
-	"extends": [
-		"airbnb-base",
-		"standard-with-typescript"
+	"extends": ["airbnb-base",
+		"standard-with-typescript"],
+	"overrides": [
 	],
-	"overrides": [],
 	"parserOptions": {
 		"ecmaVersion": "latest"
 	},
-	"rules": {},
-
+	"rules": {
+	},
+	"linebreak-style": [
+		"error",
+		"windows"
+	],
+	"parser": ["babel-eslint", '@typescript-eslint/parser']
 }
