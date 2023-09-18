@@ -61,7 +61,7 @@
 	],
 	"scripts": {
 		"lint": "eslint .",
-		"build": "webpack --mode=prodaction --config ./webpack.config.js",
+		"build": "webpack --config ./webpack.prod.js",
 		"build:dev": "webpack --config ./webpack.dev.js",
 		"watch": "webpack --watch",
 		"start:frontend": "webpack serve --port=8080",

@@ -13,7 +13,7 @@ const webpack = require('webpack');
 
 
 module.exports = {
-		mode: 'none',
+	mode: 'none',
 	entry: './src/index.js',
 		target: 'web',
     output: {
