@@ -28,7 +28,7 @@ branches:
 
 build_script:
   - yarn run start:frontend
-  - yarn run start:backend
+
 deploy_script:  # скрипт развёртывания
 # Конкретно шаг развертывания выполняется вот этим скриптом:
 # deploy_script: # скрипт развёртывания
