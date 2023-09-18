@@ -4,21 +4,20 @@ module.exports = {
 		"commonjs": true,
 		"es6": true,
 		"jest": true,
+    },
+	"extends": ["airbnb-base",
+		"standard-with-typescript"],
+    "overrides": [
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "rules": {
+			"linebreak-style": [
+				"error",
+				"windows"
+			],
 	},
-	"extends": [
-		"airbnb-base",
-		"eslint:recommended",
-		"standard-with-typescript",
-
-	],
-	"overrides": [
-	],
-	"parserOptions": {
-		"ecmaVersion": "latest",
-
-	},
-	"rules": {
-
-	},
-	"parser": "babel-eslint"
+	"parser": "babel-eslint",
+	"parser":"@typescript-eslint/parser"
 }

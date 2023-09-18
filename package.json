@@ -57,6 +57,7 @@
 		"webpack-merge": "^5.9.0"
 	},
 	"scripts": {
+		"lint": "eslint .",
 		"build": "webpack --config ./webpack.prod.js",
 		"build:dev": "webpack --config ./webpack.dev.js",
 		"watch": "webpack --watch",
