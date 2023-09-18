@@ -1,5 +1,6 @@
 *.config.js
 ./*.js
+
 node_modules
 webpack.*.js
 src/index.js
