@@ -5,12 +5,17 @@ module.exports = {
 		"es6": true,
 		"jest": true,
 	},
-	"extends": ["airbnb-base",
-		"standard-with-typescript"],
+	"extends": [
+		"airbnb-base",
+		"eslint:recommended",
+		"standard-with-typescript",
+
+	],
 	"overrides": [
 	],
 	"parserOptions": {
-		"ecmaVersion": "latest"
+		"ecmaVersion": "latest",
+		"sourceType": 'module',
 	},
 	"rules": {
 
