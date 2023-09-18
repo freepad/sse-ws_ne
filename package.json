@@ -90,8 +90,5 @@
 		"ws": "^8.13.0"
 	},
 	"repository": "https://github.com/Tryd0g0lik/sse-ws_ne.git",
-	"author": "Tryd0g0lik <work80@mail.ru>",
-	"engines": {
-		"node": ">=18.0.0"
-	}
+	"author": "Tryd0g0lik <work80@mail.ru>"
 }
