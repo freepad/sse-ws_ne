@@ -27,7 +27,9 @@ branches:
 
 
 build_script:
-  - npm run build:dev
+  - npm run build
+  - npm run lint
+  - ps: Get-ChildItem .\*.nupkg | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
 
 deploy_script:  # скрипт развёртывания
 # Конкретно шаг развертывания выполняется вот этим скриптом:
@@ -42,7 +44,7 @@ deploy_script:  # скрипт развёртывания
   #- ps: Set-Content -Path  "$HOME/.git-credentials" -Value "https://$GITHUB_TOKEN:x-oauth-basic@github.com"  -NoNewline
   - ps: Write-Host "https://$GITHUB_TOKEN:x-oauth-basic@github.com" > "$HOME/.git-credentials" -NoNewline
 
-  - yarn add push-dir -W  --dir=dist --branch=master
+  - yarn add push-dir -W --dir=dist --branch=master
   # --force
 # Обратите внимание на последнюю строчку, она отправляет собранное приложение на github pages, где оно будет доступно по
 # ссылке, которую я вам написал, а не той которую вы нашли в статье на другую тему.
