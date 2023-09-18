@@ -28,8 +28,6 @@ branches:
 
 build_script:
   - npm run build:dev
-  - npm run lint
-  - ps: Get-ChildItem .\*.nupkg | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
 
 deploy_script:  # скрипт развёртывания
 # Конкретно шаг развертывания выполняется вот этим скриптом:
