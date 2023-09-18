@@ -56,9 +56,6 @@
 		"webpack-dev-server": "^4.15.1",
 		"webpack-merge": "^5.9.0"
 	},
-	"workspaces": [
-		"src/app/*"
-	],
 	"scripts": {
 		"lint": "eslint .",
 		"build": "webpack --config ./webpack.prod.js",
@@ -66,7 +63,6 @@
 		"watch": "webpack --watch",
 		"start:frontend": "webpack serve --port=8080",
 		"start:backend": "nodemon  --watch ./ --ignore dist  ./serve.ts",
-		"start": "yarn start:frontend && yarn start:backend",
 		"unit": "jest --env=jsdom  --watch --colors --config=./unit.config.js",
 		"e2e": "jest --env=jest-environment-jsdom  --watch --colors --config=./puppeteer.config.js ",
 		"serve-test": "webpack serve --port=9000 "
