@@ -18,6 +18,7 @@ module.exports = merge(common, {
 			directory: path.join(__dirname, 'dist'),
 			staticOptions: {
 				redirect: true,
+
 			},
 		},
 		watchFiles: [
@@ -29,6 +30,7 @@ module.exports = merge(common, {
 
 		compess: true,
 		historyApiFallback: true,
+		allowedHosts: 'all',
 		open: true,
 		port: 'auto'
 	},
