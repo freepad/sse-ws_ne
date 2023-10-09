@@ -53,7 +53,7 @@ module.exports = {
 
 				loader: 'ts-loader',
 				include: [
-					path.resolve(__dirname, 'src/app/ts')
+					path.resolve(__dirname, 'src/app')
 				],
 			},
 			{

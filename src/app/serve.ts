@@ -162,10 +162,10 @@ function poster(elem: any) {
 			clients.send(elem);
 
 			console.log('Data sended');
-			console.log('/* --------------- *\\')
-
+			console.log("/* --------------- *\\");
 		})
 }
 
 // Server
 // https://discord.com/channels/@me/1067365554438017084/1151487583503790090
+

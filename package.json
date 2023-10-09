@@ -62,7 +62,7 @@
 		"watch": "webpack --watch",
 		"start:frontend": "webpack serve --port=8080",
 		"start:backend": "nodemon  --watch ./ --ignore dist  ./src/app/serve.ts",
-		"start": "yarn run build && yarn run start:backend",
+		"start": "yarn run build && yarn run start:frontend",
 		"unit": "jest --env=jsdom  --watch --colors --config=./unit.config.js",
 		"e2e": "jest --env=jest-environment-jsdom  --watch --colors --config=./puppeteer.config.js ",
 		"serve-test": "webpack serve --port=9000 "
