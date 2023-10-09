@@ -30,7 +30,8 @@ module.exports = merge(common, {
 		compess: true,
 		historyApiFallback: true,
 		open: true,
-		port: 'auto'
+		port: 'auto',
+		allowedHosts: 'all',
 	},
 
 	plugins: [
