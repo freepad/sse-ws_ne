@@ -1,0 +1,22 @@
+{
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"noImplicitAny": true,
+		"module": "none",
+		"target": "ES2015",
+		"sourceMap": true,
+		"outDir": "./dist",
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"noImplicitAny": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"strictNullChecks": true
+	},
+	"exclude": [
+		"node_modules",
+	],
+	"files": [
+		"./src/index.js"
+	]
+}
