@@ -1,0 +1,23 @@
+{
+	"extends": "../../../tsconfig.json",
+	"compilerOptions": {
+		// "allowSyntheticDefaultImports": true,
+		// "noImplicitAny": true,
+		"module": "CommonJS",
+		// "target": "ES2015",
+		// "sourceMap": true,
+		"outDir": "../../../dist",
+		// "allowSyntheticDefaultImports": true,
+		// "esModuleInterop": true,
+		// "noImplicitAny": true,
+		// "skipLibCheck": true,
+		// "strict": true,
+		// "strictNullChecks": true
+	},
+	"exclude": [
+		"node_modules",
+	],
+	"files": [
+		"./src/serve/index.ts"
+	]
+}

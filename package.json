@@ -1,0 +1,36 @@
+{
+	"name": "backend-config",
+	"version": "1.4.3",
+	"main": "src/index.js",
+	"author": "Tryd0g0lik <work80@mail.ru>",
+	"license": "MIT",
+	"private": true,
+	"devDependencies": {
+		"@koa/cors": "^4.0.0",
+		"@types/koa__router": "^12.0.1",
+		"koa": "^2.14.2",
+		"koa-body": "^6.0.1",
+		"koa-json": "^2.0.2",
+		"koa-logger": "^3.2.1",
+		"koa-router": "^12.0.0",
+		"koa-websocket": "^7.0.0",
+		"ts-loader": "^9.5.0",
+		"tsc": "^2.0.4",
+		"typescript": "^5.2.2",
+		"uuid": "^9.0.1",
+		"webpack": "^5.88.2",
+		"webpack-cli": "^5.1.4",
+		"webpack-merge": "^5.9.0",
+		"ws": "^8.14.2"
+	},
+	"description": "My webpack project",
+	"scripts": {
+		"build": "webpack --mode=production --node-env=production",
+		"build:dev": "webpack --mode=development --config ./webpack.dev.js",
+		"build:prod": "webpack --mode=production --node-env=production",
+		"watch": "webpack --watch"
+	},
+	"dependencies": {
+		"package.json": "^2.0.1"
+	}
+}
