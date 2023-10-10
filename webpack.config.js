@@ -12,7 +12,7 @@ const webpack = require('webpack');
 
 
 module.exports = {
-	entry: './src/index.js',
+	entry: path.resolve(__dirname, 'src/index.js'),
 	mode: 'none',
 	target: 'web',
 	output: {
@@ -25,7 +25,6 @@ module.exports = {
 		},
 
 		watchFiles: [
-			'./src/img',
 			'./src/scss',
 			'./src/ts'
 		],
@@ -37,7 +36,7 @@ module.exports = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: '../index.html',
+			template: path.resolve(__dirname, '../index.html'),
 			minify: {
 				// exclude the minification
 				collapseWhitespace: false
@@ -45,7 +44,7 @@ module.exports = {
 		}),
 		new webpack.SourceMapDevToolPlugin({
 			filename: '[file].map.[query]',
-			exclude: path.resolve(__dirname, 'src/app'),
+			exclude: path.resolve(__dirname, 'src'),
 		}),
 
 		new MiniCssExtractPlugin({
@@ -61,9 +60,10 @@ module.exports = {
 				test: /\.(ts|tsx)$/i,
 				loader: 'ts-loader',
 				// exclude: ['/node_modules/'],
-				include: [
-					path.resolve(__dirname, './src/ts')
-				]
+				// options: {
+				// 	????????? !!!!configFile: path.resolve(__dirname, "tsconfige.json"),
+				// }
+
 			},
 			{
 				test: /\.js$/i,
