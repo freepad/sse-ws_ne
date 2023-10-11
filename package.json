@@ -45,11 +45,9 @@
 		"html-loader": "^4.2.0",
 		"html-webpack-plugin": "^5.5.3",
 		"http": "^0.0.1-security",
-		"jest": "^29.7.0",
-		"jest-environment-jsdom": "^29.7.0",
-		"jest-puppeteer": "^9.0.1",
 		"jsdom": "^22.1.0",
 		"mini-css-extract-plugin": "^2.7.6",
+		"module-resolver": "^1.0.0",
 		"node-version": "^3.0.0",
 		"nodemon": "^3.0.1",
 		"package.json": "^2.0.1",
@@ -57,7 +55,6 @@
 		"postcss": "^8.4.31",
 		"postcss-loader": "^7.3.3",
 		"prettier": "^3.0.3",
-		"puppeteer": "^21.3.8",
 		"sass": "^1.69.2",
 		"sass-loader": "^13.3.2",
 		"ts-jest": "^29.1.1",
@@ -78,15 +75,14 @@
 		"serve:reserv": "yarn tsc src/app/serwiceWorker/src/index.ts",
 		"start:rezerv": "npx tsc --init && yarn tsc src/app/db/index.ts && yarn tsc src/app/backend/src/serve/index.ts",
 		"start:front": "workspaces.0 webpack serve --port=8080",
-		"start:back": "node ./dist/backend.js",
+		"start:back": "node dist/backend.js",
 		"start": "yarn run start:build:dev && yarn run start:back && yarn run start:front",
 		"unit": "jest --env=jsdom  --watch --colors --config ./unit.config.js",
 		"e2e": "jest --env=jest-environment-jsdom  --watch --colors --config ./puppeteer.config.js ",
 		"serve-test": "webpack serve --port=9000 "
 	},
 	"description": "sse-ws_ne",
-		"dependencies": {
-		},
+	"dependencies": {},
 	"repository": "https://github.com/Tryd0g0lik/sse-ws_ne.git",
 	"author": "Tryd0g0lik <work80@mail.ru>"
 }

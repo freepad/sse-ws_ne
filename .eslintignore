@@ -2,7 +2,7 @@
 ./*.js
 **/src/index.js
 
-./node_modules
+node_modules
 **/node_modules
 
 webpack.*.js
@@ -17,3 +17,8 @@ src.v0
 main.js
 **/backend/index.js
 *log.*
+src/index.js
+*config.js
+*dev.js
+dist
+
