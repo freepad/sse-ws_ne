@@ -75,9 +75,11 @@
 		"build:dev": "webpack --mode=development --config ./webpack.dev.js",
 		"start:build:dev": "yarn workspaces run build:dev",
 		"watch": "webpack --watch",
-		"serve:front": "yarn tsc src/app/serwiceWorker/src/index.ts",
+		"serve:reserv": "yarn tsc src/app/serwiceWorker/src/index.ts",
 		"start:rezerv": "npx tsc --init && yarn tsc src/app/db/index.ts && yarn tsc src/app/backend/src/serve/index.ts",
-		"start": "yarn run start:build:dev && yarn run start:back && yarn tsc serve:front",
+		"start:front": "workspaces.0 webpack serve --port=8080",
+		"start:back": "node ./dist/backend.js",
+		"start": "yarn run start:build:dev && yarn run start:back && yarn run start:front",
 		"unit": "jest --env=jsdom  --watch --colors --config ./unit.config.js",
 		"e2e": "jest --env=jest-environment-jsdom  --watch --colors --config ./puppeteer.config.js ",
 		"serve-test": "webpack serve --port=9000 "
