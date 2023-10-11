@@ -79,7 +79,7 @@ module.exports = {
 						plugins: [
 							'@babel/plugin-proposal-class-properties',
 						],
-						configFile: "../../../.babelrc"
+						configFile: "./babel.config.js"
 					}
 				}],
 
