@@ -2,22 +2,23 @@
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
 		"noImplicitAny": true,
-		"module": "ES6",
-		"target": "ES2021",
-		"allowJs": true,
+		"module": "ES2020",
+		"target": "ES2015",
+		"allowJs": false,
 		"sourceMap": true,
+		"rootDir": ".",
 		"outDir": "./dist",
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
 		"noImplicitAny": true,
 		"skipLibCheck": true,
-		"strict": true
+		"strict": true,
+		"strictPropertyInitialization": false, //https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-7.html#strict-class-initialization
 
 	},
 	"exclude": [
 		"node_modules",
 		"directory",
-	],
-
-  "files": ["./src/index.js"]
+		"dist"
+	]
 }
