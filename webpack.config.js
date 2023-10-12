@@ -14,14 +14,18 @@ const webpack = require('webpack');
 module.exports = {
 	entry: path.resolve(__dirname, 'src/index.js'),
 	mode: 'none',
-	target: 'web',
+	target: ['web', 'browserslist'],
 	output: {
-		path: path.resolve(__dirname, '../../../dist'),
-		filename: 'frontend.js'
+		path: path.resolve(__dirname, '../../../dist/frontend'),
+		clean: true,
+		library: {
+			type: 'commonjs'
+		},
+		filename: 'frontend.[contenthash].js'
 	},
 	devServer: {
 		static: {
-			directory: path.resolve(__dirname, '../../../dist'),
+			directory: path.join(__dirname, '../../../dist/frontend'),
 		},
 
 		watchFiles: [
@@ -48,7 +52,7 @@ module.exports = {
 		}),
 
 		new MiniCssExtractPlugin({
-			filename: '[name].css'
+			filename: '[name].[contenthash].css'
 		}),
 
 		// Add your plugins here
@@ -59,6 +63,9 @@ module.exports = {
 			{
 				test: /\.(ts|tsx)$/i,
 				loader: 'ts-loader',
+				include: [
+					path.join(__dirname, 'src/ts')
+				]
 				// exclude: ['/node_modules/'],
 				// options: {
 				// 	????????? !!!!configFile: path.resolve(__dirname, "tsconfige.json"),
@@ -85,15 +92,17 @@ module.exports = {
 
 			},
 			{
-				test: /\.s?[ac]ss$/i,
-				use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'],
+				test: /.\.s?[ac]ss$/i,
+				use: [
+					MiniCssExtractPlugin.loader,
+					'css-loader',
+					'sass-loader',
+					'postcss-loader',
+				]
 			},
-			// {
-			// 	test: /\.css$/i,
-			// 	use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
-			// },
 			{
 				test: /\.html$/i,
+
 				loader: 'html-loader'
 			},
 			{
@@ -113,13 +122,5 @@ module.exports = {
 	},
 };
 
-// module.exports = () => {
-//     if (isProduction) {
-//         config.mode = 'production';
-
-
-//     } else {
-//         config.mode = 'development';
-//     }
-//     return config;
-// };
+// 'production';
+// 'development';

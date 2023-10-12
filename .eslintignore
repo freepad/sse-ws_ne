@@ -3,3 +3,7 @@ src/index.js
 *dev.js
 node_modules
 dist
+../../../dist
+src.v*.?*
+src/index.js
+**/src/index.js

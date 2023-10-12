@@ -27,6 +27,7 @@
 		"build:dev": "webpack --mode=development --config ./webpack.dev.js",
 		"build:prod": "webpack --mode=production --node-env=production",
 		"watch": "webpack --watch",
-		"start": "webpack serve --port=8080"
+		"start": "webpack serve --port=8080",
+		"start:front": "webpack serve --port=8080"
 	}
 }
