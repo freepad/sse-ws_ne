@@ -29,19 +29,32 @@ module.exports = {
 		'main.js',
 		'*log.*'
 	],
-	"env": {
-		"browser": true,
-		"commonjs": true,
-		"es6": true,
-	},
+
 	"extends": ["airbnb-base",
 		"standard-with-typescript"],
 	"overrides": [
+		{
+			"files": "src/app/backend",
+			"env": {
+				"module": true,
+				"es6": true,
+			},
+			"parserOptions": {
+				"sourceType": "module"
+			},
+		},
+		{
+			"files": "src/app/frontend",
+			"env": {
+				"module": true,
+				"es6": true,
+			},
+			"parserOptions": {
+				"sourceType": "module"
+			},
+		}
 	],
-	"parserOptions": {
-		"ecmaVersion": "ES2015",
-		"sourceType": "module"
-	},
+
 	"rules": {
 		"semi": ["error", {
 			"omitLastInOneLineClassBody": true,

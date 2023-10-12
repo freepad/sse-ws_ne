@@ -35,8 +35,8 @@ module.exports = [
 		// 		path: path.resolve(__dirname, 'dist/db')
 		// 	},
 		// },
-		// module: {
-		// 	rules: [
+		module: {
+			rules: [
 		// 		{
 		// 			test: /\.(ts|tsx)$/i,
 		// 			loader: 'ts-loader',
@@ -66,9 +66,21 @@ module.exports = [
 		// 				}
 		// 			}],
 
-		// 		},
-		// 	]
-		// },
+				// 		},
+				// 		{
+				// 			test: /\.s[ac]ss$/i,
+				// 			use: [
+				// 				MiniCssExtractPlugin.loader,
+				// 				'postcss-loader',
+				// 				'sass-loader'
+				// 			]
+				// 		},
+				// 		{
+				// 			test: /\.css$/i,
+				// 			use: ['css-loader', 'postcss-loader', MiniCssExtractPlugin.loader],
+				// 		},
+			]
+		},
 		// resolve: {
 		// 	extensions: ['.tsx', '.ts', '.jsx', '.js', '...'],
 		// },

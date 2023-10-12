@@ -1,6 +1,10 @@
 *.config.js
 ./*.js
+
+src/index.js
 **/src/index.js
+src/app/frontend/src/index.js
+src/app/backend/src/index.js
 
 node_modules
 **/node_modules
@@ -17,7 +21,6 @@ src.v*.?*
 main.js
 **/backend/index.js
 *log.*
-src/index.js
 *config.js
 *dev.js
 dist

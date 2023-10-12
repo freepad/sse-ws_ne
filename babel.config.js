@@ -27,6 +27,11 @@ module.exports = {
 	"targets": {
 		"browsers": ["last 5 version", "not IE 11", "> 1%"]
 	},
+	"ignore": [
+		"src/index.js",
+		"app/frontend/src/index.js",
+		"app/backend/src/index.js"
+	]
 	// "env": {
 	// "backend:repo": "./src/app/backend/babel.config.js",
 	// {
