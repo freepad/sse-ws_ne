@@ -1,16 +1,12 @@
 // Server
 let postId = 0;
-const http = require('http'),
-	Koa = require('koa'),
-	json = require('koa-json'),
-	cors = require('@koa/cors'),
-
-	Logger = require('koa-logger'),
-	WS = require('ws'),
-	{ koaBody } = require('koa-body'),
-	{ v4 } = require('uuid'),
-	db = require('../../../db'),
-	app = new Koa();
+const http = require('http'), Koa = require('koa'), json = require('koa-json'), cors = require('@koa/cors');
+const Logger = require('koa-logger');
+const WS = require('ws');
+const { koaBody } = require('koa-body');
+const { v4 } = require('uuid');
+const db = require('../../../db');
+const app = new Koa();
 const server = http.createServer(app.callback);
 const wss = new WS.Server({ server });
 let newClient = {};

@@ -7,21 +7,25 @@ const path = require('path');
 
 module.exports = {
 	entry: path.resolve(__dirname, 'src/index.js'),
-	mode: 'none',
+	// mode: 'none',
 	target: 'node',
 	output: {
-		filename: 'backend.js',
-		path: path.resolve(__dirname, '../../../dist'),
+		filename: 'backend.[contenthash].js',
+		path: path.resolve(__dirname, '../../../dist/backend'),
+
 	},
-	// plugins: [
+	plugins: [
 	// Add your plugins here
 	// Learn more about plugins from https://webpack.js.org/configuration/plugins/
-	// ],/
+	],
 	module: {
 		rules: [
 			{
 				test: /\.(ts|tsx)$/i,
 				loader: 'ts-loader',
+				include: [
+					path.resolve(__dirname, 'src/serve')
+				],
 				// exclude: ['/node_modules/'],
 				// include: [
 				// 	path.resolve(__dirname, 'src')
@@ -33,7 +37,8 @@ module.exports = {
 			{
 				test: /\.js$/i,
 				include: [
-					path.resolve(__dirname, 'src')
+					path.resolve(__dirname, 'src/serve'),
+					// path.resolve(__dirname,)
 				],
 				use: [{
 					loader: 'babel-loader',
@@ -49,6 +54,7 @@ module.exports = {
 				}],
 
 			},
+
 			// Add your rules for custom modules here
 			// Learn more about loaders from https://webpack.js.org/loaders/
 		],

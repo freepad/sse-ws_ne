@@ -3,3 +3,4 @@ src/index.js
 *dev.js
 node_modules
 *.js
+src.v*.?*
