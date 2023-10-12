@@ -1,4 +1,7 @@
 module.exports = {
 	"extends": "../../../babel.config.js",
-	"targets": "current"
+
+	"sourceType": "module",
+	"targets": "current",
+	"ignore": ["src/index.js", "**/src/index.js"]
 }
