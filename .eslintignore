@@ -13,7 +13,7 @@ coverage
 websocket-polyfill.js
 setupTests.js
 caches
-src.v0
+src.v*.?*
 main.js
 **/backend/index.js
 *log.*
