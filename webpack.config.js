@@ -1,9 +1,5 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
-
 const path = require('path');
-
-// const isProduction = process.env.NODE_ENV == 'production';
-
 
 module.exports = {
 	entry: path.resolve(__dirname, 'src/index.js'),
@@ -25,20 +21,12 @@ module.exports = {
 				loader: 'ts-loader',
 				include: [
 					path.resolve(__dirname, 'src/serve')
-				],
-				// exclude: ['/node_modules/'],
-				// include: [
-				// 	path.resolve(__dirname, 'src')
-				// ],
-				// options: {
-				// 	configFile: path.resolve(__dirname, '../../../tsconfige.json')
-				// }
+				]
 			},
 			{
 				test: /\.js$/i,
 				include: [
 					path.resolve(__dirname, 'src/serve'),
-					// path.resolve(__dirname,)
 				],
 				use: [{
 					loader: 'babel-loader',
@@ -52,9 +40,7 @@ module.exports = {
 						configFile: "./babel.config.js"
 					}
 				}],
-
 			},
-
 			// Add your rules for custom modules here
 			// Learn more about loaders from https://webpack.js.org/loaders/
 		],
@@ -67,13 +53,6 @@ module.exports = {
 	},
 };
 
-// module.exports = () => {
-// 	if (isProduction) {
-// 		config.mode = 'production';
+// 'production';
+// 'development';
 
-
-// 	} else {
-// 		config.mode = 'development';
-// 	}
-// 	return config;
-// };
