@@ -29,8 +29,9 @@ module.exports = {
 	},
 	"ignore": [
 		"src/index.js",
-		"app/frontend/src/index.js",
-		"app/backend/src/index.js"
+		"src/app/frontend/src/index.js",
+		"src/app/db/src/index.js",
+		"src/app/backend/src/index.js"
 	]
 	// "env": {
 	// "backend:repo": "./src/app/backend/babel.config.js",

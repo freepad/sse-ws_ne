@@ -17,6 +17,10 @@ module.exports = [
 		entry: './src/app/frontend/webpack.dev.js'
 	},
 	{
+		name: "frontend_db",
+		entry: "./src/app/frontend/webpack.config.js"
+	},
+	{
 		name: 'backend_config',
 		entry: './src/app/backend/webpack.dev.js',
 	},

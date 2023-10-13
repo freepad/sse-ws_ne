@@ -4,10 +4,13 @@
 src/index.js
 **/src/index.js
 src/app/frontend/src/index.js
+src/app/db/src/index.js
 src/app/backend/src/index.js
+
 
 node_modules
 **/node_modules
+
 
 webpack.*.js
 src/index.js

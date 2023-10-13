@@ -16,6 +16,7 @@ module.exports = {
 		"**/dist",
 
 		"node_modules",
+		"**/db/node_modules",
 		"**/frontend/node_modules",
 		"**/backend/node_modules",
 
@@ -44,7 +45,7 @@ module.exports = {
 			},
 		},
 		{
-			"files": "src/app/frontend",
+			"files": ["src/app/frontend", "src/app/db"],
 			"env": {
 				"module": true,
 				"es6": true,

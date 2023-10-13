@@ -1,0 +1,17 @@
+{
+	"extends": "../../../tsconfig.json",
+	"compilerOptions": {
+		// "allowSyntheticDefaultImports": true,
+		// "noImplicitAny": true,
+		"module": "CommonJS",
+		// "target": "es5",
+		"outDir": "../../../dist/db",
+		// "allowJs": true
+	},
+	"exvlude": [
+		"node_modules",
+	],
+	"files": [
+		"src/db/index.ts"
+	]
+}

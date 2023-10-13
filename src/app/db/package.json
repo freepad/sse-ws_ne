@@ -1,0 +1,24 @@
+{
+	"name": "childe-backend-db",
+	"version": "1.0.0",
+	"main": "./src/index.js",
+	"author": "Tryd0g0lik",
+	"license": "MIT",
+	"private": false,
+	"dependencies": {
+		"webpack": "^5.88.2"
+	},
+	"description": "My webpack project",
+	"scripts": {
+		"build": "webpack --mode=production --node-env=production",
+		"build:dev": "webpack --mode=development --config ./webpack.config.js",
+		"build:prod": "webpack --mode=production --node-env=production",
+		"watch": "webpack --watch"
+	},
+	"devDependencies": {
+		"ts-loader": "^9.5.0",
+		"typescript": "^5.2.2",
+		"webpack": "^5.88.2",
+		"webpack-cli": "^5.1.4"
+	}
+}
