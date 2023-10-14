@@ -11,19 +11,20 @@ const path = require('path');
 
 
 module.exports = [
-
+	{
+		name: 'backend_config',
+		entry: './src/app/backend/webpack.dev.js',
+	},
 	{
 		name: 'frontend_config',
 		entry: './src/app/frontend/webpack.dev.js'
 	},
 	{
-		name: "frontend_db",
-		entry: "./src/app/frontend/webpack.config.js"
+		name: "backend_db",
+		entry: "./src/app/db/webpack.config.js"
 	},
-	{
-		name: 'backend_config',
-		entry: './src/app/backend/webpack.dev.js',
-	},
+
+
 	{
 		mode: process.env.MODE_ENV || 'none',
 		entry: path.resolve(__dirname, './src/index.js'),
@@ -85,9 +86,12 @@ module.exports = [
 				// 		},
 			]
 		},
-		// resolve: {
-		// 	extensions: ['.tsx', '.ts', '.jsx', '.js', '...'],
-		// },
+		resolve: {
+			// extensions: ['.tsx', '.ts', '.jsx', '.js', '...'],
+			alias: {
+				my_db$: path.resolve(__dirname, "../dist/db")
+			}
+		},
 		// stats: {
 		// 	errorDetails: false
 		// }

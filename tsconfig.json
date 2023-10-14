@@ -19,6 +19,7 @@
 	"exclude": [
 		"node_modules",
 		"directory",
-		"dist"
+		"dist",
+		"../../../dist/db/maps"
 	]
 }

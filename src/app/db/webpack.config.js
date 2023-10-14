@@ -6,20 +6,22 @@ const isProduction = process.env.NODE_ENV == 'production';
 
 
 module.exports = {
-	entry: './src/index.js',
+	entry: { my_db: './src/index.js' },
 	mode: isProduction || "none",
 	target: "node18.18",
 	output: {
 		path: path.resolve(__dirname, '../../../dist/db'),
-		filename: 'index.[contenthash].js',
+
+
+		filename: '[name].js',//.[contenthash]
 		clean: true
 	},
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),
-		new webpack.SourceMapDevToolPlugin({
-			filename: '[file].map.[query]',
-			exclude: path.resolve(__dirname, 'src'),
-		})
+		// new webpack.SourceMapDevToolPlugin({
+		// 	filename: 'maps/[file].map.[query]',
+		// 	exclude: path.resolve(__dirname, 'src'),
+		// })
 		// Add your plugins here
 		// Learn more about plugins from https://webpack.js.org/configuration/plugins/
 	],
@@ -64,6 +66,7 @@ module.exports = {
 	},
 	resolve: {
 		extensions: ['.tsx', '.ts', '.jsx', '.js', '...'],
+
 	},
 };
 
