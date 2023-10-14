@@ -5,7 +5,7 @@ const Logger = require('koa-logger');
 const WS = require('ws');
 const { koaBody } = require('koa-body');
 const { v4 } = require('uuid');
-const db = require('../../../db');
+const db = require('my_db2/my_db.js');
 const app = new Koa();
 const server = http.createServer(app.callback);
 const wss = new WS.Server({ server });
@@ -20,6 +20,7 @@ wss.on('connection', (ws: any, req: any) => {
 		ws.onclose = (e: any) => {
 			const message = JSON.parse(m);
 			console.log(message);
+
 			console.log('closed db.logins BEFORE; ', db['logins']);
 			if (e.code === 1001) {
 				/** ЗАКРЫЛ СТРАНИЦУ */
@@ -77,7 +78,7 @@ wss.on('connection', (ws: any, req: any) => {
 		else if (url.length === 1) { //  && req.url.length === 1
 			/** ЗАГРУЗКА СТРАНИЦЫ */
 			// отправка логинов при загрузке страницы.
-			console.log('Start load the page');
+			console.log('Start load the page', db['posts']);
 			postmane = db['posts'].length > 0 ? { users: db['logins'], posts: db['posts'] } : { users: db['logins'] };
 
 			poster(postmane);
