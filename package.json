@@ -10,8 +10,8 @@
 	},
 	"workspaces": [
 		"src/app/frontend",
-		"src/app/db",
-		"src/app/backend"
+		"src/app/backend",
+		"src/app/db"
 	],
 	"devDependencies": {
 		"@babel/cli": "^7.23.0",

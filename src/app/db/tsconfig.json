@@ -12,6 +12,6 @@
 		"node_modules",
 	],
 	"files": [
-		"src/db/index.ts"
+		"src/index.js"
 	]
 }
