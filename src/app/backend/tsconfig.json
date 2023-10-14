@@ -1,0 +1,25 @@
+{
+	"extends": "../../../tsconfig.json",
+	"compilerOptions": {
+		// "allowSyntheticDefaultImports": true,
+		// "noImplicitAny": true,
+		"module": "CommonJS",
+		// "target": "ES2015",
+		// "sourceMap": true,
+		"outDir": "../../../dist/backend",
+		// "allowSyntheticDefaultImports": true,
+		// "esModuleInterop": true,
+		// "noImplicitAny": true,
+		// "skipLibCheck": true,
+		// "strict": true,
+		// "strictNullChecks": true
+	},
+	"exclude": [
+		"node_modules",
+		"../../../../../dist/db/maps",
+		"../../../dist/db/maps"
+	],
+	"files": [
+		"./src/serve/index.ts"
+	]
+}
