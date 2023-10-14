@@ -5,7 +5,7 @@ const Logger = require('koa-logger');
 const WS = require('ws');
 const { koaBody } = require('koa-body');
 const { v4 } = require('uuid');
-const db = require('my_db2/my_db.js');
+const db = require('db/index.js');
 const app = new Koa();
 const server = http.createServer(app.callback);
 const wss = new WS.Server({ server });
@@ -79,7 +79,7 @@ wss.on('connection', (ws: any, req: any) => {
 			/** ЗАГРУЗКА СТРАНИЦЫ */
 			// отправка логинов при загрузке страницы.
 			console.log('Start load the page', db['posts']);
-			postmane = db['posts'].length > 0 ? { users: db['logins'], posts: db['posts'] } : { users: db['logins'] };
+			postmane = db['posts'].length != undefined && db['posts'].length > 0 ? { users: db['logins'], posts: db['posts'] } : { users: db['logins'] };
 
 			poster(postmane);
 			/**------------------------------------------------------- */

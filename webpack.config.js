@@ -68,7 +68,7 @@ module.exports = {
 
 
 
-			my_db2: path.resolve(__dirname, '../db/my_db.js') ///my_db.' + /my_db\.*{1.}[^map]\.js$/i
+			db: path.resolve(__dirname, '../db/src') ///my_db.' + /my_db\.*{1.}[^map]\.js$/i
 
 		},
 	},
