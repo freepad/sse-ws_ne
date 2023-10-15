@@ -1,5 +1,5 @@
 {
-	"extends": "../../../tsconfig.json", // Наследование https://www.typescriptlang.org/tsconfig#extends
+	"extends": "../../../tsconfig", // Наследование https://www.typescriptlang.org/tsconfig#extends
 	"compilerOptions": {
 // "allowSyntheticDefaultImports": true,
 // "noImplicitAny": true,
@@ -8,7 +8,7 @@
 		// "allowJs": false,
 		// "sourceMap": true,
 		"rootDir": ".",
-		"outDir": "../../../dist/frontend",
+		"outDir": "../../../dist",
 		// "allowSyntheticDefaultImports": true,
 		// "esModuleInterop": true,
 		// "noImplicitAny": true,
@@ -16,9 +16,9 @@
 		// "strict": true,
 		// "strictPropertyInitialization": false, //https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-7.html#strict-class-initialization
 	},
-	// "exclude": [
-	// 	"node_modules"
-	// ],
+	"exclude": [
+		"node_modules"
+	],
 	"include": [
 		"src/ts/function/*.ts",
 		"src/ts/function/**/*.ts",
