@@ -12,6 +12,9 @@ const wss = new WS.Server({ server });
 let newClient = {};
 let postmane: any;
 let url: string = '';
+console.log('[DB-file]: ', db);
+console.log('[DB-object]: ', Object(db))
+console.log('[DB-object]: ', Object.keys(db))
 
 wss.on('connection', (ws: any, req: any) => {
 	ws.on('message', (m: any) => {
@@ -75,7 +78,7 @@ wss.on('connection', (ws: any, req: any) => {
 
 			wss.clients.forEach((client: any) => client.send(JSON.stringify(newClient)));
 		}
-		else if (url.length === 1) { //  && req.url.length === 1
+		else if (url.length === 1 || url.length === 0) { //  && req.url.length === 1
 			/** ЗАГРУЗКА СТРАНИЦЫ */
 			// отправка логинов при загрузке страницы.
 			console.log('Start load the page', db['posts']);

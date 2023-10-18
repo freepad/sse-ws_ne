@@ -1,1 +1,1 @@
-import "serve/index.ts"
+import "./serve/index.ts"
