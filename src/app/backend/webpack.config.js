@@ -34,15 +34,10 @@ module.exports = {
 					path.resolve(__dirname, 'src/serve')
 				],
 				use: [{
-					loader: 'babel-loader',
+					loader: 'ts-loader',
 					options: {
-						presets: [
-							['@babel/preset-env', { targets: "defaults" }]
-						],
-						plugins: [
-							'@babel/plugin-proposal-class-properties',
-						],
-						configFile: "./babel.config.js"
+						transpileOnly: true,
+						configFile: "./tsconfig.json"
 					}
 				}],
 			},

@@ -41,15 +41,10 @@ module.exports = {
 					path.resolve(__dirname, "src/db")
 				],
 				use: [{
-					loader: 'babel-loader',
+					loader: 'ts-loader',
 					options: {
-						presets: [
-							['@babel/preset-env', { targets: "defaults" }]
-						],
-						plugins: [
-							'@babel/plugin-proposal-class-properties',
-						],
-						configFile: "./babel.config.js"
+
+						configFile: "./tsconfig.json"
 					}
 				}],
 
