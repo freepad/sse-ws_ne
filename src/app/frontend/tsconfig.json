@@ -3,7 +3,11 @@
 	"compilerOptions": {
 // "allowSyntheticDefaultImports": true,
 // "noImplicitAny": true,
+<<<<<<< HEAD
 		// "module": "none",
+=======
+		"module": "none",
+>>>>>>> v4.6
 		// "target": "ES2015",
 		// "allowJs": false,
 		// "sourceMap": true,
@@ -16,7 +20,13 @@
 		// "strict": true,
 		// "strictPropertyInitialization": false, //https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-7.html#strict-class-initialization
 	},
+<<<<<<< HEAD
 
+=======
+	"exclude": [
+		"node_modules"
+	],
+>>>>>>> v4.6
 	"include": [
 		"src/ts/function/*.ts",
 		"src/ts/function/**/*.ts",

@@ -19,8 +19,12 @@
 		"typescript": "^5.2.2",
 		"webpack": "^5.88.2",
 		"webpack-cli": "^5.1.4",
+<<<<<<< HEAD
 		"webpack-dev-server": "^4.15.1",
 		"eslint-webpack-plugin": "^4.0.1"
+=======
+		"webpack-dev-server": "^4.15.1"
+>>>>>>> v4.6
 	},
 	"description": "My webpack project",
 	"scripts": {

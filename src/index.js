@@ -1,3 +1,3 @@
-import './app/scss/style.css';
-import './app/scss/style.scss';
-import './app/ts/main.ts';
+import './app/backend/src/index.js'
+import './app/frontend/src/index.js';
+import './app/db/src/index.js'

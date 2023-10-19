@@ -1,10 +1,8 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
 process.traceDeprecation = true;
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const webpack = require('webpack');
+
 // const isProduction = process.env.NODE_ENV == 'production';
 
 
@@ -12,94 +10,92 @@ const webpack = require('webpack');
 
 
 
-module.exports = {
-	mode: 'none',
-	entry: './src/index.js',
-		target: 'web',
-    output: {
-        path: path.resolve(__dirname, 'dist'),
+module.exports = [
+	{
+		name: 'backend_config',
+		entry: './src/app/backend/webpack.dev.js',
+	},
+	{
+		name: 'frontend_config',
+		entry: './src/app/frontend/webpack.dev.js'
+	},
+	{
+		name: "backend_db",
+		entry: "./src/app/db/webpack.config.js"
 	},
 
-	// devServer: {
-	//     open: true,
-	//     host: 'localhost',
-	// },
-	plugins: [
-		new HtmlWebpackPlugin({
-			template: './src/app/index.html',
-			minify: {
-				// exclude the minification
-				collapseWhitespace: false
+
+	{
+		mode: process.env.MODE_ENV || 'none',
+		entry: path.resolve(__dirname, './src/index.js'),
+
+		// target: 'node',
+		// stats: {
+		// 	errorDetails: true
+		// },
+		// output: {
+		// 	clean: true,
+		// 	output: {
+		// 		filename: 'index.js',
+		// 		path: path.resolve(__dirname, 'dist/db')
+		// 	},
+		// },
+		module: {
+			rules: [
+		// 		{
+		// 			test: /\.(ts|tsx)$/i,
+		// 			loader: 'ts-loader',
+		// 			include: [
+		// 				path.resolve(__dirname, 'src/app/db')
+		// 			],
+
+		// 			// options: {
+		// 			// 	configFile: path.resolve(__dirname, './tsconfige.json')
+		// 			// }
+		// 		},
+		// 		{
+		// 			test: /\.js$/i,
+		// 			include: [
+		// 				path.resolve(__dirname, 'src/app/db')
+		// 			],
+		// 			use: [{
+		// 				loader: 'babel-loader',
+		// 				options: {
+		// 					presets: [
+		// 						['@babel/preset-env', { targets: "defaults" }]
+		// 					],
+		// 					plugins: [
+		// 						'@babel/plugin-proposal-class-properties',
+		// 					],
+		// 					configFile: "./babel.config.js"
+		// 				}
+		// 			}],
+
+				// 		},
+				// 		{
+				// 			test: /\.s[ac]ss$/i,
+				// 			use: [
+				// 				MiniCssExtractPlugin.loader,
+				// 				'postcss-loader',
+				// 				'sass-loader'
+				// 			]
+				// 		},
+				// 		{
+				// 			test: /\.css$/i,
+				// 			use: ['css-loader', 'postcss-loader', MiniCssExtractPlugin.loader],
+				// 		},
+			]
+		},
+		resolve: {
+			// extensions: ['.tsx', '.ts', '.jsx', '.js', '...'],
+			alias: {
+				my_db$: path.resolve(__dirname, "../dist/db")
 			}
-		}),
-
-		new MiniCssExtractPlugin({
-			filename: '[name].css',
-		}),
-
-		new webpack.SourceMapDevToolPlugin({
-			filename: '[file].map.[query]',
-			exclude: path.join(__dirname, 'src/app'),
-		}),
-		// new OptimizeCssAssetsPlugin()
-
-		// Add your plugins here
-		// Learn more about plugins from https://webpack.js.org/configuration/plugins/
-	],
-	module: {
-		rules: [
-			{
-				test: /\.(ts|tsx)$/i,
-
-				loader: 'ts-loader',
-				include: [
-					path.resolve(__dirname, 'src/app')
-				],
-			},
-			{
-				test: /\.js$/i,
-				exclude: /node_modules/,
-				use: [{
-					loader: 'babel-loader',
-					options: {
-						presets: [
-							['@babel/preset-env', { targets: "defaults" }]
-						],
-						plugins: [
-							'@babel/plugin-proposal-class-properties',
-						],
-					}
-				},],
-
-			},
-			{
-				test: /\.s?[ac]ss$/i,
-				include: [
-					path.resolve(__dirname, './src/app/scss')
-				],
-				use: [MiniCssExtractPlugin.loader, 'css-loader', "sass-loader", 'postcss-loader'],
-
-			},
-			{
-				test: /\.html$/i,
-				use: [
-					{
-						loader: 'html-loader',
-					},
-				],
-			},
-			{
-				test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
-				type: 'asset',
-			}
-			// Add your rules for custom modules here
-			// Learn more about loaders from https://webpack.js.org/loaders/
-		],
-	},
-	resolve: {
-		extensions: ['.tsx', '.ts', '.jsx', '.js', '...'],
-	},
-};
+		},
+		// stats: {
+		// 	errorDetails: false
+		// }
+	}];
 
 // module.exports = () => {
 //     if (isProduction) {
