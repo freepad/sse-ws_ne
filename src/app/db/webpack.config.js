@@ -10,7 +10,7 @@ module.exports = {
 	mode: isProduction || "none",
 	target: "node18.18",
 	output: {
-		path: path.resolve(__dirname, '../../../dist/backend/db'),
+		path: path.resolve(__dirname, '../../../dist/db'),
 
 
 		filename: 'index.js',//.[contenthash]
