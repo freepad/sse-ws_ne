@@ -1,39 +1,37 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
-
 const path = require('path');
-
-// const isProduction = process.env.NODE_ENV == 'production';
-
 
 module.exports = {
 	entry: path.resolve(__dirname, 'src/index.js'),
 	mode: 'none',
-	target: 'node',
+	target: 'node18.18',
 	output: {
-		filename: 'backend.js',
-		path: path.resolve(__dirname, '../../../dist'),
+		filename: 'server.js',// 'backend.[contenthash].js',
+		path: path.resolve(__dirname, '../../../dist/backend'),
+
+		clean: true
 	},
-	// plugins: [
-	// Add your plugins here
-	// Learn more about plugins from https://webpack.js.org/configuration/plugins/
-	// ],/
+	plugins: [
+		// Add your plugins here
+		// Learn more about plugins from https://webpack.js.org/configuration/plugins/
+	],
 	module: {
 		rules: [
 			{
 				test: /\.(ts|tsx)$/i,
 				loader: 'ts-loader',
-				// exclude: ['/node_modules/'],
+				exclude: [
+					/[\.\/]{1,}dist\/db\/maps/,
+					/node_modules/
+				],
 				// include: [
-				// 	path.resolve(__dirname, 'src')
-				// ],
-				// options: {
-				// 	configFile: path.resolve(__dirname, '../../../tsconfige.json')
-				// }
+				// 	path.resolve(__dirname, 'src/serve')
+				// ]
 			},
 			{
 				test: /\.js$/i,
 				include: [
-					path.resolve(__dirname, 'src')
+					path.resolve(__dirname, 'src/serve')
 				],
 				use: [{
 					loader: 'babel-loader',
@@ -44,10 +42,9 @@ module.exports = {
 						plugins: [
 							'@babel/plugin-proposal-class-properties',
 						],
-						configFile: "../../../.babelrc"
+						configFile: "./babel.config.js"
 					}
 				}],
-
 			},
 			// Add your rules for custom modules here
 			// Learn more about loaders from https://webpack.js.org/loaders/
@@ -57,17 +54,26 @@ module.exports = {
 	},
 	resolve: {
 		extensions: ['.tsx', '.ts', '.jsx', '.js', '...'],
+		alias: {
+			/**
+			 * https://github.com/auth0/node-auth0/issues/657#issuecomment-928083729
+			 * ERORR: [!hexoid is not a function] was resolved
+			 */
+			'formidable': false, //  node-auth0 build warning
+			'coffee-script': false, //  node-auth0 build fail
+			'vm2': false, // node-auth0 build fail
+			'yargs': false, // auth0-deploy-cli build warning
+			'colors': false, // auth0-deploy-cli build warning
+			'keyv': false, // openid-client build warning
 
+
+
+			db: path.resolve(__dirname, '../db/src') ///my_db.' + /my_db\.*{1.}[^map]\.js$/i
+
+		},
 	},
 };
 
-// module.exports = () => {
-// 	if (isProduction) {
-// 		config.mode = 'production';
+// 'production';
+// 'development';
 
-
-// 	} else {
-// 		config.mode = 'development';
-// 	}
-// 	return config;
-// };

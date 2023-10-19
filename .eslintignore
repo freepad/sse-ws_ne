@@ -1,5 +1,14 @@
 src/index.js
+**/src/index.js
 *config.js
 *dev.js
 node_modules
 *.js
+src.v*.?*
+../../../dist
+dist
+../db/src/db/index.ts
+../db/index.js
+../../../../../dist
+../../../../../dist/db/
+../../../../../dist/db/maps
