@@ -1,15 +1,17 @@
+backend
+frontend
 node_modules
-**/node_modules
 dist
 pic
 coverage
 caches
+
 src/__tests__
 src.v0/
-**/*.v*
 
+**/*.v*
+**/node_modules
 **/serve.js
 **/db/index.js
 
-backend
-frontend
+
