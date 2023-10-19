@@ -1,0 +1,29 @@
+{
+	"extends": "../../../tsconfig", // Наследование https://www.typescriptlang.org/tsconfig#extends
+	"compilerOptions": {
+// "allowSyntheticDefaultImports": true,
+// "noImplicitAny": true,
+		"module": "none",
+		// "target": "ES2015",
+		// "allowJs": false,
+		// "sourceMap": true,
+		"rootDir": ".",
+		"outDir": "../../../dist",
+		// "allowSyntheticDefaultImports": true,
+		// "esModuleInterop": true,
+		// "noImplicitAny": true,
+		// "skipLibCheck": true,
+		// "strict": true,
+		// "strictPropertyInitialization": false, //https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-7.html#strict-class-initialization
+	},
+	"exclude": [
+		"node_modules"
+	],
+	"include": [
+		"src/ts/function/*.ts",
+		"src/ts/function/**/*.ts",
+		"src/ts/models/*.ts",
+		"src/ts/models/**/*.ts",
+		"src/ts/*.ts"
+	]
+}
