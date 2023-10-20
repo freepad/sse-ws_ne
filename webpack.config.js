@@ -12,19 +12,9 @@ const path = require('path');
 
 module.exports = [
 	{
-		name: 'backend_config',
-		entry: './src/app/backend/webpack.dev.js',
-	},
-	{
 		name: 'frontend_config',
 		entry: './src/app/frontend/webpack.dev.js'
 	},
-	{
-		name: "backend_db",
-		entry: "./src/app/db/webpack.config.js"
-	},
-
-
 	{
 		mode: process.env.MODE_ENV || 'none',
 		entry: path.resolve(__dirname, './src/index.js'),
@@ -42,35 +32,42 @@ module.exports = [
 		// },
 		module: {
 			rules: [
-		// 		{
-		// 			test: /\.(ts|tsx)$/i,
-		// 			loader: 'ts-loader',
-		// 			include: [
-		// 				path.resolve(__dirname, 'src/app/db')
-		// 			],
-
-		// 			// options: {
-		// 			// 	configFile: path.resolve(__dirname, './tsconfige.json')
-		// 			// }
-		// 		},
-		// 		{
-		// 			test: /\.js$/i,
-		// 			include: [
-		// 				path.resolve(__dirname, 'src/app/db')
-		// 			],
-		// 			use: [{
-		// 				loader: 'babel-loader',
-		// 				options: {
-		// 					presets: [
-		// 						['@babel/preset-env', { targets: "defaults" }]
-		// 					],
-		// 					plugins: [
-		// 						'@babel/plugin-proposal-class-properties',
-		// 					],
-		// 					configFile: "./babel.config.js"
-		// 				}
-		// 			}],
-
+				{
+					test: /\.(ts|tsx)$/i,
+					// loader: 'ts-loader',
+					// include: [
+					// 	path.resolve(__dirname, 'src/app/db')
+					// ],
+					exclude: [
+						path.resolve(__dirname, "/src/app/backend"),
+						path.resolve(__dirname, "/src/app/db")
+					]
+					// options: {
+					// 	configFile: path.resolve(__dirname, './tsconfige.json')
+					// }
+				},
+				{
+					test: /\.js$/i,
+					exclude: [
+						path.resolve(__dirname, "/src/app/backend"),
+						path.resolve(__dirname, "/src/app/db")
+					]
+				// 			include: [
+				// 				path.resolve(__dirname, 'src/app/db')
+				// 			],
+				// 			use: [{
+				// 				loader: 'babel-loader',
+				// 				options: {
+				// 					presets: [
+				// 						['@babel/preset-env', { targets: "defaults" }]
+				// 					],
+				// 					plugins: [
+				// 						'@babel/plugin-proposal-class-properties',
+				// 					],
+				// 					configFile: "./babel.config.js"
+				// 				}
+				// 			}],
+				},
 				// 		},
 				// 		{
 				// 			test: /\.s[ac]ss$/i,

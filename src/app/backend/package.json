@@ -8,6 +8,7 @@
 	"devDependencies": {
 		"@koa/cors": "^4.0.0",
 		"@types/koa__router": "^12.0.1",
+		"copy-webpack-plugin": "^11.0.0",
 		"hexoid": "^1.0.0",
 		"koa": "^2.14.2",
 		"koa-body": "^6.0.1",
@@ -24,10 +25,11 @@
 		"webpack-merge": "^5.9.0",
 		"ws": "^8.14.2"
 	},
-	"description": "My webpack project",
+
 	"scripts": {
 		"build": "webpack --mode=production --node-env=production",
-		"build:dev": "webpack --mode=development --config ./webpack.dev.js",
+		"build:dev2": "webpack --mode=development --config ./webpack.dev.js",
+		"build:dev": "npx tsc --init && yarn tsc",
 		"build:prod": "webpack --mode=production --node-env=production",
 		"watch": "webpack --watch",
 		"start": "node src/serve/index.js"

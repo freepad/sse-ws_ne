@@ -11,10 +11,10 @@
 	"description": "My webpack project",
 	"scripts": {
 		"build": "webpack --mode=production --node-env=production",
-		"build:dev2": "webpack --mode=development --config ./webpack.config.js",
+		"build:dev": "npx tsc --init && yarn tsc",
 		"build:prod": "webpack --mode=production --node-env=production",
 		"watch": "webpack --watch",
-		"build:dev": "yarn tsc src/db/index.ts --outDir ../../../dist/db --outFile index.js"
+		"build:dev2": "yarn tsc src/db/index.ts"
 	},
 	"devDependencies": {
 		"ts-loader": "^9.5.0",

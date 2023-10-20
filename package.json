@@ -69,14 +69,15 @@
 		"webpack-dev-server": "^4.15.1",
 		"webpack-merge": "^5.9.0"
 	},
+
 	"scripts": {
 		"lint": "eslint .",
 		"build": "webpack --config ./webpack.prod.js",
 		"build:dev": "webpack --mode=development --config ./webpack.dev.js",
-		"start:build:dev": "yarn workspaces run build:dev",
+		"start:rezerv": "yarn workspaces run build:dev",
+		"start:build:dev": "yarn start:rezerv && yarn workspaces run build:dev",
 		"watch": "webpack --watch",
 		"serve:reserv": "yarn tsc src/app/serwiceWorker/src/index.ts",
-		"start:rezerv": "npx tsc --init && yarn tsc src/app/db/index.ts && yarn tsc src/app/backend/src/serve/index.ts",
 		"start:front": "cd src\\app\\frontend && webpack serve --port=8080",
 		"start:back": "nodemon dist/backend/server.js localhost 7070 --ignore src/",
 		"start": "yarn run start:build:dev && yarn run start:back && yarn run start:front",
