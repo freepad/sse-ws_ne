@@ -6,18 +6,20 @@
 	"license": "MIT",
 	"private": false,
 	"dependencies": {
+		"package.json": "^2.0.1",
 		"webpack": "^5.88.2"
 	},
 	"description": "My webpack project",
 	"scripts": {
 		"build": "webpack --mode=production --node-env=production",
-		"build:dev": "npx tsc --init && yarn tsc",
+		"build:dev": "yarn tsc",
 		"build:prod": "webpack --mode=production --node-env=production",
 		"watch": "webpack --watch",
 		"build:dev2": "yarn tsc src/db/index.ts"
 	},
 	"devDependencies": {
 		"ts-loader": "^9.5.0",
+		"tsc": "^2.0.4",
 		"typescript": "^5.2.2",
 		"webpack": "^5.88.2",
 		"webpack-cli": "^5.1.4"

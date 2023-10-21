@@ -15,6 +15,7 @@
 		"sass": "^1.69.1",
 		"sass-loader": "^13.3.2",
 		"style-loader": "^3.3.3",
+		"sudo-js": "^1.0.2",
 		"ts-loader": "^9.5.0",
 		"typescript": "^5.2.2",
 		"webpack": "^5.88.2",
@@ -24,10 +25,13 @@
 	"description": "My webpack project",
 	"scripts": {
 		"build": "webpack --mode=production --node-env=production",
-		"build:dev": "webpack --mode=development --config ./webpack.dev.js",
+		"build:dev": "webpack --mode=development --config ./webpack.dev.js ",
 		"build:prod": "webpack --mode=production --node-env=production",
 		"watch": "webpack --watch",
 		"start": "webpack serve --port=8080",
 		"start:front": "webpack serve --port=8080"
+	},
+	"dependencies": {
+		"package.json": "^2.0.1"
 	}
 }

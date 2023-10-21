@@ -9,9 +9,9 @@
 		"yarn": ">=1.22.19"
 	},
 	"workspaces": [
-		"src/app/frontend",
 		"src/app/backend",
-		"src/app/db"
+		"src/app/db",
+		"src/app/frontend"
 	],
 	"devDependencies": {
 		"@babel/cli": "^7.23.0",
@@ -59,6 +59,7 @@
 		"prettier": "^3.0.3",
 		"sass": "^1.69.2",
 		"sass-loader": "^13.3.2",
+		"src": "^1.1.2",
 		"ts-jest": "^29.1.1",
 		"ts-loader": "^9.5.0",
 		"ts-node": "^10.9.1",
@@ -69,13 +70,17 @@
 		"webpack-dev-server": "^4.15.1",
 		"webpack-merge": "^5.9.0"
 	},
-
 	"scripts": {
 		"lint": "eslint .",
 		"build": "webpack --config ./webpack.prod.js",
 		"build:dev": "webpack --mode=development --config ./webpack.dev.js",
-		"start:rezerv": "yarn workspaces run build:dev",
-		"start:build:dev": "yarn start:rezerv && yarn workspaces run build:dev",
+		"move-backend-index": "copy dist\\backend\\src\\app\\backend\\src\\serve\\*.js dist\\backend && copy dist\\backend\\src\\app\\backend\\src\\serve\\*.map dist\\backend",
+		"move-db-index": "copy dist\\db\\src\\app\\db\\src\\db\\*.js dist\\backend\\db && copy dist\\db\\src\\app\\db\\src\\db\\*.map dist\\backend\\db",
+		"new-folder": "mkdir dist\\backend\\db ",
+		"remove-index": "rmdir /s /q dist\\backend\\src",
+		"remove-db": "rmdir /s /q dist\\db",
+		"start:rezerv": "yarn workspaces run build:dev && yarn run move-backend-index && yarn run new-folder && yarn run move-db-index && yarn run remove-index && yarn run remove-db",
+		"start:build:dev": "yarn start:rezerv && yarn workspaces run build:dev ",
 		"watch": "webpack --watch",
 		"serve:reserv": "yarn tsc src/app/serwiceWorker/src/index.ts",
 		"start:front": "cd src\\app\\frontend && webpack serve --port=8080",

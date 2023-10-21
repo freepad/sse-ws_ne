@@ -1,6 +1,7 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
 process.traceDeprecation = true;
 const path = require('path');
+
 // const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 // const isProduction = process.env.NODE_ENV == 'production';
@@ -92,6 +93,11 @@ module.exports = [
 		// stats: {
 		// 	errorDetails: false
 		// }
+		plugins: [
+			{
+
+			},
+		]
 	}];
 
 // module.exports = () => {
@@ -104,3 +110,4 @@ module.exports = [
 //     }
 //     return config;
 // };
+
