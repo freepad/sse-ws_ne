@@ -74,7 +74,7 @@ export function getNewPost(): (e: any) => void {
 				</div>`
 
 		// if ((ImUser.querySelector('div:last-of-type') as HTMLElement).hasAttribute('data-num') /* you -------- */
-		debugger;
+		// debugger;
 		if (se.myId().length > 5 && se.myId().indexOf(data['post']['id']) >= 0) {
 			user = 'You';
 			sqreenChat.insertAdjacentHTML('beforeend', (`<div class="post your-post">
