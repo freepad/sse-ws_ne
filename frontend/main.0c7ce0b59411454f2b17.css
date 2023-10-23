@@ -1,0 +1,300 @@
+/*!****************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js!./src/scss/style.css ***!
+  \****************************************************************************************************************************************************************************/
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  padding-top: 38px;
+}
+
+section,
+div,
+.accaunt__online_one,
+.author {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+#chat {
+  min-width: 230px;
+  width: 100%;
+  max-width: 945px;
+  min-height: 593px;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  margin: 0 auto;
+  padding-bottom: 55px;
+}
+
+.accaunts,
+.chattalks,
+.chattalks > div:last-of-type,
+.preview,
+.author,
+.button button {
+  border: 1px solid #464646;
+  border-radius: 20px;
+  margin: 0;
+}
+
+.accaunts {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  min-width: 228px;
+  width: 100%;
+  max-width: 245px;
+  margin-top: 18px;
+  padding: 26px 0 8px 16px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+  border-right: 0px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.accaunt__online_one {
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  padding-top: 12px;
+}
+
+.accaunt__online_one .preview {
+  width: 58px;
+  height: 58px;
+  border-radius: 25px;
+}
+
+.sourcename {
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-left: 20px;
+}
+
+.you {
+  color: #fe654e;
+}
+
+.accaunt__online_one:first-of-type {
+  padding-top: 0;
+}
+
+.chattalks {
+  position: relative;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  -ms-flex-line-pack: justify;
+  align-content: space-between;
+  padding: 15px 20px 90px 20px;
+  width: 100%;
+  max-width: 697px;
+  min-height: inherit;
+  max-height: 725px;
+}
+
+.chattalks > div {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  padding-right: 21px;
+  overflow-y: scroll;
+}
+
+.chattalks > div:last-of-type {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 18px;
+  right: auto;
+  width: 100%;
+  max-width: 625px;
+  height: 55px;
+  overflow-y: auto;
+}
+
+#chat > div.chattalks > div:nth-child(2) > form {
+  display: inline-block;
+  width: calc(100% - 21px);
+  min-height: 48px;
+}
+
+.chattalks input,
+.chattalks input:focus,
+.chattalks input:hover,
+.chattalks input:active,
+.chattalks input:focus-visible {
+  display: inline-block;
+  width: inherit;
+  min-height: inherit;
+  outline-width: 0;
+  border: 0px;
+}
+
+.post {
+  display: block;
+  padding-bottom: 30px;
+}
+
+.your-post {
+  text-align: right;
+}
+
+.your-post .sourcename,
+.your-post .date {
+  color: #fe654e;
+}
+
+.post-accaunt.sourcename {
+  padding: 0;
+}
+
+.post-accaunt,
+.date {
+  display: inline-block;
+  width: auto;
+}
+
+.text {
+  display: block;
+  max-width: inherit;
+  padding-top: 20px;
+  font-size: 16px;
+  white-space: pre;
+}
+
+.author {
+  position: absolute;
+  left: calc(50% - 275px);
+  width: 100%;
+  max-width: 555px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  background-color: rgba(250, 235, 215, 0.85);
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin: 0 auto;
+  padding-bottom: 20px;
+  z-index: 2;
+}
+
+.author .title {
+  width: inherit;
+  padding-top: 5px;
+}
+
+.author .title h2 {
+  display: initial;
+  margin: 0 auto;
+  font-size: 22px;
+}
+
+.form {
+  width: inherit;
+  padding-top: 32px;
+}
+
+.form form {
+  width: 100%;
+  max-width: 500px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.input,
+.button {
+  width: 100%;
+}
+
+.input {
+  min-height: 50px;
+}
+
+.input input {
+  width: inherit;
+  min-height: inherit;
+  background-color: #fff;
+}
+
+.button {
+  padding-top: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.button button {
+  width: 100%;
+  max-width: 355px;
+  min-height: 50px;
+  background-color: green;
+  color: chartreuse;
+}
+
+.button button:hover, .button button:active {
+  color: #fff;
+  background-color: red;
+}
+
+.button button:active {
+  font-size: 18px;
+} 
+/*!*****************************************************************************************************************************************************************************!*\
+  !*** css ../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js!./src/scss/style.scss ***!
+  \*****************************************************************************************************************************************************************************/
+
+
+/*# sourceMappingURL=main.0c7ce0b59411454f2b17.css.map.*/
