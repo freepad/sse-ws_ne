@@ -75,7 +75,7 @@
 		"build:dev": "webpack --mode=development --config ./webpack.dev.js",
 		"move-backend-index": "rsync -av --prune-empty-dirs --include '*.js' --exclude '*' dist/backend/src/app/backend/src/serve/ dist/backend/db/ && rsync -av --prune-empty-dirs --include '*.map' --exclude '*' dist/backend/src/app/backend/src/serve/ dist/backend/db/",
 		"move-db-index": "rsync -av --prune-empty-dirs --include '*.js' --exclude '*' dist/db/src/app/db/src/db/ dist/backend/db && cp dist/db/src/app/db/src/db/*.map dist/backend/db",
-		"new-folder": "mkdir dist/backend/db ",
+		"new-folder": "mkdir -p dist/backend/db ",
 		"remove-index": "rmdir /s /q dist/backend/src",
 		"remove-db": "rmdir /s /q dist/db",
 		"serve:reserv": "yarn tsc src/app/serwiceWorker/src/index.ts",
