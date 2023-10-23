@@ -34,7 +34,7 @@ jobs:
       - name: Build-subtree-backend
         run: cd src/app/backend && yarn install && yarn run build:dev
 
-      -name: Build-subtree-db
+      - name: Build-subtree-db
         run: cd src/app/db && yarn install &&  yarn run build:dev
 
       - name: Build-frontend
