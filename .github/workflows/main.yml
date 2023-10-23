@@ -22,6 +22,7 @@ jobs:
         node-version: [18.x]
 
     steps:
+      - name: Checkout code
       - uses: actions/checkout@v3
 
       - name: Use Node.js ${{ matrix.node-version }}
@@ -33,10 +34,10 @@ jobs:
         run: yarn install
 
       - name: Run linters
-        run: yarn add -W eslint
+        run: yarn run lint
 
       - name: Build
-        run: start:build:dev
+        run: yarn run start:build:dev
 
       - name: Setup Pages
         uses: actions/configure-pages@v2
@@ -44,8 +45,12 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
+          name: 'dist'
           path: 'dist'
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
+        with:
+            branch: master
+            folder: dist
