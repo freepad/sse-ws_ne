@@ -43,13 +43,13 @@ jobs:
         run: |
           rsync -av --prune-empty-dirs --include '*.js' --exclude '*' dist/backend/src/app/backend/src/serve/ dist/backend/db/
           rsync -av --prune-empty-dirs --include '*.map' --exclude '*' dist/backend/src/app/backend/src/serve/ dist/backend/db/
-          rm -rf dist/backend/src
+          
 
       - name: Move db index files
         run: |
           rsync -av --prune-empty-dirs --include '*.js' --exclude '*' dist/db/src/app/db/src/db/ dist/backend/db
           rsync -av --prune-empty-dirs --include '*.map' --exclude '*' dist/db/src/app/db/src/db/ dist/backend/db
-          rm -rf dist/db
+          
 
       - name: Setup Pages
         uses: actions/configure-pages@v2
