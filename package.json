@@ -73,11 +73,11 @@
 		"lint": "eslint .",
 		"build": "webpack --config ./webpack.prod.js",
 		"build:dev": "webpack --mode=development --config ./webpack.dev.js",
-		"move-backend-index": "cp dist\\backend\\src\\app\\backend\\src\\serve\\*.js dist\\backend && cp dist\\backend\\src\\app\\backend\\src\\serve\\*.map dist\\backend",
-		"move-db-index": "cp dist\\db\\src\\app\\db\\src\\db\\*.js dist\\backend\\db && cp dist\\db\\src\\app\\db\\src\\db\\*.map dist\\backend\\db",
-		"new-folder": "mkdir dist\\backend\\db ",
-		"remove-index": "rmdir /s /q dist\\backend\\src",
-		"remove-db": "rmdir /s /q dist\\db",
+		"move-backend-index": "cp dist/backend/src/app/backend/src/serve/*.js dist/backend && cp dist/backend/src/app/backend/src/serve/*.map dist/backend",
+		"move-db-index": "cp dist/db/src/app/db/src/db/*.js dist/backend/db && cp dist/db/src/app/db/src/db/*.map dist/backend/db",
+		"new-folder": "mkdir dist/backend/db ",
+		"remove-index": "rmdir /s /q dist/backend/src",
+		"remove-db": "rmdir /s /q dist/db",
 		"serve:reserv": "yarn tsc src/app/serwiceWorker/src/index.ts",
 		"start:build:dev": "yarn workspaces run build:dev && yarn run move-backend-index && yarn run new-folder && yarn run move-db-index && yarn run remove-index && yarn run remove-db",
 		"start:front": "yarn workspace child-frontend-config webpack serve --port=8080",
@@ -91,6 +91,6 @@
 	"dependencies": {
 		"hexoid": "^1.0.0"
 	},
-	"repository": "https://github.com/Tryd0g0lik/sse-ws_ne.git",
+	"repository": "https:/github.com/Tryd0g0lik/sse-ws_ne.git",
 	"author": "Tryd0g0lik <work80@mail.ru>"
 }
