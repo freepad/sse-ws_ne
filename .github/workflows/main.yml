@@ -1,4 +1,3 @@
-
 name: sse-ws_ne
 on: [push, pull_request]
 
