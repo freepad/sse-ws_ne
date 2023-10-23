@@ -32,24 +32,7 @@ jobs:
         run: yarn install
 
       - name: Build-frontend
-        run: yarn run start:build:dev
-
-      - name: Create backend/db directories
-        run: |
-          mkdir -p dist/backend/db
-          mkdir -p dist/db/src/app/db/src/db
-
-      - name: Move backend index files
-        run: |
-          rsync -av --prune-empty-dirs --include '*.js' --exclude '*' dist/backend/src/app/backend/src/serve/ dist/backend/db/
-          rsync -av --prune-empty-dirs --include '*.map' --exclude '*' dist/backend/src/app/backend/src/serve/ dist/backend/db/
-          
-
-      - name: Move db index files
-        run: |
-          rsync -av --prune-empty-dirs --include '*.js' --exclude '*' dist/db/src/app/db/src/db/ dist/backend/db
-          rsync -av --prune-empty-dirs --include '*.map' --exclude '*' dist/db/src/app/db/src/db/ dist/backend/db
-          
+        run: yarn run start:build:dev       
 
       - name: Setup Pages
         uses: actions/configure-pages@v2
