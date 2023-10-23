@@ -1,6 +1,7 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
 process.traceDeprecation = true;
 const path = require('path');
+
 // const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 // const isProduction = process.env.NODE_ENV == 'production';
@@ -12,19 +13,9 @@ const path = require('path');
 
 module.exports = [
 	{
-		name: 'backend_config',
-		entry: './src/app/backend/webpack.dev.js',
-	},
-	{
 		name: 'frontend_config',
 		entry: './src/app/frontend/webpack.dev.js'
 	},
-	{
-		name: "backend_db",
-		entry: "./src/app/db/webpack.config.js"
-	},
-
-
 	{
 		mode: process.env.MODE_ENV || 'none',
 		entry: path.resolve(__dirname, './src/index.js'),
@@ -42,35 +33,42 @@ module.exports = [
 		// },
 		module: {
 			rules: [
-		// 		{
-		// 			test: /\.(ts|tsx)$/i,
-		// 			loader: 'ts-loader',
-		// 			include: [
-		// 				path.resolve(__dirname, 'src/app/db')
-		// 			],
-
-		// 			// options: {
-		// 			// 	configFile: path.resolve(__dirname, './tsconfige.json')
-		// 			// }
-		// 		},
-		// 		{
-		// 			test: /\.js$/i,
-		// 			include: [
-		// 				path.resolve(__dirname, 'src/app/db')
-		// 			],
-		// 			use: [{
-		// 				loader: 'babel-loader',
-		// 				options: {
-		// 					presets: [
-		// 						['@babel/preset-env', { targets: "defaults" }]
-		// 					],
-		// 					plugins: [
-		// 						'@babel/plugin-proposal-class-properties',
-		// 					],
-		// 					configFile: "./babel.config.js"
-		// 				}
-		// 			}],
-
+				{
+					test: /\.(ts|tsx)$/i,
+					// loader: 'ts-loader',
+					// include: [
+					// 	path.resolve(__dirname, 'src/app/db')
+					// ],
+					exclude: [
+						path.resolve(__dirname, "/src/app/backend"),
+						path.resolve(__dirname, "/src/app/db")
+					]
+					// options: {
+					// 	configFile: path.resolve(__dirname, './tsconfige.json')
+					// }
+				},
+				{
+					test: /\.js$/i,
+					exclude: [
+						path.resolve(__dirname, "/src/app/backend"),
+						path.resolve(__dirname, "/src/app/db")
+					]
+				// 			include: [
+				// 				path.resolve(__dirname, 'src/app/db')
+				// 			],
+				// 			use: [{
+				// 				loader: 'babel-loader',
+				// 				options: {
+				// 					presets: [
+				// 						['@babel/preset-env', { targets: "defaults" }]
+				// 					],
+				// 					plugins: [
+				// 						'@babel/plugin-proposal-class-properties',
+				// 					],
+				// 					configFile: "./babel.config.js"
+				// 				}
+				// 			}],
+				},
 				// 		},
 				// 		{
 				// 			test: /\.s[ac]ss$/i,
@@ -95,6 +93,11 @@ module.exports = [
 		// stats: {
 		// 	errorDetails: false
 		// }
+		plugins: [
+			{
+
+			},
+		]
 	}];
 
 // module.exports = () => {
@@ -107,3 +110,4 @@ module.exports = [
 //     }
 //     return config;
 // };
+

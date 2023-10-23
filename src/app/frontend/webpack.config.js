@@ -4,6 +4,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
+// const CopyPlugin = require('copy-webpack-plugin');
 // const isProduction = process.env.NODE_ENV == 'production';
 
 
@@ -54,7 +55,13 @@ module.exports = {
 		new MiniCssExtractPlugin({
 			filename: '[name].[contenthash].css'
 		}),
+		// new CopyPlugin({
+		// 	patterns: [
+		// 		{ from: '../../../dist/backend/src/app/backend/src/serve/index.js', to: '../../../dist/backend', },
+		// 		{ from: '../../../dist/backend/src/app/backend/src/serve/index.js.map', to: '../../../dist/backend', },
 
+		// 	],
+		// }),
 		// Add your plugins here
 		// Learn more about plugins from https://webpack.js.org/configuration/plugins/
 	],

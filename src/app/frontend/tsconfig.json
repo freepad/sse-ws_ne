@@ -24,6 +24,7 @@
 		"src/ts/function/**/*.ts",
 		"src/ts/models/*.ts",
 		"src/ts/models/**/*.ts",
-		"src/ts/*.ts"
+		"src/ts/*.ts",
+		"src/pluginssgins"
 	]
 }

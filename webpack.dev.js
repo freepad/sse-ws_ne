@@ -3,6 +3,8 @@ const path = require('path');
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const common = require('./webpack.config.js');
+// const distСopies = require('./src/app/plugins/distСopies.ts')
+
 // const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = merge(common);

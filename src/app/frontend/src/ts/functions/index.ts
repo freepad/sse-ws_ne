@@ -1,7 +1,10 @@
-// function
+// src\app\frontend\src\ts\functions\index.ts
+
 
 const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
-const { sentNewLogin, myId } = require('./serverEvent');
+// const { sentNewLogin, myId } = require('./serverEvent');
+const se = require('./serverEvent');
+const { default: sentNewLogin } = require('./serverEvent/sentNewLogin');
 const { fun } = require('./forms/logins');
 
 /* it for events by indentifikation a new Login - start*/
@@ -22,12 +25,15 @@ export function addLogin(elem: HTMLCollectionOf<HTMLElement>) {
 
 	formIdentification.addEventListener('keypress', (e: any) => {
 		if ((e as KeyboardEvent).key === 'Enter') {
+			console.log('[SE Enter]: ', sentNewLogin);
 			sentNewLogin(e)
 				.then(() => { addUserStyle() });
 		};
 	});
+
 	formIdentification.addEventListener('click', (e: any) => {
 		if (((e as MouseEvent).target as HTMLButtonElement).type === 'submit') {
+			console.log('[SE submit]: ', sentNewLogin);
 			sentNewLogin(e)
 				.then(() => { addUserStyle() });
 		};
@@ -51,7 +57,7 @@ function addUserStyle() {
 }
 
 const sqreenChat = body[0].querySelector('.chattalks > div:first-of-type') as HTMLElement;
-export function getNewPost() {
+export function getNewPost(): (e: any) => void {
 	return (e: any) => {
 		const data = JSON.parse(e.data);
 
@@ -68,8 +74,8 @@ export function getNewPost() {
 				</div>`
 
 		// if ((ImUser.querySelector('div:last-of-type') as HTMLElement).hasAttribute('data-num') /* you -------- */
-		debugger;
-		if (myId().length > 5 && myId().indexOf(data['post']['id']) >= 0) {
+		// debugger;
+		if (se.myId().length > 5 && se.myId().indexOf(data['post']['id']) >= 0) {
 			user = 'You';
 			sqreenChat.insertAdjacentHTML('beforeend', (`<div class="post your-post">
 			<div class="post-accaunt sourcename">${user}` + postConyains as any)); // помечаем авторские посты
@@ -81,5 +87,7 @@ export function getNewPost() {
 
 	}
 }
+
+
 
 

@@ -1,39 +1,16 @@
 const { WSocket } = require('../../models/websockets');
-const { UsersNetwork } = require('../../models/users');
 const { ChatSqreen } = require('../../models/chat');
+const { default: addPropertiesUser } = require('./addPropertiesUser');
 const { fun } = require('../../functions/forms/logins');
-const { getMetaDataUser, getNewPost } = require('../../functions');
+const moduleFun = require('../index.ts');
+console.log('[getNewPost]: ', moduleFun);
 const url = "ws://localhost:7070"
 const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
 const chatInput = body[0].querySelector('.chattalks input') as HTMLElement;
 let wsChat: any;
-let ws: any;
-let thisIsMyId = '';
-/**
-		 * Handler для событий из формы регистрации логина.
-	 * Отправляем логин на сервер.
-	 * @param e: event.
-	 * @returns void
-	 */
-export async function sentNewLogin(e: any) {
-	e.preventDefault();
-	const input = body[0].querySelector('.login input') as HTMLInputElement;
-	if (ws === undefined
-		|| (ws
-			&& (ws.readyState === 0 || ws.readyState > 1))) {
-		console.log('/login URL')
-		ws = new WSocket(url + "/login");
-	}
-	ws.onMessage = getNewLogin();
 
-	if (input.value.length < 1) return
-	/**Template: { newLogin: input.value } */
-	const resultOfFormIdentification = JSON.stringify(fun.idForn(e));
-	ws.sends(resultOfFormIdentification);
-	ws.onOpen();
-	input.value = ''
-	return
-}
+let thisIsMyId = '';
+
 
 /** HANDLER
  * Данные отправленнвне на сервер, там проверка нового логина.
@@ -51,8 +28,8 @@ function getNewLogin() {
 			const boxContainsUser = document.querySelectorAll('.accaunts');
 			if (thisIsMyId.length < 5) thisIsMyId = data['id'];
 			// debugger;
-			const persone = addPropertiesUser(data);
-			const newUser = persone['addHtmlUser'];
+			const persone_ = addPropertiesUser(data);
+			const newUser = persone_['addHtmlUser'];
 			newUser.classList.add('imNew');
 			// boxContainsUser[boxContainsUser.length - 1].insertAdjacentElement('beforeend', newUser);
 			boxContainsUser[0].insertAdjacentElement('beforeend', newUser);
@@ -75,28 +52,7 @@ function getNewLogin() {
 	}
 }
 
-/**
- * На входе получаем данные из БД.
- * Объект заполняем значениями свойств.
- * @param data: Данные
- * @returns обект.
- */
-export function addPropertiesUser(data: any) {
-	const persone = new UsersNetwork(data['login']);
 
-	/* User network's status is checking ??  - start */
-	if (navigator.onLine) persone.onOrOfLine = 'onLine';
-
-	window.addEventListener("offline", (event) => {
-		persone.onOrOfLine = 'offline';
-	});
-	/* User network's status is checking  - finish */
-
-	persone.addId = data['id'];
-	persone.addHTMLUser;
-	/** {login: < nik-name >, network: < on or of line >, id: < index user >} */
-	return persone;
-}
 
 
 /* it for events by indentifikation a new Login - start*/
@@ -121,12 +77,13 @@ chat.server = (elem: any) => {
 	let post = JSON.stringify(elem);
 	wsChat.sends(post);
 	wsChat.onOpen();
-	wsChat.onMessage = getNewPost();
+	wsChat.onMessage = moduleFun.getNewPost();
 
 	return
 }
 
-export function myId() {
+function myId() {
 	return thisIsMyId
 }
 // ServerEvents
+module.exports = { myId, getNewLogin }

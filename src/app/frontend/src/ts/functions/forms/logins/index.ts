@@ -1,8 +1,8 @@
-// function / forms
+// src\app\frontend\src\ts\functions\forms\logins\index.ts
 let newLogin: any[] = [];
 const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;;
 const { WSocket } = require('../../../models/websockets');
-const { addPropertiesUser, myId } = require('../../serverEvent');
+const { default: addPropertiesUser } = require('../../serverEvent/addPropertiesUser');
 let wsLoadPage: any;
 const mapListUsers = new Map();
 
@@ -42,7 +42,7 @@ export const fun = {
 	 * Если есть пользователи, загружает их на страницу.
 	//  * и загрывает соединени??????????
 	 */
-	loadPage() {
+	loadPage(ind: string) {
 		/** Первичная закгрузка страницы **/
 		newLogin = [];
 		if (wsLoadPage === undefined
@@ -95,7 +95,8 @@ export const fun = {
 
 			/** выкладываем посты  */
 			/**Выкладываем посты в экран чата */
-			if (myId().length === 0) {
+
+			if (ind.length === 0) {
 				const sqreenChat = body[0].querySelector('.chattalks > div:first-of-type') as HTMLElement;
 				postReSort.forEach((item: any) => {
 					const user: string = item['login'];
