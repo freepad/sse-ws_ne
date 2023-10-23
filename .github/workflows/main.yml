@@ -32,7 +32,10 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Build
+      - name: Build-backend
+        run: yarn run serve:reserv
+
+      - name: Build-frontend
         run: yarn run start:build:dev
 
       - name: Setup Pages
