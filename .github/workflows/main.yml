@@ -1,6 +1,5 @@
 name: sse-ws_ne
 on: [push, pull_request]
-
 # Down scope as necessary via https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token
 permissions:
   checks: write
@@ -32,7 +31,7 @@ jobs:
         run: yarn install
 
       - name: Build-frontend
-        run: yarn run start:build:dev       
+        run: yarn run start:build:dev
 
       - name: Setup Pages
         uses: actions/configure-pages@v2
