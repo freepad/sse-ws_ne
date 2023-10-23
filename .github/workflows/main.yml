@@ -33,7 +33,7 @@ jobs:
 
       - name: Build-frontend
         run: yarn run start:build:dev
-        
+
       - name: Create backend/db directories
         run: |
           mkdir -p dist/backend/db
