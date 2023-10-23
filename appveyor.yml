@@ -8,7 +8,7 @@ image:
 platform:
   - x64
 
-stack: node 18.12.0
+stack: node 18.18.1
 
 cache:
   - node_modules
@@ -25,9 +25,8 @@ branches:
   only:
     - master
 
-
 build_script:
-  - npm run build
+  - npm run start:build:dev
   - npm run lint
   - ps: Get-ChildItem .\*.nupkg | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
 
