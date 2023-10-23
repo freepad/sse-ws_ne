@@ -33,7 +33,7 @@ jobs:
         run: yarn install
 
       - name: Run linters
-        run: yarn add eslint
+        run: yarn add -W eslint
 
       - name: Build
         run: start:build:dev
