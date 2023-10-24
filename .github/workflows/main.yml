@@ -33,7 +33,7 @@ jobs:
       #   run: cd src/app/frontend && yarn run build:dev
 
       - name: Build-frontend
-        run: yarn workspace "src/app/frontend" yarn run build:dev
+        run: yarn workspace src/app/frontend yarn run build:dev
 
       - name: Build-folder-BackandDb
         run: |
