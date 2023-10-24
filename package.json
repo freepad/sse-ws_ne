@@ -5,8 +5,8 @@
 	"license": "MIT",
 	"private": true,
 	"engines": {
-		"node": ">=18.18.1",
-		"yarn": ">=1.22.19"
+		"node": ">=18.17.1",
+		"yarn": ">=1.22.5"
 	},
 	"workspaces": [
 		"src/app/backend",
