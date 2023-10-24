@@ -42,17 +42,6 @@ jobs:
           mkdir -p dist/backend/db
           mkdir -p dist/backend/src/app/backend/src/serve
           mkdir -p dist/db/src/app/db/src/db
-       
-      - name: Checker-folder after the move from a backend/db folder
-        uses: actions/checkout@v2
-      - name: Check if files exist in dist directory
-        uses: actions/glob@v2
-        with:
-          glob: 'dist/brontend/db/index.js'      
-      - name: Print found files
-        run: |
-          echo "Found files:"
-          echo "${{ join(steps.check.outputs.files, ', ') }}"
             
       - name: Build-workspace-build:dev
         run: yarn workspace child-backend-config run build:dev
@@ -67,6 +56,17 @@ jobs:
           rsync -av --prune-empty-dirs --include '*.js' --exclude '*' dist/db/src/app/db/src/db/ dist/backend/db
           rsync -av --prune-empty-dirs --include '*.map' --exclude '*' dist/db/src/app/db/src/db/ dist/backend/db
 
+      - name: Checker-folder after the move from a backend/db folder
+        uses: actions/checkout@v2
+      - name: Check if files exist in dist directory
+        uses: actions/glob@v2
+        with:
+          glob: 'dist/brontend/db/*'      
+      - name: Print found files
+        run: |
+          echo "Found files:"
+          echo "${{ join(steps.check.outputs.files, ', ') }}"
+          
       # - name: Checker -files after the move from a backend folder
       #   uses: Bhacaz/checkout-files@v2
       #   with:
