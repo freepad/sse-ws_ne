@@ -57,17 +57,17 @@ jobs:
           rsync -av --prune-empty-dirs --include '*.map' --exclude '*' dist/db/src/app/db/src/db/ dist/backend/db
       
       - name: Setup Pages
-        uses: actions/configure-pages@v3.0.6
+        uses: actions/configure-pages@v2
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v1
         with:
           name: 'dist'
           path: 'dist'
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: JamesIves/github-pages-deploy-action@4.1.4
+        uses: actions/deploy-pages@v1
         with:
             branch: gh-pages
             folder: dist
