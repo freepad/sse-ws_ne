@@ -31,7 +31,9 @@ jobs:
 
       # - name: Install dependencies
       #   run: cd src/app/frontend && yarn run build:dev
-
+      - name: Install dependencies
+        run: yarn install
+        
       - name: Build-frontend
         run: yarn workspace child-frontend-config run build:dev
 
