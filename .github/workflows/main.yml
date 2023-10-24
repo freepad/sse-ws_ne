@@ -44,11 +44,13 @@ jobs:
           mkdir -p dist/db/src/app/db/src/db
        
       - name: Checker-folder after the move from a backend/db folder
-        uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            dist/backend/db/index.js
-          sparse-checkout-cone-mode: false
+        uses: actions/checkout@v2
+      - name: Check if file exists
+        run: |
+           if [ -f dist/backend/db/index.js]: then
+             echo "file exists"
+           else
+             exho "does not exist"
             
       - name: Build-workspace-build:dev
         run: yarn workspace child-backend-config run build:dev
