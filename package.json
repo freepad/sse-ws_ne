@@ -84,8 +84,7 @@
 		"start:back": "node dist/backend/index.js localhost 7070",
 		"watch": "webpack --watch",
 		"unit": "jest --env=jsdom  --watch --colors --config ./unit.config.js",
-		"e2e": "jest --env=jest-environment-jsdom  --watch --colors --config ./puppeteer.config.js ",
-		"serve-test": "webpack serve --port=9000 "
+		"e2e": "jest --env=jest-environment-jsdom  --watch --colors --config ./puppeteer.config.js "
 	},
 	"description": "sse-ws_ne",
 	"dependencies": {
