@@ -44,8 +44,8 @@ jobs:
                 
       - name: Buil-subtree-backend
         run: |
-          rsync -av --prune-empty-dirs --include '*.js' --exclude '*' dist/backend/src/app/backend/src/serve/ dist/backend/db/
-          rsync -av --prune-empty-dirs --include '*.map' --exclude '*' dist/backend/src/app/backend/src/serve/ dist/backend/db/
+          cp dist/backend/src/app/backend/src/serve/ dist/backend/db/
+          cp dist/backend/src/app/backend/src/serve/ dist/backend/db/
 
       - name: Move db index files
         run: |
