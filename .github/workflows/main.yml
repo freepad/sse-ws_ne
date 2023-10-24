@@ -70,4 +70,4 @@ jobs:
         uses: actions/deploy-pages@v1
         with:
             branch: gh-pages
-            folder: dist
+            folder: dist/frontend
