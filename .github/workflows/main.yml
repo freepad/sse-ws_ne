@@ -40,13 +40,17 @@ jobs:
       - name: Build-folder-BackandDb
         run: |
           mkdir -p dist/backend/db
+          mkdir -p dist/backend/src/app/backend/src/serve
           mkdir -p dist/db/src/app/db/src/db
-                
-      - name: Buil-subtree-backend
+          
+      - name: Build-workspace-build:dev
+        run: yarn workspace child-backend-config run build:dev
+        
+      - name: Buil-subtree-creat-dist-backend
         run: |
-          cp dist/backend/src/app/backend/src/serve/ dist/backend/db/
-          cp dist/backend/src/app/backend/src/serve/ dist/backend/db/
-
+          rsync -av --prune-empty-dirs --include '*.js' --exclude '*' dist/backend/src/app/backend/src/serve/ dist/backend/db/
+          rsync -av --prune-empty-dirs --include '*.map' --exclude '*' dist/backend/src/app/backend/src/serve/ dist/backend/db/
+      
       - name: Move db index files
         run: |
           rsync -av --prune-empty-dirs --include '*.js' --exclude '*' dist/db/src/app/db/src/db/ dist/backend/db
