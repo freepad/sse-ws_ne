@@ -83,4 +83,4 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v2
         with:
-            folder: dist/frontend
+          folder: dist/frontend
