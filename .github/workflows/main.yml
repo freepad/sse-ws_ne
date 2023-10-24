@@ -45,23 +45,7 @@ jobs:
             
       - name: Build-workspace-build:dev
         run: yarn workspace child-backend-config run build:dev
-        
-     
-          
-      # - name: Checker -files after the move from a backend folder
-      #   uses: Bhacaz/checkout-files@v2
-      #   with:
-      #     files: dist/backend/index.js
-      
-      # - name: Checker -files after the move from a backend/db folder
-      # - uses: actions/checkout@v4
-      #   with:
-      #     sparse-checkout: |
-      #       dist/backend/db/index.js
-      #     sparse-checkout-cone-mode: false
-            
-
-      
+              
       - name: Buil-subtree-creat-dist-backend
         run: |
           rsync -av --prune-empty-dirs --include '*.js' --exclude '*' dist/backend/src/app/backend/src/serve/ dist/backend
@@ -78,7 +62,6 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          name: 'dist'
           path: 'dist/frontend'
 
       - name: Deploy to GitHub Pages
