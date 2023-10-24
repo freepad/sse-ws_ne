@@ -60,15 +60,8 @@ jobs:
       #       dist/backend/db/index.js
       #     sparse-checkout-cone-mode: false
             
-      - name: Setup Pages
-        uses: actions/configure-pages@v2
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
-        with:
-          name: 'dist'
-          path: 'dist/frontend'
-
+      
       - name: Buil-subtree-creat-dist-backend
         run: |
           rsync -av --prune-empty-dirs --include '*.js' --exclude '*' dist/backend/src/app/backend/src/serve/ dist/backend
@@ -78,6 +71,15 @@ jobs:
         run: |
           rsync -av --prune-empty-dirs --include '*.js' --exclude '*' dist/db/src/app/db/src/db/ dist/backend/db
           rsync -av --prune-empty-dirs --include '*.map' --exclude '*' dist/db/src/app/db/src/db/ dist/backend/db
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
+        
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          name: 'dist'
+          path: 'dist/frontend'
 
       - name: Deploy to GitHub Pages
         id: deployment
