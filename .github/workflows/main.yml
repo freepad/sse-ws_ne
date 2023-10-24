@@ -67,12 +67,12 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           name: 'dist'
-          path: 'dist'
+          path: 'dist/frontend'
 
       - name: Buil-subtree-creat-dist-backend
         run: |
-          rsync -av --prune-empty-dirs --include '*.js' --exclude '*' dist/backend/src/app/backend/src/serve/ dist/backend/
-          rsync -av --prune-empty-dirs --include '*.map' --exclude '*' dist/backend/src/app/backend/src/serve/ dist/backend/
+          rsync -av --prune-empty-dirs --include '*.js' --exclude '*' dist/backend/src/app/backend/src/serve/ dist/backend
+          rsync -av --prune-empty-dirs --include '*.map' --exclude '*' dist/backend/src/app/backend/src/serve/ dist/backend
       
       - name: Move db index files
         run: |
