@@ -71,8 +71,8 @@ jobs:
 
       - name: Buil-subtree-creat-dist-backend
         run: |
-          rsync -av --prune-empty-dirs --include '*.js' --exclude '*' dist/backend/src/app/backend/src/serve/ dist/backend/db/
-          rsync -av --prune-empty-dirs --include '*.map' --exclude '*' dist/backend/src/app/backend/src/serve/ dist/backend/db/
+          rsync -av --prune-empty-dirs --include '*.js' --exclude '*' dist/backend/src/app/backend/src/serve/ dist/backend/
+          rsync -av --prune-empty-dirs --include '*.map' --exclude '*' dist/backend/src/app/backend/src/serve/ dist/backend/
       
       - name: Move db index files
         run: |
@@ -82,3 +82,5 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
+        with:
+            folder: dist/frontend
