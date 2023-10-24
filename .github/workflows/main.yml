@@ -67,9 +67,11 @@ jobs:
           files: dist/backend/index.js
       
       - name: Checker -files after the move from a backend/db folder
-        uses: Bhacaz/checkout-files@v2
+      - uses: actions/checkout@v4
         with:
-          files: dist/backend/db/index.js
+          sparse-checkout: |
+            dist/backend/db/index.js
+          sparse-checkout-cone-mode: false
             
       - name: Setup Pages
         uses: actions/configure-pages@v2
