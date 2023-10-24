@@ -55,7 +55,17 @@ jobs:
         run: |
           rsync -av --prune-empty-dirs --include '*.js' --exclude '*' dist/db/src/app/db/src/db/ dist/backend/db
           rsync -av --prune-empty-dirs --include '*.map' --exclude '*' dist/db/src/app/db/src/db/ dist/backend/db
+
+      - name: Checker -files after the move from a backend folder
+        uses: Bhacaz/checkout-files@v2
+        with:
+          files: dist/backend/index.js
       
+      - name: Checker -files after the move from a backend/db folder
+        uses: Bhacaz/checkout-files@v2
+        with:
+          files: dist/backend/db/index.js
+            
       - name: Setup Pages
         uses: actions/configure-pages@v2
 
