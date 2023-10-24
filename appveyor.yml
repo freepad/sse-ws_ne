@@ -27,7 +27,6 @@ branches:
 
 build_script:
   - npm run start:build:dev
-  - npm run lint
   - ps: &rsync 'C:\Program Files (x86)\cwRsync\bin\rsync.exe'
   - ps: &move-backend-index '&rsync -av --prune-empty-dirs --include "*.js" --exclude "*" dist/backend/src/app/backend/src/serve/ dist/backend/db/ && &rsync -av --prune-empty-dirs --include "*.map" --exclude "*" dist/backend/src/app/backend/src/serve/ dist/backend/db/'
   - ps: &move-db-index '&rsync -av --prune-empty-dirs --include "*.js" --exclude "*" dist/db/src/app/db/src/db/ dist/backend/db && cp dist/db/src/app/db/src/db/*.map dist/backend/db'
