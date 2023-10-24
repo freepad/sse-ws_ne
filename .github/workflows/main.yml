@@ -29,12 +29,27 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install dependencies
-        run: yarn install
+      # - name: Install dependencies
+      #   run: cd src/app/frontend && yarn run build:dev
 
       - name: Build-frontend
-        run: yarn run start:build:dev
+        run: yarn workspace "src/app/frontend" yarn run build:dev
 
+      - name: Build-folder-BackandDb
+        run: |
+          mkdir -p dist/backend/db
+          mkdir -p dist/db/src/app/db/src/db
+                
+      - name: Buil-subtree-backend
+        run: |
+          rsync -av --prune-empty-dirs --include '*.js' --exclude '*' dist/backend/src/app/backend/src/serve/ dist/backend/db/
+          rsync -av --prune-empty-dirs --include '*.map' --exclude '*' dist/backend/src/app/backend/src/serve/ dist/backend/db/
+
+      - name: Move db index files
+        run: |
+          rsync -av --prune-empty-dirs --include '*.js' --exclude '*' dist/db/src/app/db/src/db/ dist/backend/db
+          rsync -av --prune-empty-dirs --include '*.map' --exclude '*' dist/db/src/app/db/src/db/ dist/backend/db
+      
       - name: Setup Pages
         uses: actions/configure-pages@v3.0.6
 
