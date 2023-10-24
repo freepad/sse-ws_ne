@@ -42,7 +42,12 @@ jobs:
           mkdir -p dist/backend/db
           mkdir -p dist/backend/src/app/backend/src/serve
           mkdir -p dist/db/src/app/db/src/db
-          
+       
+      - name: Checker-folder after the move from a backend/db folder
+        uses: Bhacaz/checkout-files@v2
+        with:
+          files: dist/backend/db/index.js
+            
       - name: Build-workspace-build:dev
         run: yarn workspace child-backend-config run build:dev
         
