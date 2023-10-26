@@ -1,6 +1,6 @@
 {
 	"name": "child-backend-config",
-	"version": "1.4.4",
+	"version": "1.5.0",
 	"main": "src/index.js",
 	"author": "Tryd0g0lik <work80@mail.ru>",
 	"license": "MIT",
