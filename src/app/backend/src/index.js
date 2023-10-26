@@ -1,1 +1,1 @@
-import "./serve/index.ts"
+console.log('Good world')

@@ -5,8 +5,8 @@
 		// "noImplicitAny": true,
 		"module": "CommonJS",
 		// "target": "ES6",
-		// "sourceMap": true,
-		"outDir": "./dist",
+		"sourceMap": false,
+		"outDir": "./src/result",
 		// "src/serve",
 		// "allowSyntheticDefaultImports": true,
 		// "esModuleInterop": true,
@@ -16,10 +16,10 @@
 		// "strictNullChecks": false
 	},
 	"exclude": [
-		// "node_modules",
-		// "../../../../../dist",
-		// "../../../dist",
-		// "dist"
+		"node_modules",
+		"../../../../../dist",
+		"../../../dist",
+		"dist"
 	],
 	"files": [
 		"./src/serve/index.ts"
