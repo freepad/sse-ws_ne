@@ -8,9 +8,7 @@
 		"sourceMap": true,
 		"rootDir": ".",
 		"outDir": "./dist",
-		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
-		"noImplicitAny": true,
 		"skipLibCheck": true,
 		"strict": true,
 		"strictPropertyInitialization": false, //https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-7.html#strict-class-initialization

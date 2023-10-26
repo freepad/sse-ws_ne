@@ -3,17 +3,17 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 
-if (path.resolve(__dirname, 'src/serve/index.js')) {
+// if (path.resolve(__dirname, 'src/serve/index.js')) {
 
-	console.log('[file "src/db/index.js" ]: is found ');
+// 	console.log('[file "src/db/index.js" ]: is found ');
 
-}
-else {
-	console.log('[file "src/db/index.js" ]: is not found');
-}
+// }
+// else {
+// 	console.log('[file "src/db/index.js" ]: is not found');
+// }
 module.exports = {
 	mode: 'none',
-	entry: path.resolve(__dirname, 'src/app/backend'),
+	entry: path.resolve(__dirname, 'src/index.js'),
 	output: {
 		path: path.resolve(__dirname, '../../../dist')
 	},
@@ -21,11 +21,14 @@ module.exports = {
 	plugins: [
 		new CopyPlugin({
 			patterns: [
-				{ from: 'src/serve/index.js', to: 'backend/', },
+				{ from: 'dist/src/app/backend/src/serve', to: 'backend/', },
 			],
 		}),
 	],
-
+	module: {
+		rules: [],
+		exprContextCritical: false
+	},
 	resolve: {
 		extensions: ['.tsx', '.ts', '.jsx', '.js', '...'],
 	},

@@ -35,7 +35,7 @@ module.exports = {
 		"standard-with-typescript"],
 	"overrides": [
 		{
-			"files": "src/app/backend",
+			"files": "src/app/frontend",
 			"env": {
 				"module": true,
 				"es6": true,
@@ -45,7 +45,7 @@ module.exports = {
 			},
 		},
 		{
-			"files": ["src/app/frontend", "src/app/db"],
+			"files": ["src/app/frontend/src/serve", "src/app/db/src/db"],
 			"env": {
 				"module": true,
 				"es6": true,
