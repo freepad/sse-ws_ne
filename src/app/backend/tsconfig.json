@@ -4,20 +4,22 @@
 		// "allowSyntheticDefaultImports": true,
 		// "noImplicitAny": true,
 		"module": "CommonJS",
-		"target": "ES6",
-		// "sourceMap": true,
-		"outDir": "../../../dist/backend/",
+		// "target": "ES6",
+		"sourceMap": false,
+		"outDir": "./src/result",
+		// "src/serve",
 		// "allowSyntheticDefaultImports": true,
 		// "esModuleInterop": true,
 		// "noImplicitAny": true,
 		// "skipLibCheck": true,
 		// "strict": true,
-		// "strictNullChecks": true
+		// "strictNullChecks": false
 	},
 	"exclude": [
 		"node_modules",
-		"../../../../../dist/db/maps",
-		"../../../dist/db/maps"
+		"../../../../../dist",
+		"../../../dist",
+		"dist"
 	],
 	"files": [
 		"./src/serve/index.ts"

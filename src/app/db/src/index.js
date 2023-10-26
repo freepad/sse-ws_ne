@@ -1,1 +1,1 @@
-import "./db/index.ts"
+console.log('Good world')

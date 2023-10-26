@@ -5,10 +5,10 @@
 		// "noImplicitAny": true,
 		"module": "CommonJS",
 		// "target": "es5",
-		"outDir": "../../../dist/db",
+		"outDir": "./src/result",
 		// "allowJs": true
 	},
-	"exvlude": [
+	"exclude": [
 		"node_modules",
 	],
 	"files": [

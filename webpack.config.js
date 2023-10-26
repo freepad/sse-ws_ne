@@ -50,8 +50,8 @@ module.exports = [
 				{
 					test: /\.js$/i,
 					exclude: [
-						path.resolve(__dirname, "/src/app/backend"),
-						path.resolve(__dirname, "/src/app/db")
+						path.resolve(__dirname, "/src/app/db"),
+						path.resolve(__dirname, "/src/app/backend")
 					]
 				// 			include: [
 				// 				path.resolve(__dirname, 'src/app/db')
