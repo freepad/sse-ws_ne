@@ -155,7 +155,10 @@ wss.on('connection', (ws: any, req: any) => {
 	ws.on("error", (e: any) => ws.send(e));
 });
 
-server.listen(7070, () => console.log("Server started"));
+const port = process.env.PORT ?? 7070
+server.listen(port, () => {
+ console.log(`Server started ${port}`)
+});
 
 
 /* generatos ID */
