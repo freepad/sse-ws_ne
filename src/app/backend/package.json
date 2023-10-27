@@ -29,7 +29,7 @@
 	"scripts": {
 		"build": "webpack --mode=production --node-env=production",
 		"build:dev2": "webpack --mode=development --config ./webpack.dev.js",
-		"build:dev": "yarn tsc && webpack",
+		"build:dev": "npx src && yarn tsc && webpack",
 		"build:prod": "webpack --mode=production --node-env=production",
 		"watch": "webpack --watch",
 		"start": "node src/serve/index.js"
