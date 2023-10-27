@@ -157,7 +157,14 @@ wss.on('connection', (ws: any, req: any) => {
 
 const port = process.env.PORT ?? 7070
 server.listen(port, () => {
- console.log(`Server started ${port}`)
+ console.log(`Server started http://localhost:${port}`)
+});
+
+app.use(async ctx => {
+  if (ctx.path === '/test') {
+        ctx.body = 'Hello World';
+  }        
+  console.log('open path', ctx.path)
 });
 
 
