@@ -60,7 +60,7 @@ const sqreenChat = body[0].querySelector('.chattalks > div:first-of-type') as HT
 export function getNewPost(): (e: any) => void {
 	return (e: any) => {
 		const data = JSON.parse(e.data);
-
+                // тут тоже
 		if (e.target.url !== "ws://localhost:7070/chat"
 			|| ("idPost" in data) === false) return
 		const post = data['post']['message'];
