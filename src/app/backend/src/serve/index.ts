@@ -13,9 +13,7 @@ const wss = new WS.Server({ server });
 let newClient = {};
 let postmane: any = undefined;
 let url: string = '';
-console.log('[DB-file]: ', db);
-console.log('[DB-object]: ', Object(db))
-console.log('[DB-object]: ', Object.keys(db))
+
 const db  = {
 	logins: ([] as any[]), // [ { login: 'RRRR', id: '7ef88beb-37ef-4806-9a8b-6ac6632828df' } ]
 	posts: ([] as any[]),
@@ -39,6 +37,10 @@ const db  = {
 
 	}
 };
+
+console.log('[DB-file]: ', db);
+console.log('[DB-object]: ', Object(db))
+console.log('[DB-object]: ', Object.keys(db))
 
 // module.exports = firstDb;
 wss.on('connection', (ws: any, req: any) => {
