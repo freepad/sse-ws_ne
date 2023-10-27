@@ -4,7 +4,8 @@ const { default: addPropertiesUser } = require('./addPropertiesUser');
 const { fun } = require('../../functions/forms/logins');
 const moduleFun = require('../index.ts');
 console.log('[getNewPost]: ', moduleFun);
-const url = "ws://localhost:7070"
+// везде по проекту надо заменить на переменную окружения
+const url = process.env.APP_BASE_URL_WS : process.env.APP_BASE_URL_WS  ? "ws://localhost:7070";
 const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
 const chatInput = body[0].querySelector('.chattalks input') as HTMLElement;
 let wsChat: any;
