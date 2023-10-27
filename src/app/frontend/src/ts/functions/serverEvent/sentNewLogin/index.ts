@@ -3,7 +3,8 @@
 const { WSocket } = require('../../../models/websockets');
 const { fun } = require("../../forms/logins");
 const { getNewLogin: getNewLoginPrefix } = require('../index.ts');
-const url = "ws://localhost:7070";
+// везде по проекту надо заменить на переменную окружения
+const url = process.env.APP_BASE_URL_WS : process.env.APP_BASE_URL_WS  ? "ws://localhost:7070";
 let ws: any;
 const body = document.getElementsByTagName('body') as HTMLCollectionOf<HTMLElement>;
 /**
